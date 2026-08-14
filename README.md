@@ -76,7 +76,7 @@ physics-knowledge-tree/
 
 1. 把仓库推送到 GitHub。
 2. 进入仓库 **Settings → Pages**，在"Build and deployment"中把 **Source 选为 "GitHub Actions"**。
-3. 推送到 `main` 后，Pages 工作流会自动部署；在线地址为 `https://<用户名>.github.io/<仓库名>/`。
+3. Go to the Actions tab and run the workflow titled "Deploy to GitHub Pages"(pages.yml).
 
 ## 📊 当前规模
 
