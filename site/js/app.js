@@ -78,15 +78,12 @@ window.KTApp = (() => {
     }
   });
 
-  // 单击高亮集合：直接相连 + 沿先修向下一级（子树）+ 沿先修向上追溯到顶端（先修链）
+  // 单击高亮集合：直接相连（含一级后继子树）+ 沿先修向上追溯到顶端（完整先修链）
   function computeHighlightSet(id) {
     const set = new Set([id]);
-    // 1) 直接相连（任意关系）
+    // 1) 直接相连（任意关系；先修后继即为一级子树，先修前驱即先修链第一站）
     (adj[id] || new Set()).forEach(x => set.add(x));
-    // 2) 向下一级：后继的后继
-    (prereqChildren[id] || new Set()).forEach(c =>
-      (prereqChildren[c] || new Set()).forEach(g => set.add(g)));
-    // 3) 向上追溯：先修的先修……直到无先修（如追溯到 高等数学）
+    // 2) 向上追溯：先修的先修……直到无先修（如追溯到 高等数学）
     // 注意：用独立的 visited 记录遍历进度——直接相连的祖先已在 set 中，
     // 但仍需继续向上扩展它们的先修。
     const stack = [...(prereqParents[id] || new Set())];
@@ -515,7 +512,7 @@ window.KTApp = (() => {
       try { Graph2.resumeAnimation(); } catch (e) { /* ignore */ }
       showEgo2D(state.selected);
       dom.hint2d.textContent =
-        `以「${nodeMap[state.selected].name}」为中心 · 单击高亮先修链与子树 · 双击切换中心 · 空白返回全局`;
+        `以「${nodeMap[state.selected].name}」为中心 · 单击高亮先修链与一级后继 · 双击切换中心 · 空白返回全局`;
     }
   }
 
@@ -566,7 +563,7 @@ window.KTApp = (() => {
     dom.legend.innerHTML = `
       <div class="lg-title">领域（点击切换显示 / 隐藏）</div>
       ${items}
-      <div class="lg-tip">节点间距越小、关系越紧密；云团表示领域区域。单击节点高亮其先修链与后继子树，双击进入节点。</div>`;
+      <div class="lg-tip">节点间距越小、关系越紧密；云团表示领域区域。单击节点高亮其完整先修链与一级后继子树，双击进入节点。</div>`;
     $$('.lg-item', dom.legend).forEach(el => {
       el.addEventListener('click', () => {
         const did = el.getAttribute('data-domain');
