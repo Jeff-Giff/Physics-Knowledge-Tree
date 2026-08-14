@@ -4,9 +4,16 @@
 中文物理知识树 —— 构建脚本
 职责：
   1. 扫描 content/**/*.md，解析 YAML front-matter 与 markdown 正文
-  2. 校验：id 唯一性、链接目标存在性、领域定义、weight 越界、[[wiki]] 引用等
-  3. 计算节点体积、连接可视化剪枝（max_visual_degree）、上位替代关系
+  2. 校验：id 唯一性、链接目标存在性、领域定义、关系类型、[[wiki]] 引用等
+  3. 计算节点体积、连接可视化剪枝（max_visual_degree）
   4. 生成 site/data/graph.js（浏览器直接可用的图数据 + 搜索索引）
+
+关系模型（二元关系，无权重等级）：
+  links:
+    - {id: calculus, type: prereq,  note: ...}   # calculus 是本节点的先修（有方向）
+    - {id: wave-mechanics, type: related}        # 相关（无方向）
+  type 仅取 prereq / related 两种。
+
 用法：
   python build.py            # 正常构建
   python build.py --quiet    # 仅输出错误与警告
@@ -33,6 +40,14 @@ LOGS_DIR = os.path.join(ROOT, "logs")
 BUILD_LOG = os.path.join(LOGS_DIR, "build.log")
 
 WIKI_RE = re.compile(r"\[\[([a-z0-9][a-z0-9-]*)(?:\|([^\]\n]+))?\]\]")
+
+# 合法关系类型
+REL_PREREQ = "prereq"    # 先修（有方向：本节点 → 目标 = 目标是本节点的先修）
+REL_RELATED = "related"  # 相关（无方向）
+REL_TYPES = (REL_PREREQ, REL_RELATED)
+
+# 已废弃的旧格式字段（用于给出明确的迁移提示）
+DEPRECATED_FIELDS = ("superseded_by", "supersedes")
 
 
 def wiki_ids(text):
@@ -141,7 +156,15 @@ def main():
                 },
             )
 
-        # 规范化 links
+        # 已废弃字段提示
+        for dep in DEPRECATED_FIELDS:
+            if fm.get(dep):
+                warn(
+                    f"[{rel}] 字段 '{dep}' 已废弃（上位替代关系已移除），已忽略。"
+                    f"如需保留该语义，请改写为 links 中的 type: prereq / related 条目"
+                )
+
+        # 规范化 links（二元关系：type = prereq / related）
         links = []
         for lk in fm.get("links", []) or []:
             if not isinstance(lk, dict):
@@ -151,30 +174,26 @@ def main():
             if not lid:
                 warn(f"[{rel}] links 中存在缺少 id 的条目，跳过")
                 continue
-            try:
-                w = int(lk.get("weight", 3))
-            except (TypeError, ValueError):
-                w = 3
-            if not (1 <= w <= 5):
-                warn(f"[{rel}] -> {lid} weight={w} 越界(1~5)，已截断")
-                w = max(1, min(5, w))
+            ltype = str(lk.get("type", "")).strip()
+            if ltype not in REL_TYPES:
+                if "weight" in lk:
+                    warn(
+                        f"[{rel}] -> {lid} 仍为旧格式（weight 等级已移除），已忽略。"
+                        f"请改为 type: prereq 或 type: related"
+                    )
+                else:
+                    warn(
+                        f"[{rel}] -> {lid} 缺少合法的 type"
+                        f"（应为 {' / '.join(REL_TYPES)}），已忽略"
+                    )
+                continue
             links.append(
                 {
                     "id": lid,
-                    "weight": w,
+                    "type": ltype,
                     "note": str(lk.get("note", "")).strip(),
                 }
             )
-
-        # 规范化 superseded_by / supersedes
-        def norm_ids(field):
-            vals = fm.get(field, []) or []
-            if isinstance(vals, str):
-                vals = [vals]
-            return [str(v).strip() for v in vals if str(v).strip()]
-
-        superseded_by = norm_ids("superseded_by")
-        supersedes = norm_ids("supersedes")
 
         aliases = [
             str(a).strip() for a in (fm.get("aliases", []) or []) if str(a).strip()
@@ -201,8 +220,6 @@ def main():
             "fixed": fixed,
             "size_override": size,
             "links": links,
-            "superseded_by": superseded_by,
-            "supersedes": supersedes,
             "body": body.strip(),
             "wiki_refs": wiki_ids(body),
             "file": rel,
@@ -218,18 +235,17 @@ def main():
             print("  [错误]", e)
         sys.exit(1)
 
-    # ---- 校验 wiki 引用与 superseded 目标 ----
+    # ---- 校验 wiki 引用 ----
     for nid in order:
         node = nodes_by_id[nid]
         for ref in node["wiki_refs"]:
             if ref not in nodes_by_id:
                 warn(f"[{node['file']}] [[{ref}]] 引用了不存在的节点")
-        for tid in node["superseded_by"] + node["supersedes"]:
-            if tid not in nodes_by_id:
-                warn(f"[{node['file']}] 上位/下位关系指向不存在的节点 '{tid}'")
 
-    # ---- 构建无向边 ----
-    edges = {}  # (a,b) sorted -> dict
+    # ---- 构建边 ----
+    # edges: key = tuple(sorted((a,b))) ->
+    #   {"type": 'prereq'|'related', "dir": (后继,先修) 或 None, "notes": {}}
+    edges = {}
     for nid in order:
         node = nodes_by_id[nid]
         for lk in node["links"]:
@@ -241,62 +257,58 @@ def main():
                 warn(f"[{node['file']}] link 指向自身 '{nid}'，已忽略")
                 continue
             key = tuple(sorted((nid, tid)))
-            e = edges.setdefault(key, {"weight": 0, "notes": {}, "supersede": False})
-            if lk["weight"] > e["weight"]:
-                e["weight"] = lk["weight"]
+            e = edges.setdefault(key, {"type": None, "dir": None, "notes": {}})
+
+            if lk["type"] == REL_PREREQ:
+                # nid 声明 tid 是自己的先修：方向 后继(nid) -> 先修(tid)
+                if e["type"] == REL_PREREQ and e["dir"] and e["dir"] != (nid, tid):
+                    warn(
+                        f"'{nid}' 与 '{tid}' 互相声明对方为先修（循环先修），"
+                        f"保留先声明的方向 {e['dir'][0]} -> {e['dir'][1]}"
+                    )
+                elif e["type"] == REL_RELATED:
+                    warn(
+                        f"'{nid}' 与 '{tid}' 的关系声明不一致（prereq / related），"
+                        f"已按 prereq 处理"
+                    )
+                    e["type"] = REL_PREREQ
+                    e["dir"] = (nid, tid)
+                elif e["type"] is None:
+                    e["type"] = REL_PREREQ
+                    e["dir"] = (nid, tid)
+            else:  # related
+                if e["type"] is None:
+                    e["type"] = REL_RELATED
+                elif e["type"] == REL_PREREQ:
+                    warn(
+                        f"'{nid}' 与 '{tid}' 的关系声明不一致（prereq / related），"
+                        f"已按 prereq 处理"
+                    )
             if lk["note"]:
-                e["notes"].setdefault(tid if tid == nid else nid, lk["note"])
-
-    # 上位替代边（新→旧 与 旧→新 双向写入，以旧→新为准）
-    supersede_edges = {}
-    for nid in order:
-        node = nodes_by_id[nid]
-        for tid in node["superseded_by"]:
-            if tid not in nodes_by_id:
-                continue
-            key = tuple(sorted((nid, tid)))
-            supersede_edges[key] = (nid, tid)  # source=被替代者, target=上位版本
-        for tid in node["supersedes"]:
-            if tid not in nodes_by_id:
-                continue
-            key = tuple(sorted((nid, tid)))
-            supersede_edges[key] = (tid, nid)
-
-    # 普通边若同时是 supersede 边，标记为 supersede
-    for key in supersede_edges:
-        if key in edges:
-            edges[key]["supersede"] = True
+                e["notes"].setdefault(nid, lk["note"])
 
     # ---- 可视化剪枝（度数管理）----
-    # 每个节点：按 weight 排序其邻居，取 top-N 作为该节点的"可视邻域"
+    # 每个节点：先修关系优先，其余按 id 排序，取 top-N 作为该节点的"可视邻域"
     visual_sets = {nid: set() for nid in order}
     for nid in order:
-        node = nodes_by_id[nid]
         neighbors = []
         for (a, b), e in edges.items():
+            other = None
             if a == nid:
-                neighbors.append((b, e["weight"]))
+                other = b
             elif b == nid:
-                neighbors.append((a, e["weight"]))
-        neighbors.sort(key=lambda t: -t[1])
-        for tid, _ in neighbors[:max_visual_degree]:
+                other = a
+            if other is None:
+                continue
+            prio = 0 if e["type"] == REL_PREREQ else 1
+            neighbors.append((prio, other))
+        neighbors.sort(key=lambda t: (t[0], t[1]))
+        for _, tid in neighbors[:max_visual_degree]:
             visual_sets[nid].add(tid)
 
     edge_visual = {}
-    for (a, b), e in edges.items():
-        visual = (a in visual_sets[b]) or (b in visual_sets[a])
-        edge_visual[(a, b)] = visual
-
-    # ---- 节点体积（重要度）----
-    # 依据：连接数 + 被引用数 + 作为上位版本被引用数
-    ref_count = {nid: 0 for nid in order}
-    superseded_to_count = {nid: 0 for nid in order}
-    for (a, b), e in edges.items():
-        if not e["supersede"]:
-            ref_count[a] += 1
-            ref_count[b] += 1
-    for old, new in supersede_edges.values():
-        superseded_to_count[new] += 1
+    for (a, b) in edges:
+        edge_visual[(a, b)] = (a in visual_sets[b]) or (b in visual_sets[a])
 
     # ---- 组装输出 ----
     out_nodes = []
@@ -304,34 +316,36 @@ def main():
         node = nodes_by_id[nid]
         domain = domains[node["domain"]]
 
-        # 邻居列表（可视 + 软连接），全部排序
+        # 邻居列表（可视 + 软连接）：先修在前、相关在后
         neigh = []
         for (a, b), e in edges.items():
             other = b if a == nid else (a if b == nid else None)
             if other is None:
                 continue
+            if e["type"] == REL_PREREQ:
+                # dir = (后继, 先修)；对本节点而言 out=目标是先修，in=目标是后续
+                direction = "out" if e["dir"][0] == nid else "in"
+            else:
+                direction = None
             neigh.append(
                 {
                     "id": other,
-                    "weight": e["weight"],
-                    "supersede": e["supersede"],
+                    "type": e["type"],
+                    "dir": direction,
                     "note": e["notes"].get(nid, e["notes"].get(other, "")),
                     "visual": edge_visual[(a, b)],
                 }
             )
-        neigh.sort(key=lambda t: (-t["weight"], t["id"]))
+        neigh.sort(key=lambda t: (0 if t["type"] == REL_PREREQ else 1, t["id"]))
 
-        links_out = [x for x in neigh if x["visual"] and not x["supersede"]]
-        soft_out = [x for x in neigh if not x["visual"] and not x["supersede"]]
-        supersede_out = [x for x in neigh if x["supersede"]]
+        links_out = [x for x in neigh if x["visual"]]
+        soft_out = [x for x in neigh if not x["visual"]]
 
         degree = len(neigh)
         if node["size_override"] is not None:
             size = float(node["size_override"])
         else:
-            size = round(
-                18 + 6 * degree + 4 * ref_count[nid] + 10 * superseded_to_count[nid], 1
-            )
+            size = round(18 + 10 * degree, 1)
 
         out_nodes.append(
             {
@@ -349,21 +363,12 @@ def main():
                 "pos": node["pos"],
                 "fixed": node["fixed"],
                 "body": node["body"],
-                "supersededBy": [
-                    {"id": t, "name": nodes_by_id[t]["name"]}
-                    for t in node["superseded_by"]
-                    if t in nodes_by_id
-                ],
-                "supersedes": [
-                    {"id": t, "name": nodes_by_id[t]["name"]}
-                    for t in node["supersedes"]
-                    if t in nodes_by_id
-                ],
                 "links": [
                     {
                         "id": x["id"],
                         "name": nodes_by_id[x["id"]]["name"],
-                        "weight": x["weight"],
+                        "type": x["type"],
+                        "dir": x["dir"],
                         "note": x["note"],
                     }
                     for x in links_out
@@ -372,36 +377,28 @@ def main():
                     {
                         "id": x["id"],
                         "name": nodes_by_id[x["id"]]["name"],
-                        "weight": x["weight"],
+                        "type": x["type"],
+                        "dir": x["dir"],
                         "note": x["note"],
                     }
                     for x in soft_out
-                ],
-                "supersedeLinks": [
-                    {
-                        "id": x["id"],
-                        "name": nodes_by_id[x["id"]]["name"],
-                        "weight": x["weight"],
-                        "note": x["note"],
-                    }
-                    for x in supersede_out
                 ],
             }
         )
 
     out_links = []
     for (a, b), e in edges.items():
-        # 普通边：无向；supersede 边：有向（source=被替代, target=上位）
-        if e["supersede"]:
-            src, tgt = supersede_edges[(a, b)]
+        # related：无向；prereq：有向（source=先修节点, target=后继节点）
+        # 箭头按"知识流向"渲染：由先修指向后继（如 高等数学 → 力学 → 理论力学）
+        if e["type"] == REL_PREREQ:
+            tgt, src = e["dir"]  # dir = (后继, 先修)
         else:
             src, tgt = a, b
         out_links.append(
             {
                 "source": src,
                 "target": tgt,
-                "weight": e["weight"],
-                "supersede": e["supersede"],
+                "type": e["type"],
                 "soft": not edge_visual[(a, b)],
                 "notes": list(e["notes"].values()),
             }
@@ -433,7 +430,7 @@ def main():
                 for k, v in domains.items()
             },
             "max_visual_degree": max_visual_degree,
-            "link_weight_semantics": meta.get("link_weight_semantics", {}),
+            "relation_semantics": meta.get("relation_semantics", {}),
         },
         "nodes": out_nodes,
         "links": out_links,
@@ -453,16 +450,17 @@ def main():
     # ---- 输出统计与警告 ----
     n_visual = sum(1 for l in out_links if not l["soft"])
     n_soft = sum(1 for l in out_links if l["soft"])
-    n_sup = sum(1 for l in out_links if l["supersede"])
+    n_prereq = sum(1 for l in out_links if l["type"] == REL_PREREQ)
+    n_related = sum(1 for l in out_links if l["type"] == REL_RELATED)
 
     lines = []
     lines.append("=" * 60)
     lines.append(f"构建完成  {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     lines.append(f"  节点数      : {len(out_nodes)}")
     lines.append(
-        f"  边数(普通)  : {n_visual + n_soft}（可视 {n_visual} / 软连接 {n_soft}）"
+        f"  边数        : {len(out_links)}（先修 {n_prereq} / 相关 {n_related}；"
+        f"可视 {n_visual} / 软连接 {n_soft}）"
     )
-    lines.append(f"  上位替代边  : {n_sup}")
     lines.append(f"  输出文件    : {os.path.relpath(OUT_FILE, ROOT)}")
     if warnings:
         lines.append(f"  警告数      : {len(warnings)}")

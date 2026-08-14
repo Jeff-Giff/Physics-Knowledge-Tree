@@ -30,6 +30,7 @@ window.KTApp = (() => {
     labelFontSize: typeof saved.labelFontSize === 'number' ? saved.labelFontSize : 15,
     spacing: typeof saved.spacing === 'number' ? saved.spacing : 1,
     highlightId: null,                      // 单击高亮的节点 id
+    highlightSet: null,                     // 单击高亮的节点集合（相连 + 先修链与子树）
     lastClick: { id: null, time: 0 },       // 双击判定
   };
 
@@ -59,16 +60,46 @@ window.KTApp = (() => {
   }
   function buildLinks() {
     return GRAPH.links.map(l => ({
-      source: l.source, target: l.target, weight: l.weight,
-      supersede: !!l.supersede, soft: !!l.soft,
+      source: l.source, target: l.target,
+      type: l.type || 'related', soft: !!l.soft,
     }));
   }
 
   const adj = {};
+  // 先修关系的有向邻接（数据方向：source=先修, target=后继）
+  const prereqChildren = {};  // 先修节点 -> 后继节点集合（向下）
+  const prereqParents = {};   // 后继节点 -> 先修节点集合（向上）
   GRAPH.links.forEach(l => {
     (adj[l.source] = adj[l.source] || new Set()).add(l.target);
     (adj[l.target] = adj[l.target] || new Set()).add(l.source);
+    if (l.type === 'prereq') {
+      (prereqChildren[l.source] = prereqChildren[l.source] || new Set()).add(l.target);
+      (prereqParents[l.target] = prereqParents[l.target] || new Set()).add(l.source);
+    }
   });
+
+  // 单击高亮集合：直接相连 + 沿先修向下一级（子树）+ 沿先修向上追溯到顶端（先修链）
+  function computeHighlightSet(id) {
+    const set = new Set([id]);
+    // 1) 直接相连（任意关系）
+    (adj[id] || new Set()).forEach(x => set.add(x));
+    // 2) 向下一级：后继的后继
+    (prereqChildren[id] || new Set()).forEach(c =>
+      (prereqChildren[c] || new Set()).forEach(g => set.add(g)));
+    // 3) 向上追溯：先修的先修……直到无先修（如追溯到 高等数学）
+    // 注意：用独立的 visited 记录遍历进度——直接相连的祖先已在 set 中，
+    // 但仍需继续向上扩展它们的先修。
+    const stack = [...(prereqParents[id] || new Set())];
+    const visited = new Set();
+    while (stack.length) {
+      const x = stack.pop();
+      if (visited.has(x)) continue;
+      visited.add(x);
+      set.add(x);
+      (prereqParents[x] || new Set()).forEach(p => stack.push(p));
+    }
+    return set;
+  }
 
   const isDomainVisible = d => !state.hiddenDomains.has(d);
 
@@ -131,9 +162,7 @@ window.KTApp = (() => {
 
   function isHighlightedNode(nodeId) {
     if (!state.highlightId) return true;
-    if (nodeId === state.highlightId) return true;
-    const nbrs = adj[state.highlightId];
-    return !!(nbrs && nbrs.has(nodeId));
+    return state.highlightSet ? state.highlightSet.has(nodeId) : true;
   }
 
   function makeNodeObject(node) {
@@ -270,19 +299,18 @@ window.KTApp = (() => {
   }
 
   function emphasis(l) {
-    const f = state.highlightId;
-    if (!f) return 1;
+    if (!state.highlightId || !state.highlightSet) return 1;
     const a = l.source.id, b = l.target.id;
-    return (a === f || b === f) ? 1 : 0.22;
+    return (state.highlightSet.has(a) && state.highlightSet.has(b)) ? 1 : 0.22;
   }
 
   function linkColor3D(l) {
-    if (l.supersede) return emphasis(l) < 0.5 ? 'rgba(163,113,247,0.28)' : '#a371f7';
+    if (l.type === 'prereq') return emphasis(l) < 0.5 ? 'rgba(88,166,255,0.28)' : '#58a6ff';
     const em = emphasis(l);
     return `rgba(139,152,165,${(0.14 + 0.55 * em).toFixed(2)})`;
   }
   function linkWidth3D(l) {
-    const base = l.supersede ? 1.3 : (0.3 + l.weight * 0.28);
+    const base = l.type === 'prereq' ? 1.3 : 0.9;
     return base * (0.45 + 0.55 * emphasis(l));
   }
 
@@ -300,18 +328,18 @@ window.KTApp = (() => {
       .linkColor(linkColor3D)
       .linkWidth(linkWidth3D)
       .linkVisibility(l => isDomainVisible(l.source.domain) && isDomainVisible(l.target.domain))
-      .linkDirectionalParticles(l => (l.supersede ? 2 : 0))
+      .linkDirectionalParticles(l => (l.type === 'prereq' ? 2 : 0))
       .linkDirectionalParticleWidth(2)
-      .linkDirectionalParticleSpeed(l => (l.supersede ? 0.004 : 0))
-      .linkDirectionalArrowLength(l => (l.supersede ? 4.5 : 0))
+      .linkDirectionalParticleSpeed(l => (l.type === 'prereq' ? 0.004 : 0))
+      .linkDirectionalArrowLength(l => (l.type === 'prereq' ? 4.5 : 0))
       .linkDirectionalArrowRelPos(0.85)
       .onNodeClick(n => onNodeClicked(n.id))
       .onBackgroundClick(() => { if (state.mode === '3d') deselectAll(); })
       .graphData({ nodes: buildNodes(), links: buildLinks() });
 
-    // 力配置：权重越大距离越近
+    // 力配置：先修边更近，相关边稍远
     Graph3D.d3Force('link')
-      .distance(l => l.supersede ? 34 : (18 + (5 - l.weight) * 16))
+      .distance(l => l.type === 'prereq' ? 34 : 56)
       .strength(l => (l.soft ? 0 : 1));
     Graph3D.d3Force('charge').strength(n => -38 - n.size * 0.5);
     Graph3D.d3Force('center').x(0).y(0).z(0);
@@ -343,9 +371,7 @@ window.KTApp = (() => {
 
   function isHighlighted2D(n) {
     if (!state.highlightId) return true;
-    if (n.id === state.highlightId) return true;
-    const nbrs = adj[state.highlightId];
-    return !!(nbrs && nbrs.has(n.id));
+    return state.highlightSet ? state.highlightSet.has(n.id) : true;
   }
 
   function draw2DNode(n, ctx, gs) {
@@ -392,10 +418,9 @@ window.KTApp = (() => {
   }
 
   function linkEmphasis2D(l) {
-    const f = state.highlightId;
-    if (!f) return 1;
+    if (!state.highlightId || !state.highlightSet) return 1;
     const a = l.source.id, b = l.target.id;
-    return (a === f || b === f) ? 1 : 0.2;
+    return (state.highlightSet.has(a) && state.highlightSet.has(b)) ? 1 : 0.2;
   }
 
   function initGraph2() {
@@ -406,15 +431,15 @@ window.KTApp = (() => {
       .nodeLabel(node => nodeLabelHTML(node))
       .linkColor(l => {
         const em = linkEmphasis2D(l);
-        if (l.supersede) return em < 0.5 ? 'rgba(163,113,247,0.25)' : '#a371f7';
+        if (l.type === 'prereq') return em < 0.5 ? 'rgba(88,166,255,0.25)' : '#58a6ff';
         const a = (l.soft ? 0.3 : 0.8) * (0.25 + 0.75 * em);
         return `rgba(139,152,165,${a.toFixed(2)})`;
       })
-      .linkWidth(l => (l.supersede ? 2 : 0.5 + l.weight * 0.4) * (l.soft ? 0.6 : 1) * (0.4 + 0.6 * linkEmphasis2D(l)))
-      .linkLineDash(l => ((l.soft || l.supersede) ? [4, 4] : null))
-      .linkDirectionalParticles(l => (l.supersede ? 2 : 0))
+      .linkWidth(l => (l.type === 'prereq' ? 1.8 : 1.1) * (l.soft ? 0.6 : 1) * (0.4 + 0.6 * linkEmphasis2D(l)))
+      .linkLineDash(l => (l.soft ? [4, 4] : null))
+      .linkDirectionalParticles(l => (l.type === 'prereq' ? 2 : 0))
       .linkDirectionalParticleWidth(2)
-      .linkDirectionalParticleSpeed(l => (l.supersede ? 0.006 : 0))
+      .linkDirectionalParticleSpeed(l => (l.type === 'prereq' ? 0.006 : 0))
       .onNodeClick(n => onNodeClicked(n.id))
       .onBackgroundClick(() => { if (state.mode === '2d') backToGlobal(); })
       .enableNodeDrag(true)
@@ -426,7 +451,7 @@ window.KTApp = (() => {
   }
 
   function linkDistance2D(l) {
-    const base = l.supersede ? 70 : (l.soft ? 140 : (44 + (5 - l.weight) * 26));
+    const base = l.type === 'prereq' ? 80 : (l.soft ? 150 : 120);
     return base * (state.spacing || 1);
   }
 
@@ -436,7 +461,6 @@ window.KTApp = (() => {
     const ids = new Set([id]);
     const strongIds = new Set([id]);
     (node.links || []).forEach(l => { ids.add(l.id); strongIds.add(l.id); });
-    (node.supersedeLinks || []).forEach(l => { ids.add(l.id); strongIds.add(l.id); });
     (node.softLinks || []).forEach(l => ids.add(l.id));
 
     const nodes = GRAPH.nodes.filter(n => ids.has(n.id)).map(n => ({
@@ -446,7 +470,7 @@ window.KTApp = (() => {
       val: 1,
     }));
     const links = GRAPH.links.filter(l => ids.has(l.source) && ids.has(l.target))
-      .map(l => ({ source: l.source, target: l.target, weight: l.weight, supersede: !!l.supersede, soft: !!l.soft }));
+      .map(l => ({ source: l.source, target: l.target, type: l.type || 'related', soft: !!l.soft }));
 
     Graph2.graphData({ nodes, links });
     Graph2.graphData().nodes.forEach(n => {
@@ -488,7 +512,7 @@ window.KTApp = (() => {
       try { Graph2.resumeAnimation(); } catch (e) { /* ignore */ }
       showEgo2D(state.selected);
       dom.hint2d.textContent =
-        `以「${nodeMap[state.selected].name}」为中心 · 单击高亮相连节点 · 双击切换中心 · 空白返回全局`;
+        `以「${nodeMap[state.selected].name}」为中心 · 单击高亮先修链与子树 · 双击切换中心 · 空白返回全局`;
     }
   }
 
@@ -500,6 +524,7 @@ window.KTApp = (() => {
     } else {
       state.lastClick = { id: id, time: now };
       state.highlightId = id;
+      state.highlightSet = computeHighlightSet(id);
       if (state.mode === '3d') Graph3D.refresh();
     }
   }
@@ -507,6 +532,7 @@ window.KTApp = (() => {
   function selectNode(id, source) {
     state.selected = id;
     state.highlightId = null;
+    state.highlightSet = null;
     KTDetail.render(id);
     setMode('2d');
     if (window.KTTree) KTTree.onEntered(id, source || 'click');
@@ -515,6 +541,7 @@ window.KTApp = (() => {
   function deselectAll() {
     state.selected = null;
     state.highlightId = null;
+    state.highlightSet = null;
     KTDetail.close();
     setMode('3d');
   }
@@ -536,7 +563,7 @@ window.KTApp = (() => {
     dom.legend.innerHTML = `
       <div class="lg-title">领域（点击切换显示 / 隐藏）</div>
       ${items}
-      <div class="lg-tip">节点间距越小、关系越紧密；云团表示领域区域。单击节点高亮相邻节点，双击进入节点。</div>`;
+      <div class="lg-tip">节点间距越小、关系越紧密；云团表示领域区域。单击节点高亮其先修链与后继子树，双击进入节点。</div>`;
     $$('.lg-item', dom.legend).forEach(el => {
       el.addEventListener('click', () => {
         const did = el.getAttribute('data-domain');
@@ -592,9 +619,9 @@ window.KTApp = (() => {
     });
 
     const nNodes = GRAPH.nodes.length;
-    const nLinks = GRAPH.links.filter(l => !l.supersede).length;
-    const nSup = GRAPH.links.filter(l => l.supersede).length;
-    dom.stat.textContent = `节点 ${nNodes} · 连接 ${nLinks} · 上位替代 ${nSup}`;
+    const nPrereq = GRAPH.links.filter(l => l.type === 'prereq').length;
+    const nRelated = GRAPH.links.filter(l => l.type !== 'prereq').length;
+    dom.stat.textContent = `节点 ${nNodes} · 先修 ${nPrereq} · 相关 ${nRelated}`;
 
     dom.loading.classList.add('fade');
     setTimeout(() => dom.loading.remove(), 700);

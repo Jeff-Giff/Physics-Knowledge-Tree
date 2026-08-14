@@ -23,7 +23,6 @@
       <button id="btn-global" class="btn active">3D 全局</button>
       <button id="btn-labels" class="btn active">标签</button>
       <button id="btn-tree" class="btn">学习树</button>
-      <button id="btn-challenge" class="btn">挑战模式</button>
       <label class="ctl">字号<input id="font-slider" type="range" min="10" max="50" step="1" value="15"></label>
       <label class="ctl hidden" id="spacing-ctl">间距<input id="spacing-slider" type="range" min="50" max="300" step="5" value="100"></label>
       <button id="btn-reset" class="btn hidden">重置布局</button>
@@ -73,81 +72,6 @@
     <div id="detail-scroll"></div>
   </div>
 
-  <!-- 挑战模式覆盖层 -->
-  <div id="challenge" class="hidden">
-    <div id="ch-start">
-      <div class="ch-panel">
-        <h2>挑战模式 · 搭建物理知识框架</h2>
-        <p class="ch-desc">从各领域的核心节点开始，每轮出现若干"子节点"（仅显示名称）。请把它们挂到正确的父节点上；挂对即可推进，全部挂完即完成。</p>
-        <div class="ch-row">
-          <label>每轮子节点数
-            <select id="ch-n">
-              <option value="3">3</option>
-              <option value="5" selected>5</option>
-              <option value="8">8</option>
-              <option value="10">10</option>
-            </select>
-          </label>
-        </div>
-        <div class="ch-row">
-          <label>判定难度</label>
-          <label><input type="radio" name="ch-diff" value="loose" checked> 宽松（任意关联）</label>
-          <label><input type="radio" name="ch-diff" value="strict"> 严格（仅强关联）</label>
-        </div>
-        <div class="ch-row">
-          <button id="ch-begin" class="btn">开始挑战</button>
-          <button id="ch-close" class="btn">返回</button>
-        </div>
-      </div>
-    </div>
-
-    <div id="ch-play" class="hidden">
-      <div id="ch-header">
-        <span class="ch-hd">⏱ <span id="ch-timer">0:00</span></span>
-        <span class="ch-hd">轮次 <span id="ch-round">0</span></span>
-        <span class="ch-hd">进度 <span id="ch-progress-num"></span></span>
-        <span id="ch-progress"><span id="ch-progress-fill"></span></span>
-        <button id="ch-exit" class="btn">退出</button>
-      </div>
-      <div id="ch-graph"></div>
-      <div id="ch-bottom">
-        <div id="ch-search-row">
-          <input id="ch-search" type="text" placeholder="搜索父节点（先选中子节点，再点此连接）…" autocomplete="off">
-          <div id="ch-search-res" class="hidden"></div>
-        </div>
-        <div id="ch-feedback"></div>
-        <div class="ch-panel-title">本轮子节点（点击或按数字键 1~9/0 选中 → 点击图上节点 / 搜索 / 拖拽连接）</div>
-        <div id="ch-cards"></div>
-        <button id="ch-next" class="btn hidden">下一轮 →</button>
-      </div>
-    </div>
-
-    <div id="ch-done" class="hidden">
-      <div class="ch-panel">
-        <h2>🎉 挑战完成！</h2>
-        <p>总用时：<b id="ch-done-time"></b></p>
-        <p>总轮次：<b id="ch-done-rounds"></b></p>
-        <p>总错误：<b id="ch-done-errors"></b></p>
-        <p>正确率：<b id="ch-done-acc"></b></p>
-        <div class="ch-row">
-          <button id="ch-restart" class="btn">再来一次</button>
-          <button id="ch-done-close" class="btn">关闭</button>
-        </div>
-      </div>
-    </div>
-
-    <div id="ch-detail" class="hidden">
-      <div id="ch-detail-panel">
-        <div id="ch-detail-head">
-          <span id="ch-detail-title"></span>
-          <span id="ch-detail-domain" class="badge-domain"></span>
-          <button id="ch-detail-close" title="关闭">✕</button>
-        </div>
-        <div id="ch-detail-body"></div>
-      </div>
-    </div>
-  </div>
-
   <!-- 加载遮罩 -->
   <div id="loading">正在加载知识树…</div>
 
@@ -168,7 +92,6 @@
   <script src="js/detail.js"></script>
   <script src="js/search.js"></script>
   <script src="js/tree.js"></script>
-  <script src="js/challenge.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

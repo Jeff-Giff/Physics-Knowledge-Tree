@@ -49,14 +49,11 @@ window.KT = (() => {
     }
   }
 
-  /* 权重 → 标签 */
-  const WEIGHT_LABEL = {
-    5: '直接等价',
-    4: '强相关',
-    3: '相关',
-    2: '弱相关',
-    1: '边缘',
+  /* 关系类型 → 标签（二元关系：先修 / 相关） */
+  const REL_LABEL = {
+    prereq: '先修',
+    related: '相关',
   };
 
-  return { GRAPH, nodeMap, $, $$, esc, linkify, renderMarkdown, WEIGHT_LABEL };
+  return { GRAPH, nodeMap, $, $$, esc, linkify, renderMarkdown, REL_LABEL };
 })();

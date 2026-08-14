@@ -1,140 +1,115 @@
 # ============================================================
 # 中文物理知识树 —— 全局元数据
-# 本文件定义：站点信息、领域(domain)体系、云图参数、可视化参数
+# 本文件定义：站点信息、领域(domain)体系、云图参数、可视化参数、
+#             关系语义（先修 / 相关 二元关系）
 # 由 build.py 读取，并合并进 site/data/graph.js
 # ============================================================
 
 site:
   title: 中文物理知识树
   subtitle: Physics Knowledge Graph
-  description: 以"四大力学"为主干的物理与数学知识网络
+  description: 从本科课程到研究方向的物理知识导航网络
 
 # ------------------------------------------------------------
-# 领域体系：每个领域一块区域、一种颜色、一团半透明云
+# 领域体系：课程层 5 个子类（c- 前缀，暖色）+ 研究层 12 个类别（r- 前缀，冷色）
+# 课程层分类参考北大物理学院 / 清华物理系本科培养方案；
+# 研究层分类按 arXiv Physics 顶层类别归并。
 # color: 节点/云图主色（16 进制）
 # cloud_alpha: 云图不透明度 0~1（越小越透明，允许领域重叠）
 # cloud_r: 云图半径系数（相对节点散布大小的比例）
 # ------------------------------------------------------------
 domains:
-  mathematics:
-    name: 数学基础
-    color: "#8e9eab"
-    cloud_alpha: 0.07
+  c-math:
+    name: 数学基础（课程）
+    color: "#8d9db6"
+    cloud_alpha: 0.1
     cloud_r: 1.0
-  math-methods:
-    name: 数学物理方法
-    color: "#16a085"
-    cloud_alpha: 0.09
+  c-general:
+    name: 普通物理（课程）
+    color: "#e67e22"
+    cloud_alpha: 0.1
     cloud_r: 1.0
-  classic-mechanics:
-    name: 经典力学
-    color: "#e74c3c"
-    cloud_alpha: 0.10
-    cloud_r: 1.0
-  electrodynamics:
-    name: 电动力学
-    color: "#f39c12"
-    cloud_alpha: 0.10
-    cloud_r: 1.0
-  quantum-mechanics:
-    name: 量子力学
-    color: "#9b59b6"
-    cloud_alpha: 0.10
-    cloud_r: 1.0
-  statistical-mechanics:
-    name: 统计物理与热力学
-    color: "#2ecc71"
-    cloud_alpha: 0.10
-    cloud_r: 1.0
-  relativity:
-    name: 相对论
-    color: "#3498db"
-    cloud_alpha: 0.10
-    cloud_r: 1.0
-  quantum-field-theory:
-    name: 量子场论
-    color: "#8e44ad"
-    cloud_alpha: 0.09
-    cloud_r: 1.0
-  particle-physics:
-    name: 粒子物理
-    color: "#d35400"
-    cloud_alpha: 0.09
-    cloud_r: 1.0
-  condensed-matter:
-    name: 凝聚态物理
-    color: "#1abc9c"
-    cloud_alpha: 0.09
-    cloud_r: 1.0
-  quantum-information:
-    name: 量子信息
+  c-core:
+    name: 四大力学（课程）
     color: "#c0392b"
+    cloud_alpha: 0.11
+    cloud_r: 1.0
+  c-lab:
+    name: 实验与计算（课程）
+    color: "#f1c40f"
     cloud_alpha: 0.09
     cloud_r: 1.0
-  optics:
-    name: 光学
-    color: "#7f8c8d"
-    cloud_alpha: 0.08
+  c-elective:
+    name: 专业选修（课程）
+    color: "#d35400"
+    cloud_alpha: 0.1
     cloud_r: 1.0
-  fluid-mechanics:
-    name: 流体与声学
+  r-astro:
+    name: 天体物理与宇宙学
+    color: "#6c5ce7"
+    cloud_alpha: 0.09
+    cloud_r: 1.0
+  r-gravity:
+    name: 引力与量子引力
     color: "#2980b9"
     cloud_alpha: 0.08
     cloud_r: 1.0
-  cosmology:
-    name: 天体与宇宙学
-    color: "#6c5ce7"
+  r-hep:
+    name: 高能物理
+    color: "#e84393"
     cloud_alpha: 0.08
     cloud_r: 1.0
-  nuclear-physics:
+  r-nuclear:
     name: 核物理
-    color: "#f9ca24"
+    color: "#b33771"
+    cloud_alpha: 0.08
+    cloud_r: 1.0
+  r-condmat:
+    name: 凝聚态物理
+    color: "#16a085"
     cloud_alpha: 0.09
     cloud_r: 1.0
-  plasma-physics:
-    name: 等离子体物理
+  r-quantum:
+    name: 量子物理与量子信息
+    color: "#8e44ad"
+    cloud_alpha: 0.09
+    cloud_r: 1.0
+  r-amo:
+    name: 原子分子与光物理
     color: "#00cec9"
-    cloud_alpha: 0.09
+    cloud_alpha: 0.08
     cloud_r: 1.0
-  astrophysics:
-    name: 天体物理
-    color: "#fd79a8"
-    cloud_alpha: 0.09
-    cloud_r: 1.0
-  atomic-molecular-optics:
-    name: 原子分子光学
-    color: "#a29bfe"
-    cloud_alpha: 0.09
-    cloud_r: 1.0
-  soft-matter:
-    name: 软物质物理
+  r-plasma:
+    name: 等离子体物理
     color: "#e17055"
-    cloud_alpha: 0.09
+    cloud_alpha: 0.08
     cloud_r: 1.0
-  biophysics:
-    name: 生物物理
-    color: "#00b894"
-    cloud_alpha: 0.09
+  r-fluid:
+    name: 流体与非线性科学
+    color: "#3498db"
+    cloud_alpha: 0.08
     cloud_r: 1.0
-  geophysics:
-    name: 地球与大气物理
+  r-statphys:
+    name: 统计物理与复杂系统
+    color: "#2ecc71"
+    cloud_alpha: 0.08
+    cloud_r: 1.0
+  r-softbio:
+    name: 软物质与生物物理
+    color: "#f368e0"
+    cloud_alpha: 0.08
+    cloud_r: 1.0
+  r-earth:
+    name: 地球、大气与空间物理
     color: "#57606f"
     cloud_alpha: 0.08
-    cloud_r: 1.0
-  quantum-gravity:
-    name: 量子引力
-    color: "#74b9ff"
-    cloud_alpha: 0.09
     cloud_r: 1.0
 
 # ------------------------------------------------------------
 # 可视化参数
 # ------------------------------------------------------------
-max_visual_degree: 8     # 单节点最多可视连接数，超出部分降级为超链接/软连接
+max_visual_degree: 8     # 单节点最多可视连接数（先修关系优先保留），超出部分降级为超链接/软连接
 node_importance: 60      # 节点体积基准值（基于连接数/被引用数）
-link_weight_semantics:   # weight 标定说明
-  5: "几乎等价/直接可推导（如牛顿力学与拉格朗日力学）"
-  4: "强关联，一个的掌握直接依赖另一个"
-  3: "相关，共享部分概念或方法"
-  2: "弱相关，仅偶尔交叉"
-  1: "边缘联系，提供背景视角"
+relation_semantics:      # 二元关系语义说明（links 条目的 type 字段）
+  prereq: "先修：学习本节点之前应先掌握目标节点（有方向，图上渲染为带箭头的连线）"
+  related: "相关：共享概念或方法、可相互参照（无方向，图上渲染为普通连线）"

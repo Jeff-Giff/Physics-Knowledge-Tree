@@ -20,23 +20,24 @@ window.KTTree = (() => {
   let forestData = { trees: [] };
   let currentId = null;
 
-  // 邻接与边权（含上位替代边）
+  // 邻接与关系类型（先修 prereq / 相关 related）
   const adj = {};
-  const edgeWeight = {};
+  const edgeType = {};
   GRAPH.links.forEach(l => {
     const a = l.source, b = l.target;
     (adj[a] = adj[a] || new Set()).add(b);
     (adj[b] = adj[b] || new Set()).add(a);
     const key = a < b ? a + '|' + b : b + '|' + a;
-    edgeWeight[key] = Math.max(edgeWeight[key] || 0, l.weight || 3);
+    // 同一对节点只保留一种关系；先修优先于相关
+    if (edgeType[key] !== 'prereq') edgeType[key] = l.type === 'prereq' ? 'prereq' : 'related';
   });
 
   function classify(a, b) {
     if (a === b) return 'strong';
     const key = a < b ? a + '|' + b : b + '|' + a;
-    const w = edgeWeight[key] || 0;
-    if (w >= 4) return 'strong';
-    if (w >= 1) return 'weak';
+    const t = edgeType[key];
+    if (t === 'prereq') return 'strong';
+    if (t === 'related') return 'weak';
     const na = adj[a] || new Set(), nb = adj[b] || new Set();
     for (const x of na) if (nb.has(x)) return 'weak';
     return 'none';

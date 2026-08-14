@@ -5,7 +5,7 @@
 
 window.KTDetail = (() => {
   const KT = window.KT;
-  const { GRAPH, nodeMap, $, $$, esc, renderMarkdown, WEIGHT_LABEL } = KT;
+  const { GRAPH, nodeMap, $, $$, esc, renderMarkdown, REL_LABEL } = KT;
 
   const drawer = $('#detail');
   const head = $('#detail-head');
@@ -29,41 +29,41 @@ window.KTDetail = (() => {
     // ---- 滚动区 ----
     let html = '';
 
-    // 上位替代横幅
-    if (n.supersededBy && n.supersededBy.length) {
-      html += `<div class="sec-superseded"><div class="lbl">上位替代 / 更普适理论</div>`;
-      n.supersededBy.forEach(s => {
-        html += `<p>本理论在更一般的情形下被 <a href="javascript:void(0)" class="jump-link" data-jump="${esc(s.id)}">「${esc(s.name)}」</a> 所替代或涵盖，是其特例/极限。点击可跳转查看。</p>`;
-      });
-      html += `</div>`;
-    }
-
-    // 被本节点替代
-    if (n.supersedes && n.supersedes.length) {
-      html += `<div class="sec-superseded" style="border-color:rgba(88,166,255,0.35);background:rgba(88,166,255,0.06)">
-        <div class="lbl" style="color:var(--accent)">本节点是更上位理论，替代了：</div>`;
-      n.supersedes.forEach(s => {
-        html += `<p><a href="javascript:void(0)" class="jump-link" data-jump="${esc(s.id)}">「${esc(s.name)}」</a></p>`;
-      });
-      html += `</div>`;
-    }
-
     // 正文
     html += `<div class="sec-body" id="body-md"></div>`;
 
-    // 相关知识
+    // 连线（二元关系：先修 / 相关），先修在前
     const links = n.links || [];
-    if (links.length) {
-      html += `<div class="sec-links"><div class="lbl">直接相关的知识点（按紧密程度排序）</div>`;
-      links.forEach(l => {
-        const wl = WEIGHT_LABEL[l.weight] || '';
-        html += `<div class="link-card" data-jump="${esc(l.id)}">
-          <span class="nm">${esc(l.name)}</span>
-          <span class="wtag">${l.weight} · ${esc(wl)}</span>
-          <span class="arrow">→</span>
-        </div>
-        ${l.note ? `<div class="link-card-note">${esc(l.note)}</div>` : ''}`;
-      });
+    const prereqOut = links.filter(l => l.type === 'prereq' && l.dir === 'out');
+    const prereqIn = links.filter(l => l.type === 'prereq' && l.dir === 'in');
+    const related = links.filter(l => l.type === 'related');
+
+    const card = (l, tag, arrow) =>
+      `<div class="link-card ${l.type === 'prereq' ? 'prereq' : ''}" data-jump="${esc(l.id)}">
+        <span class="nm">${esc(l.name)}</span>
+        <span class="wtag ${l.type === 'related' ? 'rel' : ''}">${esc(tag)}</span>
+        <span class="arrow">${arrow}</span>
+      </div>
+      ${l.note ? `<div class="link-card-note">${esc(l.note)}</div>` : ''}`;
+
+    // 先修：学习本节点前应先掌握
+    if (prereqOut.length) {
+      html += `<div class="sec-links"><div class="lbl">先修知识（学习本节点前建议掌握）</div>`;
+      prereqOut.forEach(l => { html += card(l, REL_LABEL.prereq, '→'); });
+      html += `</div>`;
+    }
+
+    // 后续：以本节点为先修的节点
+    if (prereqIn.length) {
+      html += `<div class="sec-links"><div class="lbl">后续知识（以本节点为先修）</div>`;
+      prereqIn.forEach(l => { html += card(l, '后续', '←'); });
+      html += `</div>`;
+    }
+
+    // 相关
+    if (related.length) {
+      html += `<div class="sec-links"><div class="lbl">相关知识点</div>`;
+      related.forEach(l => { html += card(l, REL_LABEL.related, '→'); });
       html += `</div>`;
     }
 
@@ -72,24 +72,11 @@ window.KTDetail = (() => {
     if (soft.length) {
       html += `<div class="sec-links"><div class="lbl">更远的关联（图中未直接连线）</div>`;
       soft.forEach(l => {
-        html += `<div class="link-card soft" data-jump="${esc(l.id)}">
+        const tag = l.type === 'prereq' ? (l.dir === 'in' ? '后续' : REL_LABEL.prereq) : REL_LABEL.related;
+        html += `<div class="link-card soft ${l.type === 'prereq' ? 'prereq' : ''}" data-jump="${esc(l.id)}">
           <span class="nm">${esc(l.name)}</span>
-          <span class="wtag">${l.weight}</span>
+          <span class="wtag ${l.type === 'related' ? 'rel' : ''}">${esc(tag)}</span>
           <span class="arrow">↗</span>
-        </div>`;
-      });
-      html += `</div>`;
-    }
-
-    // 上位/下位关系也可作为"相关"补充（如未在 links 中）
-    const supLinks = n.supersedeLinks || [];
-    if (supLinks.length) {
-      html += `<div class="sec-links"><div class="lbl">与上位/下位理论的连线</div>`;
-      supLinks.forEach(l => {
-        html += `<div class="link-card supersede" data-jump="${esc(l.id)}">
-          <span class="nm">${esc(l.name)}</span>
-          <span class="wtag">${l.weight}</span>
-          <span class="arrow">↑</span>
         </div>`;
       });
       html += `</div>`;
