@@ -82,7 +82,7 @@ window.KTTree = (() => {
   function defaultName() {
     const d = new Date();
     const p = n => String(n).padStart(2, '0');
-    return `学习树 ${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`;
+    return `${KTI18n.t('tree_default_name')} ${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`;
   }
 
   function init(hooks) {
@@ -140,6 +140,8 @@ window.KTTree = (() => {
 
     if (data.enabled) { panel.classList.remove('hidden'); btnTree.classList.add('active'); }
     render();
+    // 语言切换：重绘树与森林列表（静态按钮文本由 app.js 统一刷新）
+    KTI18n.onChange(() => { render(); });
   }
 
   function toggle(on) {
@@ -157,8 +159,8 @@ window.KTTree = (() => {
     data.name = name;
     save();
     if (saveBtn) {
-      saveBtn.textContent = '已保存✓';
-      setTimeout(() => { saveBtn.textContent = '保存'; }, 1200);
+      saveBtn.textContent = KTI18n.t('tree_saved');
+      setTimeout(() => { saveBtn.textContent = KTI18n.t('tree_save'); }, 1200);
     }
   }
 
@@ -181,7 +183,7 @@ window.KTTree = (() => {
   function renderForest() {
     if (!forestList) return;
     if (!forestData.trees.length) {
-      forestList.innerHTML = '<div class="ff-empty">暂无保存的学习树</div>';
+      forestList.innerHTML = `<div class="ff-empty">${esc(KTI18n.t('tree_ff_empty'))}</div>`;
       return;
     }
     forestList.innerHTML = forestData.trees.map(t => {
@@ -191,8 +193,8 @@ window.KTTree = (() => {
       const count = Object.keys(t.nodes || {}).length;
       return `<div class="ff-item" data-name="${esc(t.name)}">
         <span class="ff-name">${esc(t.name)}</span>
-        <span class="ff-meta">${count} 节点 · ${time}</span>
-        <button class="ff-del" title="删除">×</button>
+        <span class="ff-meta">${count} ${esc(KTI18n.t('tree_ff_nodes'))} · ${time}</span>
+        <button class="ff-del" title="${esc(KTI18n.t('tree_del'))}">×</button>
       </div>`;
     }).join('');
   }
@@ -225,12 +227,12 @@ window.KTTree = (() => {
   }
 
   function promptNewRoot(id) {
-    const name = nodeMap[id] ? nodeMap[id].name : id;
+    const name = nodeMap[id] ? KTI18n.nodeName(nodeMap[id]) : id;
     promptEl.innerHTML = `
-      <div class="tp-text">「${esc(name)}」与现有根均无关联，是否建立新的独立根？</div>
+      <div class="tp-text">${esc(KTI18n.t('tree_prompt', { name }))}</div>
       <div class="tp-btns">
-        <button class="btn" data-choice="new">建立新根</button>
-        <button class="btn" data-choice="attach">挂在最近根下</button>
+        <button class="btn" data-choice="new">${esc(KTI18n.t('tree_new_root'))}</button>
+        <button class="btn" data-choice="attach">${esc(KTI18n.t('tree_attach'))}</button>
       </div>`;
     promptEl.__pendingId = id;
     promptEl.classList.remove('hidden');
@@ -260,7 +262,7 @@ window.KTTree = (() => {
     const renderNode = (id, depth) => {
       const n = data.nodes[id];
       const node = nodeMap[id];
-      const name = node ? node.name : id;
+      const name = node ? KTI18n.nodeName(node) : id;
       const color = node ? node.color : '#888';
       const hasChild = childrenOf(id).length > 0;
       const cur = id === currentId ? ' current' : '';

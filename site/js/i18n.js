@@ -1,0 +1,175 @@
+/* ============================================================
+ * i18n.js —— 中 / 英双语界面
+ * KTI18n.t(key) 取词；KTI18n.nodeName(n) / domainName(did) 按当前语言给显示名；
+ * KTI18n.onChange(cb) 注册语言切换回调；选择持久化到 localStorage。
+ * 注意：仅界面（UI）双语；节点正文 Markdown 仍为中文。
+ * ============================================================ */
+'use strict';
+
+window.KTI18n = (() => {
+  const LS = 'physics-kn-lang';
+  let lang = 'zh';
+  try {
+    const v = localStorage.getItem(LS);
+    if (v === 'en' || v === 'zh') lang = v;
+  } catch (e) { /* ignore */ }
+
+  const STR = {
+    zh: {
+      doc_title: '中文物理知识树',
+      brand_title: '中文物理知识树',
+      brand_subtitle: 'PHYSICS KNOWLEDGE GRAPH',
+      search_ph: '搜索知识点（名称 / 别名 / 标签）…',
+      btn_global: '3D 全局',
+      btn_global_back: '← 返回 3D 全局',
+      btn_labels: '标签',
+      btn_tree: '我的路径',
+      btn_legend: '领域图例',
+      btn_domainhl: '分类高亮',
+      btn_lang: 'EN',
+      ctl_font: '字号',
+      ctl_spacing: '间距',
+      btn_reset: '重置布局',
+      loading: '正在加载知识树…',
+      tree_title: '我的学习路径',
+      tree_save: '保存',
+      tree_save_title: '保存到森林',
+      tree_forest: '已有路径',
+      tree_forest_title: '载入已保存的学习树',
+      tree_clear: '清空',
+      tree_name_ph: '输入名称…',
+      tree_ok: '确认',
+      tree_cancel: '取消',
+      tree_empty: '双击进入节点开始构建学习树',
+      tree_saved: '已保存✓',
+      tree_ff_empty: '暂无保存的学习树',
+      tree_ff_nodes: '节点',
+      tree_del: '删除',
+      tree_mkroot: '设为根',
+      tree_remove: '移除',
+      tree_prompt: '「{name}」与现有根均无关联，是否建立新的独立根？',
+      tree_new_root: '建立新根',
+      tree_attach: '挂在最近根下',
+      tree_default_name: '学习树',
+      detail_close: '关闭',
+      legend_title: '领域（点击切换显示 / 隐藏）',
+      legend_tip: '节点间距越小、关系越紧密；云团表示领域区域。单击节点高亮其完整先修链与一级后继子树，双击进入节点。',
+      dp_title: '分类高亮（可多选）',
+      dp_all: '全选',
+      dp_clear: '清空',
+      dp_tip: '勾选领域后，仅高亮这些领域的节点与内部连线；再次点击空白处不影响勾选。与单击节点高亮互斥：单击高亮优先。',
+      stat: '节点 {n} · 先修 {p} · 相关 {r}',
+      hint2d: '以「{name}」为中心 · 单击高亮先修链与一级后继 · 双击切换中心 · 空白返回全局',
+      tooltip_links: '关联 {d} · 点击查看详情',
+      search_empty: '未找到「{q}」相关节点',
+      rel_prereq: '先修',
+      rel_related: '相关',
+      rel_successor: '后续',
+      det_alias: '别名：',
+      det_prereq: '先修知识（学习本节点前建议掌握）',
+      det_successor: '后续知识（以本节点为先修）',
+      det_related: '相关知识点',
+      det_soft: '更远的关联（图中未直接连线）',
+      det_foot: 'ID：{id} · 领域：{domain} · 直接连接 {links} 个',
+      det_foot_degree: ' · 总关联 {degree} 个',
+      det_foot_updated: ' · 更新 {updated}',
+    },
+    en: {
+      doc_title: 'Science Knowledge Tree',
+      brand_title: 'Science Knowledge Tree',
+      brand_subtitle: 'SCIENCE KNOWLEDGE GRAPH',
+      search_ph: 'Search nodes (name / alias / tag)…',
+      btn_global: '3D Global',
+      btn_global_back: '← Back to 3D',
+      btn_labels: 'Labels',
+      btn_tree: 'My Path',
+      btn_legend: 'Legend',
+      btn_domainhl: 'Highlight',
+      btn_lang: '中',
+      ctl_font: 'Font',
+      ctl_spacing: 'Spacing',
+      btn_reset: 'Reset Layout',
+      loading: 'Loading knowledge tree…',
+      tree_title: 'My Learning Path',
+      tree_save: 'Save',
+      tree_save_title: 'Save to library',
+      tree_forest: 'Saved',
+      tree_forest_title: 'Load a saved path',
+      tree_clear: 'Clear',
+      tree_name_ph: 'Name…',
+      tree_ok: 'OK',
+      tree_cancel: 'Cancel',
+      tree_empty: 'Double-click a node to start building your path',
+      tree_saved: 'Saved✓',
+      tree_ff_empty: 'No saved paths yet',
+      tree_ff_nodes: 'nodes',
+      tree_del: 'Delete',
+      tree_mkroot: 'Make root',
+      tree_remove: 'Remove',
+      tree_prompt: '"{name}" is unrelated to all existing roots. Create a new independent root?',
+      tree_new_root: 'New root',
+      tree_attach: 'Attach to latest root',
+      tree_default_name: 'Learning Path',
+      detail_close: 'Close',
+      legend_title: 'Domains (click to show / hide)',
+      legend_tip: 'Closer nodes are more tightly related; clouds mark domain regions. Click a node to highlight its full prerequisite chain and first-level successors; double-click to enter.',
+      dp_title: 'Highlight by domain (multi-select)',
+      dp_all: 'All',
+      dp_clear: 'Clear',
+      dp_tip: 'Checked domains stay bright while others fade. Click-highlight on a node takes precedence while active.',
+      stat: '{n} nodes · {p} prereq · {r} related',
+      hint2d: 'Centered on "{name}" · click to highlight prereq chain & direct successors · double-click to re-center · click blank to go back',
+      tooltip_links: '{d} links · click for details',
+      search_empty: 'No nodes match "{q}"',
+      rel_prereq: 'Prereq',
+      rel_related: 'Related',
+      rel_successor: 'Successor',
+      det_alias: 'Aliases: ',
+      det_prereq: 'Prerequisites (recommended before this node)',
+      det_successor: 'Successors (nodes that require this one)',
+      det_related: 'Related nodes',
+      det_soft: 'Further links (not drawn in the graph)',
+      det_foot: 'ID: {id} · Domain: {domain} · {links} direct links',
+      det_foot_degree: ' · {degree} total',
+      det_foot_updated: ' · updated {updated}',
+    },
+  };
+
+  const listeners = [];
+
+  function t(key, params) {
+    const pack = STR[lang] || STR.zh;
+    let s = (pack[key] != null) ? pack[key] : (STR.zh[key] != null ? STR.zh[key] : key);
+    if (params) {
+      Object.keys(params).forEach(k => { s = s.replace('{' + k + '}', String(params[k])); });
+    }
+    return s;
+  }
+
+  function set(l) {
+    if (l !== 'en' && l !== 'zh') return;
+    if (l === lang) return;
+    lang = l;
+    try { localStorage.setItem(LS, l); } catch (e) { /* ignore */ }
+    listeners.forEach(f => { try { f(lang); } catch (e) { /* ignore */ } });
+  }
+  function toggle() { set(lang === 'zh' ? 'en' : 'zh'); }
+  function onChange(f) { listeners.push(f); }
+
+  /* 节点显示名：英文模式优先 nameEn，缺失回退中文名 */
+  function nodeName(n) {
+    if (!n) return '';
+    return lang === 'en' ? (n.nameEn || n.name) : n.name;
+  }
+  /* 领域显示名 */
+  function domainName(did) {
+    const d = window.PHYSICS_GRAPH && window.PHYSICS_GRAPH.meta.domains[did];
+    if (!d) return did;
+    return lang === 'en' ? (d.name_en || d.name) : d.name;
+  }
+
+  return {
+    t, set, toggle, onChange, nodeName, domainName,
+    get lang() { return lang; },
+  };
+})();

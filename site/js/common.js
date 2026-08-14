@@ -23,7 +23,7 @@ window.KT = (() => {
     const out = md.replace(/\[\[([a-z0-9][a-z0-9-]*)(?:\|([^\]\n]+))?\]\]/g, (m, id, label) => {
       refs.add(id);
       const n = nodeMap[id];
-      const text = label || (n ? n.name : id);
+      const text = label || (n ? (window.KTI18n ? KTI18n.nodeName(n) : n.name) : id);
       return `<a href="javascript:void(0)" class="jump-link" data-jump="${esc(id)}">${esc(text)}</a>`;
     });
     return { html: out, refs: refs };

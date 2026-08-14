@@ -79,6 +79,7 @@ def load_meta():
         d = d or {}
         normalized[did] = {
             "name": d.get("name", did),
+            "name_en": d.get("name_en", ""),
             "color": d.get("color", "#888888"),
             "cloud_alpha": float(d.get("cloud_alpha", 0.08)),
             "cloud_r": float(d.get("cloud_r", 1.0)),
@@ -423,6 +424,7 @@ def main():
             "domains": {
                 k: {
                     "name": v["name"],
+                    "name_en": v.get("name_en", ""),
                     "color": v["color"],
                     "cloud_alpha": v["cloud_alpha"],
                     "cloud_r": v["cloud_r"],

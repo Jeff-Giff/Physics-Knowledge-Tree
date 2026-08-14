@@ -12,8 +12,8 @@
   <!-- 顶部栏 -->
   <div id="topbar">
     <div class="brand">
-      <div class="title">中文物理知识树</div>
-      <div class="subtitle">PHYSICS KNOWLEDGE GRAPH</div>
+      <div class="title" id="brand-title">中文物理知识树</div>
+      <div class="subtitle" id="brand-subtitle">PHYSICS KNOWLEDGE GRAPH</div>
     </div>
     <div id="search-wrap">
       <input id="search-input" type="text" placeholder="搜索知识点（名称 / 别名 / 标签）…" autocomplete="off">
@@ -23,10 +23,12 @@
       <button id="btn-global" class="btn active">3D 全局</button>
       <button id="btn-labels" class="btn active">标签</button>
       <button id="btn-tree" class="btn">我的路径</button>
-      <label class="ctl">字号<input id="font-slider" type="range" min="10" max="50" step="1" value="15"></label>
-      <label class="ctl hidden" id="spacing-ctl">间距<input id="spacing-slider" type="range" min="50" max="300" step="5" value="100"></label>
+      <button id="btn-domain-hl" class="btn">分类高亮</button>
+      <label class="ctl"><span id="ctl-font-label">字号</span><input id="font-slider" type="range" min="10" max="50" step="1" value="15"></label>
+      <label class="ctl hidden" id="spacing-ctl"><span id="ctl-spacing-label">间距</span><input id="spacing-slider" type="range" min="50" max="300" step="5" value="100"></label>
       <button id="btn-reset" class="btn hidden">重置布局</button>
       <button id="btn-legend" class="btn">领域图例</button>
+      <button id="btn-lang" class="btn" title="Switch language / 切换语言">EN</button>
       <span id="stat"></span>
     </div>
   </div>
@@ -41,10 +43,13 @@
   <!-- 领域图例 -->
   <div id="cloud-legend" class="hidden"></div>
 
+  <!-- 分类高亮侧边栏（3D，可多选） -->
+  <div id="domain-panel" class="hidden"></div>
+
   <!-- 树状学习图面板 -->
   <div id="tree-panel" class="hidden">
     <div id="tree-head">
-      <span class="th-title">我的学习路径</span>
+      <span class="th-title" id="tree-title">我的学习路径</span>
       <div class="th-actions">
         <button id="tree-save-btn" class="btn" title="保存到森林">保存</button>
         <button id="tree-forest-btn" class="btn" title="载入已保存的学习树">已有路径</button>
@@ -88,6 +93,7 @@
   <script src="data/graph.js"></script>
 
   <!-- 应用代码 -->
+  <script src="js/i18n.js"></script>
   <script src="js/common.js"></script>
   <script src="js/detail.js"></script>
   <script src="js/search.js"></script>

@@ -26,176 +26,211 @@ site:
 domains:
   c-math:
     name: 数学基础（课程）
+    name_en: "Mathematical Foundations (Courses)"
     color: "#9374aa"
     cloud_alpha: 0.1
     cloud_r: 1.0
   c-general:
     name: 普通物理（课程）
+    name_en: "General Physics (Courses)"
     color: "#75789f"
     cloud_alpha: 0.1
     cloud_r: 1.0
   c-core:
     name: 四大力学（课程）
+    name_en: "Theoretical Physics Core (Courses)"
     color: "#667b99"
     cloud_alpha: 0.11
     cloud_r: 1.0
   c-lab:
     name: 实验与计算（课程）
+    name_en: "Experiments & Computation (Courses)"
     color: "#748f9a"
     cloud_alpha: 0.09
     cloud_r: 1.0
   c-elective:
     name: 专业选修（课程）
+    name_en: "Specialized Electives (Courses)"
     color: "#608a8a"
     cloud_alpha: 0.1
     cloud_r: 1.0
   r-astro:
     name: 天体物理与宇宙学
+    name_en: "Astrophysics & Cosmology"
     color: "#593cec"
     cloud_alpha: 0.09
     cloud_r: 1.0
   r-gravity:
     name: 引力与量子引力
+    name_en: "Gravity & Quantum Gravity"
     color: "#1f16da"
     cloud_alpha: 0.08
     cloud_r: 1.0
   r-hep:
     name: 高能物理
+    name_en: "High Energy Physics"
     color: "#3c49ec"
     cloud_alpha: 0.08
     cloud_r: 1.0
   r-nuclear:
     name: 核物理
+    name_en: "Nuclear Physics"
     color: "#163bda"
     cloud_alpha: 0.08
     cloud_r: 1.0
   r-condmat:
     name: 凝聚态物理
+    name_en: "Condensed Matter Physics"
     color: "#166ada"
     cloud_alpha: 0.09
     cloud_r: 1.0
   r-quantum:
     name: 量子物理与量子信息
+    name_en: "Quantum Physics & Quantum Information"
     color: "#3c73ec"
     cloud_alpha: 0.09
     cloud_r: 1.0
   r-amo:
     name: 原子分子与光物理
+    name_en: "Atomic, Molecular & Optical Physics"
     color: "#3c9dec"
     cloud_alpha: 0.08
     cloud_r: 1.0
   r-plasma:
     name: 等离子体物理
+    name_en: "Plasma Physics"
     color: "#169ada"
     cloud_alpha: 0.08
     cloud_r: 1.0
   r-fluid:
     name: 流体与非线性科学
+    name_en: "Fluids & Nonlinear Science"
     color: "#16c9da"
     cloud_alpha: 0.08
     cloud_r: 1.0
   r-statphys:
     name: 统计物理与复杂系统
+    name_en: "Statistical Physics & Complex Systems"
     color: "#3cc7ec"
     cloud_alpha: 0.08
     cloud_r: 1.0
   r-softbio:
     name: 软物质与生物物理
+    name_en: "Soft Matter & Biological Physics"
     color: "#16dabd"
     cloud_alpha: 0.08
     cloud_r: 1.0
   r-earth:
     name: 地球、大气与空间物理
+    name_en: "Earth, Atmospheric & Space Physics"
     color: "#3cece6"
     cloud_alpha: 0.08
     cloud_r: 1.0
   c-math-adv:
     name: 数学专业核心（课程）
+    name_en: "Advanced Mathematics (Courses)"
     color: "#7a5b8f"
     cloud_alpha: 0.1
     cloud_r: 1.0
   c-chem:
     name: 化学（课程）
+    name_en: "Chemistry (Courses)"
     color: "#6a9064"
     cloud_alpha: 0.1
     cloud_r: 1.0
   c-bio:
     name: 生命科学（课程）
+    name_en: "Life Sciences (Courses)"
     color: "#858d5e"
     cloud_alpha: 0.1
     cloud_r: 1.0
   r-math-pure:
     name: 基础数学
+    name_en: "Pure Mathematics"
     color: "#b040e7"
     cloud_alpha: 0.08
     cloud_r: 1.0
   r-math-applied:
     name: 应用与计算数学
+    name_en: "Applied & Computational Mathematics"
     color: "#6e1fd6"
     cloud_alpha: 0.08
     cloud_r: 1.0
   r-chem-core:
     name: 基础化学研究
+    name_en: "Core Chemistry Research"
     color: "#1eb823"
     cloud_alpha: 0.08
     cloud_r: 1.0
   r-chem-applied:
     name: 交叉与应用化学
+    name_en: "Interdisciplinary & Applied Chemistry"
     color: "#6bd61f"
     cloud_alpha: 0.08
     cloud_r: 1.0
   r-bio-mol:
     name: 分子、细胞与基因组
+    name_en: "Molecular, Cell & Genome Biology"
     color: "#a8e619"
     cloud_alpha: 0.08
     cloud_r: 1.0
   r-bio-org:
     name: 个体、神经与生态
+    name_en: "Organismal, Neural & Ecological Biology"
     color: "#e6d80f"
     cloud_alpha: 0.08
     cloud_r: 1.0
   c-cs:
     name: 计算机科学（课程）
+    name_en: "Computer Science (Courses)"
     color: "#9b6f88"
     cloud_alpha: 0.1
     cloud_r: 1.0
   c-info:
     name: 信息科学（课程）
+    name_en: "Information Science (Courses)"
     color: "#966990"
     cloud_alpha: 0.1
     cloud_r: 1.0
   c-eng:
     name: 工程科学（课程）
+    name_en: "Engineering (Courses)"
     color: "#946b79"
     cloud_alpha: 0.1
     cloud_r: 1.0
   r-cs-theory:
     name: 理论与算法
+    name_en: "Theory & Algorithms"
     color: "#e6379d"
     cloud_alpha: 0.08
     cloud_r: 1.0
   r-cs-systems:
     name: 系统、网络与安全
+    name_en: "Systems, Networks & Security"
     color: "#da1ba1"
     cloud_alpha: 0.08
     cloud_r: 1.0
   r-cs-ai:
     name: 人工智能
+    name_en: "Artificial Intelligence"
     color: "#ea3e8e"
     cloud_alpha: 0.08
     cloud_r: 1.0
   r-info-eng:
     name: 信息与电子
+    name_en: "Information & Electronics"
     color: "#e029ce"
     cloud_alpha: 0.08
     cloud_r: 1.0
   r-eng-core:
     name: 机械、电气与控制
+    name_en: "Mechanical, Electrical & Control Engineering"
     color: "#dd2c61"
     cloud_alpha: 0.08
     cloud_r: 1.0
   r-eng-applied:
     name: 材料、能源与土建
+    name_en: "Materials, Energy & Civil Engineering"
     color: "#e33b57"
     cloud_alpha: 0.08
     cloud_r: 1.0

@@ -31,6 +31,7 @@ window.KTApp = (() => {
     spacing: typeof saved.spacing === 'number' ? saved.spacing : 1,
     highlightId: null,                      // 单击高亮的节点 id
     highlightSet: null,                     // 单击高亮的节点集合（相连 + 先修链与子树）
+    hlDomains: new Set(),                   // 分类高亮：勾选的领域 id 集合（3D，可多选）
     lastClick: { id: null, time: 0 },       // 双击判定
   };
 
@@ -44,6 +45,9 @@ window.KTApp = (() => {
     btnLabels: $('#btn-labels'),
     btnLegend: $('#btn-legend'),
     btnReset: $('#btn-reset'),
+    btnLang: $('#btn-lang'),
+    btnDomainHl: $('#btn-domain-hl'),
+    domainPanel: $('#domain-panel'),
     fontSlider: $('#font-slider'),
     spacingCtl: $('#spacing-ctl'),
     spacingSlider: $('#spacing-slider'),
@@ -157,15 +161,17 @@ window.KTApp = (() => {
     return 0.8 + Math.sqrt(n.size) * 0.30;
   }
 
-  function isHighlightedNode(nodeId) {
-    if (!state.highlightId) return true;
-    return state.highlightSet ? state.highlightSet.has(nodeId) : true;
+  // 节点是否处于压暗状态：单击高亮优先；否则按分类高亮勾选压暗其他领域
+  function isNodeDimmed(node) {
+    if (state.highlightId) return state.highlightSet ? !state.highlightSet.has(node.id) : false;
+    if (state.hlDomains.size) return !state.hlDomains.has(node.domain);
+    return false;
   }
 
   function makeNodeObject(node) {
     const r = nodeRadius(node);
     const group = new THREE.Group();
-    const dimmed = state.highlightId && !isHighlightedNode(node.id);
+    const dimmed = isNodeDimmed(node);
     const sphere = new THREE.Mesh(
       new THREE.SphereGeometry(r, 22, 22),
       new THREE.MeshPhongMaterial({ color: node.color, transparent: true, opacity: dimmed ? 0.12 : 0.92 })
@@ -182,7 +188,7 @@ window.KTApp = (() => {
     halo.visible = node.id === state.selected || node.id === state.highlightId;
     group.add(halo);
 
-    const label = makeLabelSprite(node.name);
+    const label = makeLabelSprite(KTI18n.nodeName(node));
     label.position.set(0, r + 1.2 + state.labelFontSize / 60, 0);
     label.userData.isLabel = true;
     label.visible = state.labelsOn;
@@ -260,7 +266,12 @@ window.KTApp = (() => {
       sprite.position.set(cx, cy, cz);
       const targetR = Math.max(70, (maxr[did] || 40) * 2.6) * (d.cloud_r || 1);
       sprite.scale.set(targetR, targetR, 1);
-      sprite.material.opacity = Math.max(0.22, (d.cloud_alpha || 0.08) * 3);
+      // 高亮激活时云团大幅减弱，避免加色发光盖过高亮链路；
+      // 分类高亮时未勾选领域的云团同样减弱
+      let cloudFade = 1;
+      if (state.highlightId) cloudFade = 0.15;
+      else if (state.hlDomains.size && !state.hlDomains.has(did)) cloudFade = 0.15;
+      sprite.material.opacity = Math.max(0.22, (d.cloud_alpha || 0.08) * 3) * cloudFade;
       sprite.material.color.set(d.color);
     });
   }
@@ -287,28 +298,45 @@ window.KTApp = (() => {
   // ------------------------- 样式函数 -------------------------
   function nodeLabelHTML(n) {
     const d = GRAPH.meta.domains[n.domain];
+    const main = KTI18n.nodeName(n);
+    const sub = KTI18n.lang === 'en' ? n.name : (n.nameEn || '');
     return `<div style="font-size:13px;line-height:1.6">
-      <b style="font-size:15px">${n.name}</b>
-      <div style="color:#9aa7b4">${n.nameEn || ''}</div>
-      <div><span style="color:${d ? d.color : '#888'}">●</span> ${d ? d.name : n.domain}</div>
-      <div style="color:#9aa7b4">关联 ${n.degree} · 点击查看详情</div>
+      <b style="font-size:15px">${main}</b>
+      <div style="color:#9aa7b4">${sub}</div>
+      <div><span style="color:${d ? d.color : '#888'}">●</span> ${KTI18n.domainName(n.domain)}</div>
+      <div style="color:#9aa7b4">${KTI18n.t('tooltip_links', { d: n.degree })}</div>
     </div>`;
   }
 
   function emphasis(l) {
-    if (!state.highlightId || !state.highlightSet) return 1;
     const a = l.source.id, b = l.target.id;
-    return (state.highlightSet.has(a) && state.highlightSet.has(b)) ? 1 : 0.22;
+    if (state.highlightId && state.highlightSet) {
+      return (state.highlightSet.has(a) && state.highlightSet.has(b)) ? 1 : 0.22;
+    }
+    // 分类高亮：连线两端领域均被勾选才保持亮起
+    if (state.hlDomains.size) {
+      const da = l.source.domain, db = l.target.domain;
+      return (state.hlDomains.has(da) && state.hlDomains.has(db)) ? 1 : 0.22;
+    }
+    return 1;
   }
 
   function linkColor3D(l) {
-    if (l.type === 'prereq') return emphasis(l) < 0.5 ? 'rgba(88,166,255,0.28)' : '#58a6ff';
     const em = emphasis(l);
-    return `rgba(139,152,165,${(0.14 + 0.55 * em).toFixed(2)})`;
+    const hl = state.highlightId || state.hlDomains.size;
+    if (l.type === 'prereq') {
+      if (!hl) return '#58a6ff';
+      return em < 0.5 ? 'rgba(88,166,255,0.05)' : '#b5dcff';
+    }
+    if (!hl) return 'rgba(139,152,165,0.69)';
+    return em < 0.5 ? 'rgba(139,152,165,0.04)' : 'rgba(220,230,242,0.85)';
   }
   function linkWidth3D(l) {
     const base = l.type === 'prereq' ? 1.3 : 0.9;
-    return base * (0.45 + 0.55 * emphasis(l));
+    const em = emphasis(l);
+    // 高亮激活时：集合内连线加粗、集合外压细，让先修链一眼可辨
+    if (state.highlightId || state.hlDomains.size) return em < 0.5 ? base * 0.25 : base * 2.2;
+    return base;
   }
 
   // ------------------------- 3D 图 -------------------------
@@ -325,7 +353,11 @@ window.KTApp = (() => {
       .linkColor(linkColor3D)
       .linkWidth(linkWidth3D)
       .linkVisibility(l => isDomainVisible(l.source.domain) && isDomainVisible(l.target.domain))
-      .linkDirectionalParticles(l => (l.type === 'prereq' ? 2 : 0))
+      .linkDirectionalParticles(l => {
+        if (l.type !== 'prereq') return 0;
+        if (state.highlightId && state.highlightSet) return emphasis(l) >= 0.5 ? 5 : 0;
+        return 2;
+      })
       .linkDirectionalParticleWidth(2)
       .linkDirectionalParticleSpeed(l => (l.type === 'prereq' ? 0.004 : 0))
       .linkDirectionalArrowLength(l => (l.type === 'prereq' ? 4.5 : 0))
@@ -402,7 +434,7 @@ window.KTApp = (() => {
     ctx.shadowColor = 'rgba(0,0,0,0.9)';
     ctx.shadowBlur = weak ? 2 : 4;
     ctx.fillStyle = hlDim ? 'rgba(255,255,255,0.22)' : (weak ? 'rgba(255,255,255,0.45)' : '#fff');
-    ctx.fillText(n.name, n.x, n.y - r * gs - 3);
+    ctx.fillText(KTI18n.nodeName(n), n.x, n.y - r * gs - 3);
     ctx.shadowBlur = 0;
   }
 
@@ -434,7 +466,11 @@ window.KTApp = (() => {
       })
       .linkWidth(l => (l.type === 'prereq' ? 1.8 : 1.1) * (l.soft ? 0.6 : 1) * (0.4 + 0.6 * linkEmphasis2D(l)))
       .linkLineDash(l => (l.soft ? [4, 4] : null))
-      .linkDirectionalParticles(l => (l.type === 'prereq' ? 2 : 0))
+      .linkDirectionalParticles(l => {
+        if (l.type !== 'prereq') return 0;
+        if (state.highlightId && state.highlightSet) return emphasis(l) >= 0.5 ? 5 : 0;
+        return 2;
+      })
       .linkDirectionalParticleWidth(2)
       .linkDirectionalParticleSpeed(l => (l.type === 'prereq' ? 0.006 : 0))
       .onNodeClick(n => onNodeClicked(n.id))
@@ -494,10 +530,13 @@ window.KTApp = (() => {
     dom.graph3d.classList.toggle('hidden', mode !== '3d');
     dom.graph2d.classList.toggle('hidden', mode !== '2d');
     dom.hint2d.classList.toggle('hidden', mode !== '2d');
-    dom.btnGlobal.textContent = mode === '2d' ? '← 返回 3D 全局' : '3D 全局';
+    dom.btnGlobal.textContent = KTI18n.t(mode === '2d' ? 'btn_global_back' : 'btn_global');
     dom.btnGlobal.classList.toggle('active', mode === '3d');
     dom.spacingCtl.classList.toggle('hidden', mode !== '2d');
     dom.btnReset.classList.toggle('hidden', mode !== '2d');
+    // 分类高亮仅 3D 可用：进入 2D 时收起面板（勾选状态保留，回 3D 继续生效）
+    dom.btnDomainHl.classList.toggle('hidden', mode !== '3d');
+    if (mode !== '3d') dom.domainPanel.classList.add('hidden');
 
     if (mode === '3d') {
       try { Graph2.pauseAnimation(); } catch (e) { /* ignore */ }
@@ -512,7 +551,7 @@ window.KTApp = (() => {
       try { Graph2.resumeAnimation(); } catch (e) { /* ignore */ }
       showEgo2D(state.selected);
       dom.hint2d.textContent =
-        `以「${nodeMap[state.selected].name}」为中心 · 单击高亮先修链与一级后继 · 双击切换中心 · 空白返回全局`;
+        KTI18n.t('hint2d', { name: KTI18n.nodeName(nodeMap[state.selected]) });
     }
   }
 
@@ -551,20 +590,26 @@ window.KTApp = (() => {
   }
 
   // ------------------------- 图例 -------------------------
-  function buildLegend() {
+  function domainCounts() {
     const counts = {};
     GRAPH.nodes.forEach(n => { counts[n.domain] = (counts[n.domain] || 0) + 1; });
+    return counts;
+  }
+
+  function buildLegend() {
+    const counts = domainCounts();
     const items = Object.entries(GRAPH.meta.domains).map(([did, d]) => `
       <div class="lg-item" data-domain="${did}">
         <span class="lg-swatch" style="background:${d.color}"></span>
-        <span>${d.name}</span>
+        <span>${KTI18n.domainName(did)}</span>
         <span class="lg-count">${counts[did] || 0}</span>
       </div>`).join('');
     dom.legend.innerHTML = `
-      <div class="lg-title">领域（点击切换显示 / 隐藏）</div>
+      <div class="lg-title">${KTI18n.t('legend_title')}</div>
       ${items}
-      <div class="lg-tip">节点间距越小、关系越紧密；云团表示领域区域。单击节点高亮其完整先修链与一级后继子树，双击进入节点。</div>`;
+      <div class="lg-tip">${KTI18n.t('legend_tip')}</div>`;
     $$('.lg-item', dom.legend).forEach(el => {
+      el.classList.toggle('off', state.hiddenDomains.has(el.getAttribute('data-domain')));
       el.addEventListener('click', () => {
         const did = el.getAttribute('data-domain');
         if (state.hiddenDomains.has(did)) state.hiddenDomains.delete(did);
@@ -576,11 +621,112 @@ window.KTApp = (() => {
     });
   }
 
+  // ------------------------- 分类高亮侧边栏（3D，多选） -------------------------
+  function syncDomainHlBtn() {
+    dom.btnDomainHl.classList.toggle('on', state.hlDomains.size > 0);
+  }
+
+  function applyDomainHighlight() {
+    syncDomainHlBtn();
+    Graph3D.refresh();
+    updateClouds();
+  }
+
+  function buildDomainPanel() {
+    const counts = domainCounts();
+    const items = Object.entries(GRAPH.meta.domains).map(([did, d]) => `
+      <label class="dp-item" data-domain="${did}">
+        <input type="checkbox" ${state.hlDomains.has(did) ? 'checked' : ''}>
+        <span class="lg-swatch" style="background:${d.color}"></span>
+        <span class="dp-name">${KTI18n.domainName(did)}</span>
+        <span class="lg-count">${counts[did] || 0}</span>
+      </label>`).join('');
+    dom.domainPanel.innerHTML = `
+      <div class="dp-head">
+        <span class="lg-title">${KTI18n.t('dp_title')}</span>
+        <span class="dp-actions">
+          <button class="btn dp-btn" data-act="all">${KTI18n.t('dp_all')}</button>
+          <button class="btn dp-btn" data-act="clear">${KTI18n.t('dp_clear')}</button>
+        </span>
+      </div>
+      ${items}
+      <div class="lg-tip">${KTI18n.t('dp_tip')}</div>`;
+    $$('.dp-item input', dom.domainPanel).forEach(cb => {
+      cb.addEventListener('change', () => {
+        const did = cb.closest('.dp-item').getAttribute('data-domain');
+        if (cb.checked) state.hlDomains.add(did);
+        else state.hlDomains.delete(did);
+        applyDomainHighlight();
+      });
+    });
+    $$('.dp-btn', dom.domainPanel).forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (btn.getAttribute('data-act') === 'all') {
+          Object.keys(GRAPH.meta.domains).forEach(did => state.hlDomains.add(did));
+        } else {
+          state.hlDomains.clear();
+        }
+        $$('.dp-item input', dom.domainPanel).forEach(cb => {
+          cb.checked = state.hlDomains.has(cb.closest('.dp-item').getAttribute('data-domain'));
+        });
+        applyDomainHighlight();
+      });
+    });
+  }
+
+  // ------------------------- 界面语言 -------------------------
+  function applyLang() {
+    const t = KTI18n.t;
+    document.title = t('doc_title');
+    document.documentElement.lang = KTI18n.lang === 'en' ? 'en' : 'zh-CN';
+    $('#brand-title').textContent = t('brand_title');
+    $('#brand-subtitle').textContent = t('brand_subtitle');
+    $('#search-input').placeholder = t('search_ph');
+    dom.btnGlobal.textContent = t(state.mode === '2d' ? 'btn_global_back' : 'btn_global');
+    dom.btnLabels.textContent = t('btn_labels');
+    $('#btn-tree').textContent = t('btn_tree');
+    dom.btnLegend.textContent = t('btn_legend');
+    dom.btnDomainHl.textContent = t('btn_domainhl');
+    dom.btnLang.textContent = t('btn_lang');
+    $('#ctl-font-label').textContent = t('ctl_font');
+    $('#ctl-spacing-label').textContent = t('ctl_spacing');
+    dom.btnReset.textContent = t('btn_reset');
+    $('#tree-title').textContent = t('tree_title');
+    $('#tree-save-btn').textContent = t('tree_save');
+    $('#tree-save-btn').title = t('tree_save_title');
+    $('#tree-forest-btn').textContent = t('tree_forest');
+    $('#tree-forest-btn').title = t('tree_forest_title');
+    $('#tree-clear').textContent = t('tree_clear');
+    $('#tree-clear').title = t('tree_clear');
+    $('#tree-name-input').placeholder = t('tree_name_ph');
+    $('#tree-save-confirm').textContent = t('tree_ok');
+    $('#tree-save-cancel').textContent = t('tree_cancel');
+    $('#tree-empty').textContent = t('tree_empty');
+    dom.detailClose.title = t('detail_close');
+    const loading = $('#loading');
+    if (loading) loading.textContent = t('loading');
+    updateStat();
+    buildLegend();
+    buildDomainPanel();
+    if (state.mode === '2d' && state.selected) {
+      dom.hint2d.textContent = KTI18n.t('hint2d', { name: KTI18n.nodeName(nodeMap[state.selected]) });
+    }
+  }
+
+  function updateStat() {
+    const nNodes = GRAPH.nodes.length;
+    const nPrereq = GRAPH.links.filter(l => l.type === 'prereq').length;
+    const nRelated = GRAPH.links.filter(l => l.type !== 'prereq').length;
+    dom.stat.textContent = KTI18n.t('stat', { n: nNodes, p: nPrereq, r: nRelated });
+  }
+
   // ------------------------- 初始化 -------------------------
   function init() {
     initGraph3D();
     initGraph2();
     buildLegend();
+    buildDomainPanel();
+    applyLang();
 
     KTSearch.init(id => selectNode(id, 'search'));
 
@@ -594,6 +740,22 @@ window.KTApp = (() => {
     dom.btnLegend.addEventListener('click', () => {
       dom.legend.classList.toggle('hidden');
       dom.btnLegend.classList.toggle('active', !dom.legend.classList.contains('hidden'));
+      // 与分类高亮面板互斥
+      if (!dom.legend.classList.contains('hidden')) dom.domainPanel.classList.add('hidden');
+    });
+    dom.btnDomainHl.addEventListener('click', () => {
+      dom.domainPanel.classList.toggle('hidden');
+      // 与领域图例互斥
+      if (!dom.domainPanel.classList.contains('hidden')) {
+        dom.legend.classList.add('hidden');
+        dom.btnLegend.classList.remove('active');
+      }
+    });
+    dom.btnLang.addEventListener('click', () => KTI18n.toggle());
+    KTI18n.onChange(() => {
+      labelTextureCache.clear();
+      Graph3D.refresh();
+      applyLang();
     });
 
     dom.fontSlider.value = state.labelFontSize;
@@ -618,10 +780,7 @@ window.KTApp = (() => {
       if (ev.key === 'Escape' && state.mode === '2d') deselectAll();
     });
 
-    const nNodes = GRAPH.nodes.length;
-    const nPrereq = GRAPH.links.filter(l => l.type === 'prereq').length;
-    const nRelated = GRAPH.links.filter(l => l.type !== 'prereq').length;
-    dom.stat.textContent = `节点 ${nNodes} · 先修 ${nPrereq} · 相关 ${nRelated}`;
+    updateStat();
 
     dom.loading.classList.add('fade');
     setTimeout(() => dom.loading.remove(), 700);

@@ -53,16 +53,17 @@ window.KTSearch = (() => {
     activeIdx = scored.length ? 0 : -1;
 
     if (!scored.length) {
-      box.innerHTML = `<div class="sr-empty">未找到「${esc(q)}」相关节点</div>`;
+      box.innerHTML = `<div class="sr-empty">${esc(KTI18n.t('search_empty', { q }))}</div>`;
       return;
     }
     box.innerHTML = scored.map((x, i) => {
       const n = KT.nodeMap[x.e.id];
-      const label = highlight(x.e.name, q);
+      const dispName = KTI18n.lang === 'en' ? (x.e.nameEn || x.e.name) : x.e.name;
+      const label = highlight(dispName, q);
       return `<div class="sr-item${i === activeIdx ? ' active' : ''}" data-id="${esc(x.e.id)}">
         <span class="sr-dot" style="background:${esc(n.color)}"></span>
         <span class="sr-name">${label}</span>
-        <span class="sr-meta">${esc(x.e.domainName)}</span>
+        <span class="sr-meta">${esc(KTI18n.domainName(n.domain))}</span>
       </div>`;
     }).join('');
   }
