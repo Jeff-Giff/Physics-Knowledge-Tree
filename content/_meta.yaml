@@ -8,12 +8,15 @@
 site:
   title: 中文物理知识树
   subtitle: Physics Knowledge Graph
-  description: 从本科课程到研究方向的物理知识导航网络
+  description: 从本科课程到研究方向的科学知识导航网络（物理 · 数学 · 化学 · 生命科学 · 信息 · 计算机 · 工程）
 
 # ------------------------------------------------------------
-# 领域体系：课程层 5 个子类（c- 前缀，低饱和度偏灰）+ 研究层 12 个类别（r- 前缀，高饱和度）
-# 色相按学科预留扩展空间：数学=紫色；物理=蓝紫色至蓝绿色（课程/研究均落在此区间）；
-# 化学=绿色至黄绿色（预留，当前未启用）
+# 领域体系：课程层 11 个子类（c- 前缀，低饱和度偏灰）+ 研究层 24 个类别（r- 前缀，高饱和度）
+# 课程层分类参考北大/清华本科培养方案；研究层分类按 arXiv 顶层类别归并，
+# 化学（无 arXiv）按教育部学科目录二级学科（0703）与 GB/T 13745 归并。
+# 色相按学科分区间：数学=紫色（约 266°~280°）；物理=蓝紫色至蓝绿色（250°→170°）；
+# 化学=绿色至黄绿色（122°→95°）；生命科学=黄绿色至黄色（78°→56°）；
+# 信息/计算机/工程=紫红至粉红（306°→350°）
 # 课程层分类参考北大物理学院 / 清华物理系本科培养方案；
 # 研究层分类按 arXiv Physics 顶层类别归并。
 # color: 节点/云图主色（16 进制）
@@ -104,6 +107,96 @@ domains:
   r-earth:
     name: 地球、大气与空间物理
     color: "#3cece6"
+    cloud_alpha: 0.08
+    cloud_r: 1.0
+  c-math-adv:
+    name: 数学专业核心（课程）
+    color: "#7a5b8f"
+    cloud_alpha: 0.1
+    cloud_r: 1.0
+  c-chem:
+    name: 化学（课程）
+    color: "#6a9064"
+    cloud_alpha: 0.1
+    cloud_r: 1.0
+  c-bio:
+    name: 生命科学（课程）
+    color: "#858d5e"
+    cloud_alpha: 0.1
+    cloud_r: 1.0
+  r-math-pure:
+    name: 基础数学
+    color: "#b040e7"
+    cloud_alpha: 0.08
+    cloud_r: 1.0
+  r-math-applied:
+    name: 应用与计算数学
+    color: "#6e1fd6"
+    cloud_alpha: 0.08
+    cloud_r: 1.0
+  r-chem-core:
+    name: 基础化学研究
+    color: "#1eb823"
+    cloud_alpha: 0.08
+    cloud_r: 1.0
+  r-chem-applied:
+    name: 交叉与应用化学
+    color: "#6bd61f"
+    cloud_alpha: 0.08
+    cloud_r: 1.0
+  r-bio-mol:
+    name: 分子、细胞与基因组
+    color: "#a8e619"
+    cloud_alpha: 0.08
+    cloud_r: 1.0
+  r-bio-org:
+    name: 个体、神经与生态
+    color: "#e6d80f"
+    cloud_alpha: 0.08
+    cloud_r: 1.0
+  c-cs:
+    name: 计算机科学（课程）
+    color: "#9b6f88"
+    cloud_alpha: 0.1
+    cloud_r: 1.0
+  c-info:
+    name: 信息科学（课程）
+    color: "#966990"
+    cloud_alpha: 0.1
+    cloud_r: 1.0
+  c-eng:
+    name: 工程科学（课程）
+    color: "#946b79"
+    cloud_alpha: 0.1
+    cloud_r: 1.0
+  r-cs-theory:
+    name: 理论与算法
+    color: "#e6379d"
+    cloud_alpha: 0.08
+    cloud_r: 1.0
+  r-cs-systems:
+    name: 系统、网络与安全
+    color: "#da1ba1"
+    cloud_alpha: 0.08
+    cloud_r: 1.0
+  r-cs-ai:
+    name: 人工智能
+    color: "#ea3e8e"
+    cloud_alpha: 0.08
+    cloud_r: 1.0
+  r-info-eng:
+    name: 信息与电子
+    color: "#e029ce"
+    cloud_alpha: 0.08
+    cloud_r: 1.0
+  r-eng-core:
+    name: 机械、电气与控制
+    color: "#dd2c61"
+    cloud_alpha: 0.08
+    cloud_r: 1.0
+  r-eng-applied:
+    name: 材料、能源与土建
+    color: "#e33b57"
     cloud_alpha: 0.08
     cloud_r: 1.0
 

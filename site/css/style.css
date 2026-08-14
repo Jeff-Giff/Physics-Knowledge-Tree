@@ -149,12 +149,12 @@ html, body {
   top: 52px; left: 0; right: 0; bottom: 0;
   z-index: 10;
 }
-#graph2d { z-index: 12; }
+#graph2d { z-index: 12; right: 440px; }  /* 2D 模式下详情面板常驻右侧，画布避开面板以免节点被遮挡而无法点击 */
 
 /* 2D 顶部提示条 */
 #hint2d {
   position: fixed;
-  top: 64px; left: 50%;
+  top: 64px; left: calc((100% - 440px) / 2);
   transform: translateX(-50%);
   z-index: 30;
   padding: 6px 14px;
@@ -487,5 +487,7 @@ html, body {
   .brand { min-width: 90px; }
   #stat { display: none; }
   #detail { width: 100vw; max-width: 100vw; }
+  #graph2d { right: 0; }
+  #hint2d { left: 50%; }
   #tree-panel { width: 100vw; }
 }

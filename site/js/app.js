@@ -458,6 +458,9 @@ window.KTApp = (() => {
   function showEgo2D(id) {
     const node = nodeMap[id];
     if (!node) return;
+    // 画布 CSS 已避开右侧详情面板（#graph2d right:440px），
+    // 但 force-graph 只在窗口 resize 时重测容器尺寸，这里显式同步一次
+    try { Graph2.width(dom.graph2d.clientWidth).height(dom.graph2d.clientHeight); } catch (e) { /* ignore */ }
     const ids = new Set([id]);
     const strongIds = new Set([id]);
     (node.links || []).forEach(l => { ids.add(l.id); strongIds.add(l.id); });
