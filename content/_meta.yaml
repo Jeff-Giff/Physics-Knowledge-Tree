@@ -11,7 +11,9 @@ site:
   description: 从本科课程到研究方向的物理知识导航网络
 
 # ------------------------------------------------------------
-# 领域体系：课程层 5 个子类（c- 前缀，暖色）+ 研究层 12 个类别（r- 前缀，冷色）
+# 领域体系：课程层 5 个子类（c- 前缀，低饱和度偏灰）+ 研究层 12 个类别（r- 前缀，高饱和度）
+# 色相按学科预留扩展空间：数学=紫色；物理=蓝紫色至蓝绿色（课程/研究均落在此区间）；
+# 化学=绿色至黄绿色（预留，当前未启用）
 # 课程层分类参考北大物理学院 / 清华物理系本科培养方案；
 # 研究层分类按 arXiv Physics 顶层类别归并。
 # color: 节点/云图主色（16 进制）
@@ -21,87 +23,87 @@ site:
 domains:
   c-math:
     name: 数学基础（课程）
-    color: "#8d9db6"
+    color: "#9374aa"
     cloud_alpha: 0.1
     cloud_r: 1.0
   c-general:
     name: 普通物理（课程）
-    color: "#e67e22"
+    color: "#75789f"
     cloud_alpha: 0.1
     cloud_r: 1.0
   c-core:
     name: 四大力学（课程）
-    color: "#c0392b"
+    color: "#667b99"
     cloud_alpha: 0.11
     cloud_r: 1.0
   c-lab:
     name: 实验与计算（课程）
-    color: "#f1c40f"
+    color: "#748f9a"
     cloud_alpha: 0.09
     cloud_r: 1.0
   c-elective:
     name: 专业选修（课程）
-    color: "#d35400"
+    color: "#608a8a"
     cloud_alpha: 0.1
     cloud_r: 1.0
   r-astro:
     name: 天体物理与宇宙学
-    color: "#6c5ce7"
+    color: "#593cec"
     cloud_alpha: 0.09
     cloud_r: 1.0
   r-gravity:
     name: 引力与量子引力
-    color: "#2980b9"
+    color: "#1f16da"
     cloud_alpha: 0.08
     cloud_r: 1.0
   r-hep:
     name: 高能物理
-    color: "#e84393"
+    color: "#3c49ec"
     cloud_alpha: 0.08
     cloud_r: 1.0
   r-nuclear:
     name: 核物理
-    color: "#b33771"
+    color: "#163bda"
     cloud_alpha: 0.08
     cloud_r: 1.0
   r-condmat:
     name: 凝聚态物理
-    color: "#16a085"
+    color: "#166ada"
     cloud_alpha: 0.09
     cloud_r: 1.0
   r-quantum:
     name: 量子物理与量子信息
-    color: "#8e44ad"
+    color: "#3c73ec"
     cloud_alpha: 0.09
     cloud_r: 1.0
   r-amo:
     name: 原子分子与光物理
-    color: "#00cec9"
+    color: "#3c9dec"
     cloud_alpha: 0.08
     cloud_r: 1.0
   r-plasma:
     name: 等离子体物理
-    color: "#e17055"
+    color: "#169ada"
     cloud_alpha: 0.08
     cloud_r: 1.0
   r-fluid:
     name: 流体与非线性科学
-    color: "#3498db"
+    color: "#16c9da"
     cloud_alpha: 0.08
     cloud_r: 1.0
   r-statphys:
     name: 统计物理与复杂系统
-    color: "#2ecc71"
+    color: "#3cc7ec"
     cloud_alpha: 0.08
     cloud_r: 1.0
   r-softbio:
     name: 软物质与生物物理
-    color: "#f368e0"
+    color: "#16dabd"
     cloud_alpha: 0.08
     cloud_r: 1.0
   r-earth:
     name: 地球、大气与空间物理
-    color: "#57606f"
+    color: "#3cece6"
     cloud_alpha: 0.08
     cloud_r: 1.0
 

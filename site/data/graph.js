@@ -9,103 +9,103 @@ window.PHYSICS_GRAPH = {
   "domains": {
    "c-math": {
     "name": "数学基础（课程）",
-    "color": "#8d9db6",
+    "color": "#9374aa",
     "cloud_alpha": 0.1,
     "cloud_r": 1.0
    },
    "c-general": {
     "name": "普通物理（课程）",
-    "color": "#e67e22",
+    "color": "#75789f",
     "cloud_alpha": 0.1,
     "cloud_r": 1.0
    },
    "c-core": {
     "name": "四大力学（课程）",
-    "color": "#c0392b",
+    "color": "#667b99",
     "cloud_alpha": 0.11,
     "cloud_r": 1.0
    },
    "c-lab": {
     "name": "实验与计算（课程）",
-    "color": "#f1c40f",
+    "color": "#748f9a",
     "cloud_alpha": 0.09,
     "cloud_r": 1.0
    },
    "c-elective": {
     "name": "专业选修（课程）",
-    "color": "#d35400",
+    "color": "#608a8a",
     "cloud_alpha": 0.1,
     "cloud_r": 1.0
    },
    "r-astro": {
     "name": "天体物理与宇宙学",
-    "color": "#6c5ce7",
+    "color": "#593cec",
     "cloud_alpha": 0.09,
     "cloud_r": 1.0
    },
    "r-gravity": {
     "name": "引力与量子引力",
-    "color": "#2980b9",
+    "color": "#1f16da",
     "cloud_alpha": 0.08,
     "cloud_r": 1.0
    },
    "r-hep": {
     "name": "高能物理",
-    "color": "#e84393",
+    "color": "#3c49ec",
     "cloud_alpha": 0.08,
     "cloud_r": 1.0
    },
    "r-nuclear": {
     "name": "核物理",
-    "color": "#b33771",
+    "color": "#163bda",
     "cloud_alpha": 0.08,
     "cloud_r": 1.0
    },
    "r-condmat": {
     "name": "凝聚态物理",
-    "color": "#16a085",
+    "color": "#166ada",
     "cloud_alpha": 0.09,
     "cloud_r": 1.0
    },
    "r-quantum": {
     "name": "量子物理与量子信息",
-    "color": "#8e44ad",
+    "color": "#3c73ec",
     "cloud_alpha": 0.09,
     "cloud_r": 1.0
    },
    "r-amo": {
     "name": "原子分子与光物理",
-    "color": "#00cec9",
+    "color": "#3c9dec",
     "cloud_alpha": 0.08,
     "cloud_r": 1.0
    },
    "r-plasma": {
     "name": "等离子体物理",
-    "color": "#e17055",
+    "color": "#169ada",
     "cloud_alpha": 0.08,
     "cloud_r": 1.0
    },
    "r-fluid": {
     "name": "流体与非线性科学",
-    "color": "#3498db",
+    "color": "#16c9da",
     "cloud_alpha": 0.08,
     "cloud_r": 1.0
    },
    "r-statphys": {
     "name": "统计物理与复杂系统",
-    "color": "#2ecc71",
+    "color": "#3cc7ec",
     "cloud_alpha": 0.08,
     "cloud_r": 1.0
    },
    "r-softbio": {
     "name": "软物质与生物物理",
-    "color": "#f368e0",
+    "color": "#16dabd",
     "cloud_alpha": 0.08,
     "cloud_r": 1.0
    },
    "r-earth": {
     "name": "地球、大气与空间物理",
-    "color": "#57606f",
+    "color": "#3cece6",
     "cloud_alpha": 0.08,
     "cloud_r": 1.0
    }
@@ -123,7 +123,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Classical Electrodynamics",
    "domain": "c-core",
    "domainName": "四大力学（课程）",
-   "color": "#c0392b",
+   "color": "#667b99",
    "aliases": [
     "经典电动力学"
    ],
@@ -193,7 +193,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Quantum Mechanics",
    "domain": "c-core",
    "domainName": "四大力学（课程）",
-   "color": "#c0392b",
+   "color": "#667b99",
    "aliases": [
     "量子力学(I)"
    ],
@@ -277,7 +277,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Thermodynamics and Statistical Mechanics",
    "domain": "c-core",
    "domainName": "四大力学（课程）",
-   "color": "#c0392b",
+   "color": "#667b99",
    "aliases": [
     "统计力学",
     "热统"
@@ -369,7 +369,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Theoretical (Analytical) Mechanics",
    "domain": "c-core",
    "domainName": "四大力学（课程）",
-   "color": "#c0392b",
+   "color": "#667b99",
    "aliases": [
     "分析力学"
    ],
@@ -439,7 +439,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Advanced Quantum Mechanics",
    "domain": "c-elective",
    "domainName": "专业选修（课程）",
-   "color": "#d35400",
+   "color": "#608a8a",
    "aliases": [
     "量子力学(II)",
     "高量"
@@ -475,7 +475,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Atomic, Molecular and Optical Physics",
    "domain": "c-elective",
    "domainName": "专业选修（课程）",
-   "color": "#d35400",
+   "color": "#608a8a",
    "aliases": [
     "AMO物理"
    ],
@@ -552,7 +552,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Introduction to Astrophysics",
    "domain": "c-elective",
    "domainName": "专业选修（课程）",
-   "color": "#d35400",
+   "color": "#608a8a",
    "aliases": [
     "天体物理基础"
    ],
@@ -629,7 +629,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Advanced Computational Physics",
    "domain": "c-elective",
    "domainName": "专业选修（课程）",
-   "color": "#d35400",
+   "color": "#608a8a",
    "aliases": [
     "高等计算物理"
    ],
@@ -657,7 +657,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Fluid Mechanics",
    "domain": "c-elective",
    "domainName": "专业选修（课程）",
-   "color": "#d35400",
+   "color": "#608a8a",
    "aliases": [
     "流体力学基础"
    ],
@@ -720,7 +720,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "General Relativity",
    "domain": "c-elective",
    "domainName": "专业选修（课程）",
-   "color": "#d35400",
+   "color": "#608a8a",
    "aliases": [
     "广相"
    ],
@@ -790,7 +790,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Group Theory for Physicists",
    "domain": "c-elective",
    "domainName": "专业选修（课程）",
-   "color": "#d35400",
+   "color": "#608a8a",
    "aliases": [
     "群论(物理)"
    ],
@@ -825,7 +825,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Particle and Nuclear Physics",
    "domain": "c-elective",
    "domainName": "专业选修（课程）",
-   "color": "#d35400",
+   "color": "#608a8a",
    "aliases": [
     "粒子物理与核物理"
    ],
@@ -902,7 +902,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Fundamentals of Plasma Physics",
    "domain": "c-elective",
    "domainName": "专业选修（课程）",
-   "color": "#d35400",
+   "color": "#608a8a",
    "aliases": [
     "等离子体物理导论"
    ],
@@ -965,7 +965,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Quantum Field Theory",
    "domain": "c-elective",
    "domainName": "专业选修（课程）",
-   "color": "#d35400",
+   "color": "#608a8a",
    "aliases": [
     "QFT"
    ],
@@ -1028,7 +1028,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Introduction to Quantum Information",
    "domain": "c-elective",
    "domainName": "专业选修（课程）",
-   "color": "#d35400",
+   "color": "#608a8a",
    "aliases": [
     "量子信息基础"
    ],
@@ -1091,7 +1091,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Solid State Physics",
    "domain": "c-elective",
    "domainName": "专业选修（课程）",
-   "color": "#d35400",
+   "color": "#608a8a",
    "aliases": [
     "固体物理学"
    ],
@@ -1168,7 +1168,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Atomic Physics (Modern Physics)",
    "domain": "c-general",
    "domainName": "普通物理（课程）",
-   "color": "#e67e22",
+   "color": "#75789f",
    "aliases": [
     "近代物理",
     "原子物理学"
@@ -1239,7 +1239,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Electromagnetism",
    "domain": "c-general",
    "domainName": "普通物理（课程）",
-   "color": "#e67e22",
+   "color": "#75789f",
    "aliases": [
     "电磁学基础"
    ],
@@ -1295,7 +1295,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Mechanics",
    "domain": "c-general",
    "domainName": "普通物理（课程）",
-   "color": "#e67e22",
+   "color": "#75789f",
    "aliases": [
     "普通物理力学"
    ],
@@ -1365,7 +1365,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Optics",
    "domain": "c-general",
    "domainName": "普通物理（课程）",
-   "color": "#e67e22",
+   "color": "#75789f",
    "aliases": [
     "波动光学"
    ],
@@ -1400,7 +1400,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Thermal Physics",
    "domain": "c-general",
    "domainName": "普通物理（课程）",
-   "color": "#e67e22",
+   "color": "#75789f",
    "aliases": [
     "热力学基础"
    ],
@@ -1449,7 +1449,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Computational Physics",
    "domain": "c-lab",
    "domainName": "实验与计算（课程）",
-   "color": "#f1c40f",
+   "color": "#748f9a",
    "aliases": [
     "计算物理基础"
    ],
@@ -1498,7 +1498,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Frontier Physics Experiments (Precision Measurement)",
    "domain": "c-lab",
    "domainName": "实验与计算（课程）",
-   "color": "#f1c40f",
+   "color": "#748f9a",
    "aliases": [
     "精密测量实验",
     "综合物理实验"
@@ -1534,7 +1534,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "General Physics Laboratory",
    "domain": "c-lab",
    "domainName": "实验与计算（课程）",
-   "color": "#f1c40f",
+   "color": "#748f9a",
    "aliases": [
     "普物实验"
    ],
@@ -1569,7 +1569,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Modern Physics Laboratory",
    "domain": "c-lab",
    "domainName": "实验与计算（课程）",
-   "color": "#f1c40f",
+   "color": "#748f9a",
    "aliases": [
     "近物实验"
    ],
@@ -1618,7 +1618,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Calculus",
    "domain": "c-math",
    "domainName": "数学基础（课程）",
-   "color": "#8d9db6",
+   "color": "#9374aa",
    "aliases": [
     "微积分",
     "数学分析"
@@ -1661,7 +1661,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Linear Algebra",
    "domain": "c-math",
    "domainName": "数学基础（课程）",
-   "color": "#8d9db6",
+   "color": "#9374aa",
    "aliases": [
     "高等代数"
    ],
@@ -1703,7 +1703,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Methods of Mathematical Physics",
    "domain": "c-math",
    "domainName": "数学基础（课程）",
-   "color": "#8d9db6",
+   "color": "#9374aa",
    "aliases": [
     "数理方法",
     "数理方程"
@@ -1774,7 +1774,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Probability and Statistics",
    "domain": "c-math",
    "domainName": "数学基础（课程）",
-   "color": "#8d9db6",
+   "color": "#9374aa",
    "aliases": [
     "概率统计"
    ],
@@ -1816,7 +1816,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Atomic and Molecular Physics",
    "domain": "r-amo",
    "domainName": "原子分子与光物理",
-   "color": "#00cec9",
+   "color": "#3c9dec",
    "aliases": [
     "原子分子"
    ],
@@ -1851,7 +1851,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Laser Physics",
    "domain": "r-amo",
    "domainName": "原子分子与光物理",
-   "color": "#00cec9",
+   "color": "#3c9dec",
    "aliases": [
     "激光技术"
    ],
@@ -1893,7 +1893,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Quantum Optics",
    "domain": "r-amo",
    "domainName": "原子分子与光物理",
-   "color": "#00cec9",
+   "color": "#3c9dec",
    "aliases": [
     "量子光学"
    ],
@@ -1935,7 +1935,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Precision Spectroscopy",
    "domain": "r-amo",
    "domainName": "原子分子与光物理",
-   "color": "#00cec9",
+   "color": "#3c9dec",
    "aliases": [
     "精密测量物理"
    ],
@@ -1977,7 +1977,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Ultrafast and Strong-Field Physics",
    "domain": "r-amo",
    "domainName": "原子分子与光物理",
-   "color": "#00cec9",
+   "color": "#3c9dec",
    "aliases": [
     "阿秒物理",
     "强场物理"
@@ -2013,7 +2013,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Astronomical Instrumentation and Methods",
    "domain": "r-astro",
    "domainName": "天体物理与宇宙学",
-   "color": "#6c5ce7",
+   "color": "#593cec",
    "aliases": [
     "天文技术与方法"
    ],
@@ -2048,7 +2048,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Cosmology",
    "domain": "r-astro",
    "domainName": "天体物理与宇宙学",
-   "color": "#6c5ce7",
+   "color": "#593cec",
    "aliases": [
     "物理宇宙学"
    ],
@@ -2104,7 +2104,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Planetary Science and Exoplanets",
    "domain": "r-astro",
    "domainName": "天体物理与宇宙学",
-   "color": "#6c5ce7",
+   "color": "#593cec",
    "aliases": [
     "系外行星"
    ],
@@ -2132,7 +2132,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Galaxy Astrophysics",
    "domain": "r-astro",
    "domainName": "天体物理与宇宙学",
-   "color": "#6c5ce7",
+   "color": "#593cec",
    "aliases": [
     "星系天文学"
    ],
@@ -2167,7 +2167,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "High-Energy Astrophysics",
    "domain": "r-astro",
    "domainName": "天体物理与宇宙学",
-   "color": "#6c5ce7",
+   "color": "#593cec",
    "aliases": [
     "高能天体"
    ],
@@ -2223,7 +2223,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Stellar Physics",
    "domain": "r-astro",
    "domainName": "天体物理与宇宙学",
-   "color": "#6c5ce7",
+   "color": "#593cec",
    "aliases": [
     "恒星结构与演化"
    ],
@@ -2258,7 +2258,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Materials Science",
    "domain": "r-condmat",
    "domainName": "凝聚态物理",
-   "color": "#16a085",
+   "color": "#166ada",
    "aliases": [
     "计算材料学"
    ],
@@ -2293,7 +2293,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Mesoscopic and Nanoscale Physics",
    "domain": "r-condmat",
    "domainName": "凝聚态物理",
-   "color": "#16a085",
+   "color": "#166ada",
    "aliases": [
     "介观物理"
    ],
@@ -2335,7 +2335,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Semiconductor Physics",
    "domain": "r-condmat",
    "domainName": "凝聚态物理",
-   "color": "#16a085",
+   "color": "#166ada",
    "aliases": [
     "半导体"
    ],
@@ -2377,7 +2377,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Magnetism and Spintronics",
    "domain": "r-condmat",
    "domainName": "凝聚态物理",
-   "color": "#16a085",
+   "color": "#166ada",
    "aliases": [
     "自旋电子学"
    ],
@@ -2412,7 +2412,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Strongly Correlated Electrons",
    "domain": "r-condmat",
    "domainName": "凝聚态物理",
-   "color": "#16a085",
+   "color": "#166ada",
    "aliases": [
     "强关联体系"
    ],
@@ -2468,7 +2468,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Superconductivity",
    "domain": "r-condmat",
    "domainName": "凝聚态物理",
-   "color": "#16a085",
+   "color": "#166ada",
    "aliases": [
     "超导"
    ],
@@ -2503,7 +2503,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Atmospheric Physics",
    "domain": "r-earth",
    "domainName": "地球、大气与空间物理",
-   "color": "#57606f",
+   "color": "#3cece6",
    "aliases": [
     "大气科学物理"
    ],
@@ -2559,7 +2559,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Solid Earth Geophysics",
    "domain": "r-earth",
    "domainName": "地球、大气与空间物理",
-   "color": "#57606f",
+   "color": "#3cece6",
    "aliases": [
     "地球内部物理"
    ],
@@ -2601,7 +2601,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Physical Oceanography",
    "domain": "r-earth",
    "domainName": "地球、大气与空间物理",
-   "color": "#57606f",
+   "color": "#3cece6",
    "aliases": [
     "物理海洋学"
    ],
@@ -2650,7 +2650,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Fluid Dynamics",
    "domain": "r-fluid",
    "domainName": "流体与非线性科学",
-   "color": "#3498db",
+   "color": "#16c9da",
    "aliases": [
     "流体力学研究"
    ],
@@ -2678,7 +2678,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Nonlinear Dynamics and Chaos",
    "domain": "r-fluid",
    "domainName": "流体与非线性科学",
-   "color": "#3498db",
+   "color": "#16c9da",
    "aliases": [
     "混沌"
    ],
@@ -2720,7 +2720,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Pattern Formation",
    "domain": "r-fluid",
    "domainName": "流体与非线性科学",
-   "color": "#3498db",
+   "color": "#16c9da",
    "aliases": [
     "斑图动力学"
    ],
@@ -2762,7 +2762,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Turbulence",
    "domain": "r-fluid",
    "domainName": "流体与非线性科学",
-   "color": "#3498db",
+   "color": "#16c9da",
    "aliases": [
     "湍流研究"
    ],
@@ -2811,7 +2811,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Black Hole Physics",
    "domain": "r-gravity",
    "domainName": "引力与量子引力",
-   "color": "#2980b9",
+   "color": "#1f16da",
    "aliases": [
     "黑洞"
    ],
@@ -2853,7 +2853,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Gravitational Waves",
    "domain": "r-gravity",
    "domainName": "引力与量子引力",
-   "color": "#2980b9",
+   "color": "#1f16da",
    "aliases": [
     "引力波物理"
    ],
@@ -2895,7 +2895,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Numerical Relativity",
    "domain": "r-gravity",
    "domainName": "引力与量子引力",
-   "color": "#2980b9",
+   "color": "#1f16da",
    "aliases": [
     "数值相对论模拟"
    ],
@@ -2937,7 +2937,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Quantum Gravity",
    "domain": "r-gravity",
    "domainName": "引力与量子引力",
-   "color": "#2980b9",
+   "color": "#1f16da",
    "aliases": [
     "量子引力理论"
    ],
@@ -2993,7 +2993,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Experimental Particle Physics",
    "domain": "r-hep",
    "domainName": "高能物理",
-   "color": "#e84393",
+   "color": "#3c49ec",
    "aliases": [
     "高能实验"
    ],
@@ -3035,7 +3035,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Particle Phenomenology",
    "domain": "r-hep",
    "domainName": "高能物理",
-   "color": "#e84393",
+   "color": "#3c49ec",
    "aliases": [
     "粒子唯象"
    ],
@@ -3084,7 +3084,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Formal High-Energy Theory",
    "domain": "r-hep",
    "domainName": "高能物理",
-   "color": "#e84393",
+   "color": "#3c49ec",
    "aliases": [
     "弦论",
     "形式高能理论"
@@ -3120,7 +3120,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Lattice Field Theory",
    "domain": "r-hep",
    "domainName": "高能物理",
-   "color": "#e84393",
+   "color": "#3c49ec",
    "aliases": [
     "格点QCD"
    ],
@@ -3162,7 +3162,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Heavy-Ion Physics",
    "domain": "r-nuclear",
    "domainName": "核物理",
-   "color": "#b33771",
+   "color": "#163bda",
    "aliases": [
     "相对论重离子碰撞"
    ],
@@ -3204,7 +3204,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Nuclear Astrophysics",
    "domain": "r-nuclear",
    "domainName": "核物理",
-   "color": "#b33771",
+   "color": "#163bda",
    "aliases": [
     "核天体"
    ],
@@ -3246,7 +3246,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Nuclear Reactions",
    "domain": "r-nuclear",
    "domainName": "核物理",
-   "color": "#b33771",
+   "color": "#163bda",
    "aliases": [
     "原子核反应"
    ],
@@ -3281,7 +3281,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Nuclear Structure",
    "domain": "r-nuclear",
    "domainName": "核物理",
-   "color": "#b33771",
+   "color": "#163bda",
    "aliases": [
     "原子核结构"
    ],
@@ -3309,7 +3309,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Inertial Confinement Fusion & HEDP",
    "domain": "r-plasma",
    "domainName": "等离子体物理",
-   "color": "#e17055",
+   "color": "#169ada",
    "aliases": [
     "惯性约束聚变",
     "高能量密度物理"
@@ -3352,7 +3352,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Laser-Plasma Physics",
    "domain": "r-plasma",
    "domainName": "等离子体物理",
-   "color": "#e17055",
+   "color": "#169ada",
    "aliases": [
     "激光等离子体相互作用"
    ],
@@ -3394,7 +3394,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Magnetic Confinement Fusion",
    "domain": "r-plasma",
    "domainName": "等离子体物理",
-   "color": "#e17055",
+   "color": "#169ada",
    "aliases": [
     "托卡马克"
    ],
@@ -3429,7 +3429,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Space Plasma Physics",
    "domain": "r-plasma",
    "domainName": "等离子体物理",
-   "color": "#e17055",
+   "color": "#169ada",
    "aliases": [
     "空间物理"
    ],
@@ -3471,7 +3471,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Cold Atoms and Quantum Gases",
    "domain": "r-quantum",
    "domainName": "量子物理与量子信息",
-   "color": "#8e44ad",
+   "color": "#3c73ec",
    "aliases": [
     "超冷原子"
    ],
@@ -3513,7 +3513,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Quantum Computing",
    "domain": "r-quantum",
    "domainName": "量子物理与量子信息",
-   "color": "#8e44ad",
+   "color": "#3c73ec",
    "aliases": [
     "量子计算机"
    ],
@@ -3569,7 +3569,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Quantum Communication",
    "domain": "r-quantum",
    "domainName": "量子物理与量子信息",
-   "color": "#8e44ad",
+   "color": "#3c73ec",
    "aliases": [
     "量子保密通信"
    ],
@@ -3604,7 +3604,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Quantum Metrology and Sensing",
    "domain": "r-quantum",
    "domainName": "量子物理与量子信息",
-   "color": "#8e44ad",
+   "color": "#3c73ec",
    "aliases": [
     "量子传感"
    ],
@@ -3646,7 +3646,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Quantum Simulation",
    "domain": "r-quantum",
    "domainName": "量子物理与量子信息",
-   "color": "#8e44ad",
+   "color": "#3c73ec",
    "aliases": [
     "量子模拟器"
    ],
@@ -3695,7 +3695,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Biological Physics",
    "domain": "r-softbio",
    "domainName": "软物质与生物物理",
-   "color": "#f368e0",
+   "color": "#16dabd",
    "aliases": [
     "生物物理学"
    ],
@@ -3730,7 +3730,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Medical Physics",
    "domain": "r-softbio",
    "domainName": "软物质与生物物理",
-   "color": "#f368e0",
+   "color": "#16dabd",
    "aliases": [
     "医学物理学"
    ],
@@ -3765,7 +3765,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Soft Matter Physics",
    "domain": "r-softbio",
    "domainName": "软物质与生物物理",
-   "color": "#f368e0",
+   "color": "#16dabd",
    "aliases": [
     "软凝聚态"
    ],
@@ -3814,7 +3814,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Complex Systems",
    "domain": "r-statphys",
    "domainName": "统计物理与复杂系统",
-   "color": "#2ecc71",
+   "color": "#3cc7ec",
    "aliases": [
     "交叉科学"
    ],
@@ -3849,7 +3849,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Non-Equilibrium Statistical Mechanics",
    "domain": "r-statphys",
    "domainName": "统计物理与复杂系统",
-   "color": "#2ecc71",
+   "color": "#3cc7ec",
    "aliases": [
     "非平衡态"
    ],
@@ -3898,7 +3898,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Phase Transitions and Critical Phenomena",
    "domain": "r-statphys",
    "domainName": "统计物理与复杂系统",
-   "color": "#2ecc71",
+   "color": "#3cc7ec",
    "aliases": [
     "临界现象"
    ],
@@ -3933,7 +3933,7 @@ window.PHYSICS_GRAPH = {
    "nameEn": "Stochastic Processes",
    "domain": "r-statphys",
    "domainName": "统计物理与复杂系统",
-   "color": "#2ecc71",
+   "color": "#3cc7ec",
    "aliases": [
     "随机动力学"
    ],

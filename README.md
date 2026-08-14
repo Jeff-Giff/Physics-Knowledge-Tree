@@ -22,7 +22,7 @@
 - **节点详情**：Markdown + **KaTeX 公式**渲染；连线按"先修知识 / 后续知识 / 相关知识点"分组展示，一键跳转。
 - **搜索**：按名称 / 英文名 / 别名 / 标签 / 关键词模糊检索。
 - **树状学习图**：左侧缩进树记录访问路径；按相关度自动挂载、支持拖拽整理；可命名保存、森林载入（`localStorage` 长期保存）。
-- **领域体系**：17 个类别（课程层 5 子类 + 研究层 12 类）、17 种配色、可逐域显隐。
+- **领域体系**：17 个类别（课程层 5 子类 + 研究层 12 类），课程低饱和度偏灰、研究方向高饱和；色相按学科分区间（数学=紫、物理=蓝紫至蓝绿、化学=绿至黄绿预留），可逐域显隐。
 
 ## 🚀 快速开始
 
@@ -76,7 +76,7 @@ physics-knowledge-tree/
 
 1. 把仓库推送到 GitHub。
 2. 进入仓库 **Settings → Pages**，在"Build and deployment"中把 **Source 选为 "GitHub Actions"**。
-3. Go to the Actions tab and run the workflow named "Deploy to GitHub Pages"(associated w/ pages.yml).
+3. 推送到 `main` 后，Pages 工作流会自动部署；在线地址为 `https://<用户名>.github.io/<仓库名>/`。
 
 ## 📊 当前规模
 
