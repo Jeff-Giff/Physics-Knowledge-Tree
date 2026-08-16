@@ -8,7 +8,7 @@
 ![license](https://img.shields.io/badge/license-GPL--3.0-blue)
 ![nodes](https://img.shields.io/badge/nodes-190-blue)
 
-> 🌐 在线预览（若已启用 GitHub Pages）：`https://<用户名>.github.io/<仓库名>/`
+> 🌐 在线预览：[https://jeff-giff.github.io/Physics-Knowledge-Tree/](https://jeff-giff.github.io/Physics-Knowledge-Tree/)
 >
 > 部署方式见下文"GitHub Pages"。
 
