@@ -120,6 +120,19 @@ def main():
     domains = meta["domains"]
     max_visual_degree = int(meta.get("max_visual_degree", 8))
 
+    # ---- 加载管理员名单 ----
+    admins_path = os.path.join(CONTENT_DIR, "_admins.yaml")
+    admins = []
+    if os.path.isfile(admins_path):
+        with open(admins_path, "r", encoding="utf-8") as f:
+            adm = yaml.safe_load(f) or {}
+        admins = [str(a).strip().lower() for a in (adm.get("admins", []) or []) if str(a).strip()]
+    else:
+        warn("缺少 content/_admins.yaml，管理员名单为空")
+
+    # 推荐资料 type 枚举
+    RESOURCE_TYPES = {"教材", "公开课", "论文", "笔记", "工具"}
+
     nodes_by_id = {}  # id -> node dict (raw)
     file_of = {}  # id -> rel path
     order = []  # 保持文件顺序
@@ -208,6 +221,45 @@ def main():
         fixed = bool(fm.get("fixed", False))
         size = fm.get("size")
 
+        # 解析并校验 resources
+        raw_resources = fm.get("resources", []) or []
+        resources = []
+        seen_titles = set()
+        if isinstance(raw_resources, list):
+            for idx, r in enumerate(raw_resources):
+                if not isinstance(r, dict):
+                    warn(f"[{rel}] resources[{idx}] 应为字典，跳过")
+                    continue
+                rtitle = str(r.get("title", "")).strip()
+                rurl = str(r.get("url", "")).strip()
+                rtype = str(r.get("type", "")).strip()
+                if not rtitle:
+                    warn(f"[{rel}] resources[{idx}] 缺少 title，跳过")
+                    continue
+                if not rurl:
+                    warn(f"[{rel}] resources[{idx}] 缺少 url，跳过")
+                    continue
+                if not rurl.startswith("https://"):
+                    warn(f"[{rel}] resources[{idx}] url 必须以 https:// 开头：{rurl}")
+                    continue
+                if rtype and rtype not in RESOURCE_TYPES:
+                    warn(f"[{rel}] resources[{idx}] type '{rtype}' 不在枚举内（{' / '.join(sorted(RESOURCE_TYPES))}），已保留")
+                if rtitle in seen_titles:
+                    warn(f"[{rel}] resources 存在重复 title：'{rtitle}'，保留首个")
+                    continue
+                seen_titles.add(rtitle)
+                resources.append({
+                    "title": rtitle,
+                    "type": rtype or "",
+                    "url": rurl,
+                    "note": str(r.get("note", "")).strip(),
+                })
+            if len(resources) > 10:
+                warn(f"[{rel}] resources 条目数 {len(resources)} 超过 10，已截断")
+                resources = resources[:10]
+        else:
+            warn(f"[{rel}] resources 应为列表，已忽略")
+
         node = {
             "id": nid,
             "name": name,
@@ -217,6 +269,7 @@ def main():
             "tags": tags,
             "keywords": keywords,
             "updated": str(fm.get("updated", "")).strip(),
+            "resources": resources,
             "pos": pos,
             "fixed": fixed,
             "size_override": size,
@@ -384,6 +437,7 @@ def main():
                     }
                     for x in soft_out
                 ],
+                "resources": node["resources"],
             }
         )
 
@@ -419,6 +473,7 @@ def main():
     ]
 
     graph = {
+        "admins": admins,
         "meta": {
             "site": meta.get("site", {}),
             "domains": {
@@ -454,6 +509,8 @@ def main():
     n_soft = sum(1 for l in out_links if l["soft"])
     n_prereq = sum(1 for l in out_links if l["type"] == REL_PREREQ)
     n_related = sum(1 for l in out_links if l["type"] == REL_RELATED)
+    n_res_nodes = sum(1 for n in out_nodes if n.get("resources"))
+    n_res_total = sum(len(n.get("resources", [])) for n in out_nodes)
 
     lines = []
     lines.append("=" * 60)
@@ -463,6 +520,7 @@ def main():
         f"  边数        : {len(out_links)}（先修 {n_prereq} / 相关 {n_related}；"
         f"可视 {n_visual} / 软连接 {n_soft}）"
     )
+    lines.append(f"  推荐资料    : 覆盖 {n_res_nodes}/{len(out_nodes)} 节点 · 共 {n_res_total} 条 · 管理员 {len(admins)} 人")
     lines.append(f"  输出文件    : {os.path.relpath(OUT_FILE, ROOT)}")
     if warnings:
         lines.append(f"  警告数      : {len(warnings)}")

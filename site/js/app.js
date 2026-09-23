@@ -782,8 +782,38 @@ window.KTApp = (() => {
 
     updateStat();
 
+    // 初始化登录模块
+    initAuth();
+
     dom.loading.classList.add('fade');
     setTimeout(() => dom.loading.remove(), 700);
+  }
+
+  function initAuth() {
+    const auth = window.KTAuth;
+    const loginBtn = document.getElementById('btn-login');
+    const userName = document.getElementById('user-name');
+    if (!auth || !loginBtn) return;
+
+    function updateAuthUI(loggedIn, user, isAdmin) {
+      const t = window.KTI18n.t;
+      if (loggedIn && user) {
+        loginBtn.textContent = t('logout_btn');
+        loginBtn.style.display = '';
+        loginBtn.onclick = () => auth.logout();
+        userName.textContent = isAdmin ? `@${user.login} (admin)` : `@${user.login}`;
+      } else {
+        loginBtn.textContent = t('login_btn');
+        loginBtn.style.display = '';
+        loginBtn.onclick = () => auth.login();
+        userName.textContent = '';
+      }
+    }
+
+    auth.onChange(updateAuthUI);
+    auth.init().then(() => {
+      updateAuthUI(auth.isLoggedIn(), auth.getUser(), auth.isAdmin());
+    });
   }
 
   if (document.readyState === 'loading') {

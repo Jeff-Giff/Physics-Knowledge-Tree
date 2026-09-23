@@ -521,6 +521,16 @@ html, body {
 .katex { font-size: 1.12em; }
 .katex-display { margin: 10px 0; overflow-x: auto; overflow-y: hidden; padding: 4px 0; }
 
+/* ---------------- 推荐资料 ---------------- */
+.sec-resources { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); }
+.sec-resources .lbl { font-size: 13px; font-weight: 600; color: var(--fg-dim); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+.res-group { margin-bottom: 10px; }
+.res-group-title { font-size: 12px; color: var(--accent); margin-bottom: 4px; font-weight: 500; }
+.res-item { margin: 4px 0; font-size: 13px; line-height: 1.5; }
+.res-link { color: var(--accent); text-decoration: none; word-break: break-all; }
+.res-link:hover { text-decoration: underline; }
+.res-note { color: var(--fg-dim); font-size: 12px; margin-left: 6px; }
+
 @media (max-width: 720px) {
   .brand .subtitle { display: none; }
   .brand { min-width: 90px; }

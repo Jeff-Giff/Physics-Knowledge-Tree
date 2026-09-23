@@ -1,0 +1,5 @@
+# 管理员名单
+# 只有这里的 GitHub 用户名（小写）才能看到编辑推荐按钮
+# 管理员增减 = 改此文件后重新运行 python build.py
+admins:
+  - jeff-giff

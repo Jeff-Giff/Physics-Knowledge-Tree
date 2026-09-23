@@ -45,6 +45,28 @@ window.KTDetail = (() => {
     // 正文
     html += `<div class="sec-body" id="body-md"></div>`;
 
+    // 推荐资料
+    const resources = n.resources || [];
+    if (resources.length) {
+      const byType = {};
+      resources.forEach(r => {
+        const tk = r.type || t('res_type_note');
+        (byType[tk] = byType[tk] || []).push(r);
+      });
+      html += `<div class="sec-resources"><div class="lbl">${esc(t('res_title'))}</div>`;
+      Object.entries(byType).forEach(([type, list]) => {
+        html += `<div class="res-group"><div class="res-group-title">${esc(type)}</div>`;
+        list.forEach(r => {
+          html += `<div class="res-item">
+            <a class="res-link" href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.title)}</a>
+            ${r.note ? `<span class="res-note">${esc(r.note)}</span>` : ''}
+          </div>`;
+        });
+        html += `</div>`;
+      });
+      html += `</div>`;
+    }
+
     // 连线（二元关系：先修 / 相关），先修在前
     const links = n.links || [];
     const prereqOut = links.filter(l => l.type === 'prereq' && l.dir === 'out');
@@ -95,6 +117,11 @@ window.KTDetail = (() => {
       html += `</div>`;
     }
 
+    // 编辑按钮（仅管理员可见）
+    html += `<div id="res-edit-wrap" style="display:none;margin-top:8px;">
+      <button id="res-edit-btn" class="btn" style="font-size:13px;padding:4px 10px;">${esc(t('res_edit'))}</button>
+    </div>`;
+
     // 脚注
     html += `<div class="sec-foot">${
       t('det_foot', { id: n.id, domain: domainText, links: n.links ? n.links.length : 0 })
@@ -118,6 +145,25 @@ window.KTDetail = (() => {
         }
       });
     });
+
+    // 绑定编辑按钮
+    const editWrap = $('#res-edit-wrap', scroll);
+    const editBtn = $('#res-edit-btn', scroll);
+    if (editWrap && editBtn) {
+      function updateEditBtn() {
+        const auth = window.KTAuth;
+        if (auth && auth.isAdmin()) {
+          editWrap.style.display = 'block';
+          editBtn.onclick = () => {
+            if (window.KTResourceEditor) window.KTResourceEditor.open(currentId);
+          };
+        } else {
+          editWrap.style.display = 'none';
+        }
+      }
+      updateEditBtn();
+      if (window.KTAuth) window.KTAuth.onChange(updateEditBtn);
+    }
 
     drawer.classList.remove('closed');
   }

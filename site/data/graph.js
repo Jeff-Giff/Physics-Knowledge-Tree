@@ -1,5 +1,8 @@
 /* 由 build.py 自动生成，请勿手动修改。修改 content/ 后重新运行 python build.py */
 window.PHYSICS_GRAPH = {
+ "admins": [
+  "jeff-giff"
+ ],
  "meta": {
   "site": {
    "title": "中文物理知识树",
@@ -342,7 +345,8 @@ window.PHYSICS_GRAPH = {
      "note": "生物分子的物理研究（折叠动力学、单分子）"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-bioinfo",
@@ -405,7 +409,8 @@ window.PHYSICS_GRAPH = {
      "note": "算法与编程训练"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-cell-bio",
@@ -473,7 +478,8 @@ window.PHYSICS_GRAPH = {
      "note": "细胞过程的分子基础"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-dev-bio",
@@ -506,7 +512,8 @@ window.PHYSICS_GRAPH = {
      "note": "基因调控"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-ecology",
@@ -546,7 +553,8 @@ window.PHYSICS_GRAPH = {
      "note": "种群统计与数据分析"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-gen-bio",
@@ -616,7 +624,8 @@ window.PHYSICS_GRAPH = {
      "note": "生命的化学基础（生物分子、能量与酶）"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-genetics",
@@ -677,7 +686,8 @@ window.PHYSICS_GRAPH = {
      "note": "基因调控"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-microbiology",
@@ -710,7 +720,8 @@ window.PHYSICS_GRAPH = {
      "note": "微生物类群"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-molecular-bio",
@@ -764,7 +775,8 @@ window.PHYSICS_GRAPH = {
      "note": "基因操作"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-physiology",
@@ -811,7 +823,8 @@ window.PHYSICS_GRAPH = {
      "note": "课程基础"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-analytical",
@@ -853,7 +866,8 @@ window.PHYSICS_GRAPH = {
      "note": "定量分析基础"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-gen-chem",
@@ -924,7 +938,8 @@ window.PHYSICS_GRAPH = {
      "note": "生命的化学基础（生物分子、能量与酶）"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-inorganic",
@@ -964,7 +979,8 @@ window.PHYSICS_GRAPH = {
      "note": "固体无机化学"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-instrumental",
@@ -1006,7 +1022,8 @@ window.PHYSICS_GRAPH = {
      "note": "光谱仪器的物理原理"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-organic",
@@ -1060,7 +1077,8 @@ window.PHYSICS_GRAPH = {
      "note": "课程基础"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-phys-chem",
@@ -1137,7 +1155,8 @@ window.PHYSICS_GRAPH = {
      "note": "物理系热学/热力学与化学热力学同源"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-polymer-chem",
@@ -1179,7 +1198,8 @@ window.PHYSICS_GRAPH = {
      "note": "课程基础"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-struct-chem",
@@ -1228,7 +1248,8 @@ window.PHYSICS_GRAPH = {
      "note": "量子力学是结构化学的理论框架（薛定谔方程、轨道）"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-electrodynamics",
@@ -1298,7 +1319,8 @@ window.PHYSICS_GRAPH = {
      "note": "相对论性表述需要分析力学语言"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-quantum-mechanics",
@@ -1396,7 +1418,8 @@ window.PHYSICS_GRAPH = {
      "note": "量子力学是结构化学的理论框架（薛定谔方程、轨道）"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-statistical-mechanics",
@@ -1495,7 +1518,8 @@ window.PHYSICS_GRAPH = {
      "note": "统计力学的概率模型（伊辛模型、渗流）"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-theoretical-mechanics",
@@ -1565,7 +1589,8 @@ window.PHYSICS_GRAPH = {
      "note": "混沌理论根植于动力学系统"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-ai-intro",
@@ -1614,7 +1639,8 @@ window.PHYSICS_GRAPH = {
      "note": "课程基础"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-algorithms",
@@ -1663,7 +1689,8 @@ window.PHYSICS_GRAPH = {
      "note": "连续优化与组合优化的交汇"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-compilers",
@@ -1705,7 +1732,8 @@ window.PHYSICS_GRAPH = {
      "note": "语言实现"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-computer-arch",
@@ -1747,7 +1775,8 @@ window.PHYSICS_GRAPH = {
      "note": "硬件基础"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-data-structures",
@@ -1822,7 +1851,8 @@ window.PHYSICS_GRAPH = {
      "note": "编程与几何数据结构"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-database",
@@ -1857,7 +1887,8 @@ window.PHYSICS_GRAPH = {
      "note": "课程基础"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-discrete-math",
@@ -1913,7 +1944,8 @@ window.PHYSICS_GRAPH = {
      "note": "组合计数方法的深化"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-ml",
@@ -1983,7 +2015,8 @@ window.PHYSICS_GRAPH = {
      "note": "学习控制"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-networks-course",
@@ -2032,7 +2065,8 @@ window.PHYSICS_GRAPH = {
      "note": "网络栈与 socket 编程"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-os",
@@ -2081,7 +2115,8 @@ window.PHYSICS_GRAPH = {
      "note": "网络栈与 socket 编程"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-programming",
@@ -2124,7 +2159,8 @@ window.PHYSICS_GRAPH = {
      "note": "计算思维与数学基础相互促进"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-advanced-qm",
@@ -2160,7 +2196,8 @@ window.PHYSICS_GRAPH = {
      "note": "本课程是量子力学的深化"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-amo-course",
@@ -2237,7 +2274,8 @@ window.PHYSICS_GRAPH = {
      "note": "课程基础"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-astro-intro",
@@ -2314,7 +2352,8 @@ window.PHYSICS_GRAPH = {
      "note": "课程基础"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-computational-adv",
@@ -2342,7 +2381,8 @@ window.PHYSICS_GRAPH = {
      "note": "本课程是计算物理的深化"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-fluid",
@@ -2419,7 +2459,8 @@ window.PHYSICS_GRAPH = {
      "note": "课程基础"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-gr",
@@ -2496,7 +2537,8 @@ window.PHYSICS_GRAPH = {
      "note": "广义相对论的数学语言（黎曼几何）"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-group-theory",
@@ -2538,7 +2580,8 @@ window.PHYSICS_GRAPH = {
      "note": "物理系的群论课程聚焦其在对称性中的应用"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-particle-nuclear",
@@ -2615,7 +2658,8 @@ window.PHYSICS_GRAPH = {
      "note": "课程基础"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-plasma-intro",
@@ -2678,7 +2722,8 @@ window.PHYSICS_GRAPH = {
      "note": "课程基础"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-qft",
@@ -2741,7 +2786,8 @@ window.PHYSICS_GRAPH = {
      "note": "量子化方法是场论方法"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-quantum-info-intro",
@@ -2804,7 +2850,8 @@ window.PHYSICS_GRAPH = {
      "note": "课程基础"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-solid-state",
@@ -2888,7 +2935,8 @@ window.PHYSICS_GRAPH = {
      "note": "固体物理提供微观理论（能带、缺陷）"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-circuits",
@@ -2937,7 +2985,8 @@ window.PHYSICS_GRAPH = {
      "note": "电路是电磁场的集总近似"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-control-principles",
@@ -2979,7 +3028,8 @@ window.PHYSICS_GRAPH = {
      "note": "微分方程建模"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-electronics",
@@ -3022,7 +3072,8 @@ window.PHYSICS_GRAPH = {
      "note": "器件与电路"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-eng-mechanics",
@@ -3071,7 +3122,8 @@ window.PHYSICS_GRAPH = {
      "note": "力学基础"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-eng-thermo",
@@ -3104,7 +3156,8 @@ window.PHYSICS_GRAPH = {
      "note": "工程热力学"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-materials-fund",
@@ -3146,7 +3199,8 @@ window.PHYSICS_GRAPH = {
      "note": "固体物理提供微观理论（能带、缺陷）"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-atomic",
@@ -3217,7 +3271,8 @@ window.PHYSICS_GRAPH = {
      "note": "电离辐射与成像的物理基础"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-electromagnetism",
@@ -3280,7 +3335,8 @@ window.PHYSICS_GRAPH = {
      "note": "电路是电磁场的集总近似"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-mechanics",
@@ -3357,7 +3413,8 @@ window.PHYSICS_GRAPH = {
      "note": "弹性波与应力场的基础"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-optics",
@@ -3399,7 +3456,8 @@ window.PHYSICS_GRAPH = {
      "note": "光谱仪器的物理原理"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-thermo",
@@ -3462,7 +3520,8 @@ window.PHYSICS_GRAPH = {
      "note": "物理系热学/热力学与化学热力学同源"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-comm-principles",
@@ -3502,7 +3561,8 @@ window.PHYSICS_GRAPH = {
      "note": "课程基础"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-dsp",
@@ -3544,7 +3604,8 @@ window.PHYSICS_GRAPH = {
      "note": "课程基础"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-image-processing",
@@ -3584,7 +3645,8 @@ window.PHYSICS_GRAPH = {
      "note": "底层图像处理基础"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-info-theory-course",
@@ -3619,7 +3681,8 @@ window.PHYSICS_GRAPH = {
      "note": "数学方向的信息论研究（容量证明与编码构造）"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-signals",
@@ -3680,7 +3743,8 @@ window.PHYSICS_GRAPH = {
      "note": "微分方程刻画线性时不变系统"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-computational",
@@ -3750,7 +3814,8 @@ window.PHYSICS_GRAPH = {
      "note": "物理系的计算物理课程侧重物理问题建模"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-frontier-lab",
@@ -3786,7 +3851,8 @@ window.PHYSICS_GRAPH = {
      "note": "精密测量实验训练"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-general-lab",
@@ -3821,7 +3887,8 @@ window.PHYSICS_GRAPH = {
      "note": "需要先修完基础实验训练"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-modern-lab",
@@ -3870,7 +3937,8 @@ window.PHYSICS_GRAPH = {
      "note": "计数统计与误差分析需要概率论"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-calculus",
@@ -3963,7 +4031,8 @@ window.PHYSICS_GRAPH = {
      "dir": null,
      "note": "工科高等数学的严格化与深化（极限的 ε-δ 理论）"
     }
-   ]
+   ],
+   "resources": []
   },
   {
    "id": "c-linear-algebra",
@@ -4033,7 +4102,8 @@ window.PHYSICS_GRAPH = {
      "note": "工科线性代数的深化（多项式理论与抽象线性空间）"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-math-methods",
@@ -4125,7 +4195,8 @@ window.PHYSICS_GRAPH = {
      "note": "物理系数理方法覆盖三类经典方程的解法"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-probability",
@@ -4237,7 +4308,8 @@ window.PHYSICS_GRAPH = {
      "note": "种群统计与数据分析"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-abstract-algebra",
@@ -4293,7 +4365,8 @@ window.PHYSICS_GRAPH = {
      "note": "物理系的群论课程聚焦其在对称性中的应用"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-advanced-algebra",
@@ -4370,7 +4443,8 @@ window.PHYSICS_GRAPH = {
      "note": "工科线性代数的深化（多项式理论与抽象线性空间）"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-analytic-geometry",
@@ -4398,7 +4472,8 @@ window.PHYSICS_GRAPH = {
      "note": "为古典微分几何提供曲线曲面的几何直观"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-complex-analysis",
@@ -4440,7 +4515,8 @@ window.PHYSICS_GRAPH = {
      "note": "傅里叶/拉普拉斯变换的复分析背景"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-differential-geometry",
@@ -4494,7 +4570,8 @@ window.PHYSICS_GRAPH = {
      "note": "广义相对论的数学语言（黎曼几何）"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-functional-analysis",
@@ -4555,7 +4632,8 @@ window.PHYSICS_GRAPH = {
      "note": "量子力学的数学框架（希尔伯特空间与算子谱理论）"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-math-analysis",
@@ -4640,7 +4718,8 @@ window.PHYSICS_GRAPH = {
      "dir": null,
      "note": "工科高等数学的严格化与深化（极限的 ε-δ 理论）"
     }
-   ]
+   ],
+   "resources": []
   },
   {
    "id": "c-numerical-analysis",
@@ -4689,7 +4768,8 @@ window.PHYSICS_GRAPH = {
      "note": "物理系的计算物理课程侧重物理问题建模"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-ode",
@@ -4752,7 +4832,8 @@ window.PHYSICS_GRAPH = {
      "note": "微分方程刻画线性时不变系统"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-pde",
@@ -4802,7 +4883,8 @@ window.PHYSICS_GRAPH = {
      "note": "物理系数理方法覆盖三类经典方程的解法"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-real-analysis",
@@ -4852,7 +4934,8 @@ window.PHYSICS_GRAPH = {
      "note": "测度论框架"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "c-topology",
@@ -4894,7 +4977,8 @@ window.PHYSICS_GRAPH = {
      "note": "基本群与同调"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-atommol",
@@ -4936,7 +5020,8 @@ window.PHYSICS_GRAPH = {
      "note": "精密测量原子分子结构"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-laser",
@@ -4978,7 +5063,8 @@ window.PHYSICS_GRAPH = {
      "note": "超快激光是直接延伸"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-qoptics",
@@ -5020,7 +5106,8 @@ window.PHYSICS_GRAPH = {
      "note": "光子是量子计算的载体之一"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-spectroscopy",
@@ -5069,7 +5156,8 @@ window.PHYSICS_GRAPH = {
      "note": "原子钟与频率测量"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-ultrafast",
@@ -5105,7 +5193,8 @@ window.PHYSICS_GRAPH = {
      "note": "超快激光是直接延伸"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-astro-instrument",
@@ -5140,7 +5229,8 @@ window.PHYSICS_GRAPH = {
      "note": "高能探测器是主要应用对象"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-cosmology",
@@ -5196,7 +5286,8 @@ window.PHYSICS_GRAPH = {
      "note": "普朗克时期需要量子引力"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-exoplanet",
@@ -5224,7 +5315,8 @@ window.PHYSICS_GRAPH = {
      "note": "课程基础"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-galaxy",
@@ -5259,7 +5351,8 @@ window.PHYSICS_GRAPH = {
      "note": "星系形成嵌在宇宙学框架中"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-he-astro",
@@ -5315,7 +5408,8 @@ window.PHYSICS_GRAPH = {
      "note": "核过程决定高能辐射机制"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-stellar",
@@ -5350,7 +5444,8 @@ window.PHYSICS_GRAPH = {
      "note": "恒星核燃烧即核天体物理"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-biomolecules",
@@ -5385,7 +5480,8 @@ window.PHYSICS_GRAPH = {
      "note": "蛋白质折叠与生物大分子的软物质物理"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-cell-behavior",
@@ -5420,7 +5516,8 @@ window.PHYSICS_GRAPH = {
      "note": "细胞集体行为构成组织功能"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-genomics",
@@ -5455,7 +5552,8 @@ window.PHYSICS_GRAPH = {
      "note": "遗传学"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-mol-networks",
@@ -5497,7 +5595,8 @@ window.PHYSICS_GRAPH = {
      "note": "复杂网络理论与生物网络"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-quant-bio",
@@ -5539,7 +5638,8 @@ window.PHYSICS_GRAPH = {
      "note": "高维统计方法的主要来源"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-subcellular",
@@ -5574,7 +5674,8 @@ window.PHYSICS_GRAPH = {
      "note": "细胞结构"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-neuro",
@@ -5609,7 +5710,8 @@ window.PHYSICS_GRAPH = {
      "note": "神经生理"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-pop-evolution",
@@ -5652,7 +5754,8 @@ window.PHYSICS_GRAPH = {
      "note": "生态系统是远平衡态体系的典型"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-synthetic-bio",
@@ -5694,7 +5797,8 @@ window.PHYSICS_GRAPH = {
      "note": "化学工具（非天然氨基酸、生物正交）的供给方"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-tissues-organs",
@@ -5737,7 +5841,8 @@ window.PHYSICS_GRAPH = {
      "note": "医学物理（成像、放疗）的生物学端点"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-chem-bio",
@@ -5784,7 +5889,8 @@ window.PHYSICS_GRAPH = {
      "note": "化学工具（非天然氨基酸、生物正交）的供给方"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-energy-env-chem",
@@ -5820,7 +5926,8 @@ window.PHYSICS_GRAPH = {
      "note": "大气化学与气候物理的接口"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-materials-chem",
@@ -5876,7 +5983,8 @@ window.PHYSICS_GRAPH = {
      "note": "化学合成的材料路线"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-quantum-chem",
@@ -5919,7 +6027,8 @@ window.PHYSICS_GRAPH = {
      "note": "量子化学是量子计算最有前景的早期应用"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-analytical-res",
@@ -5962,7 +6071,8 @@ window.PHYSICS_GRAPH = {
      "note": "光谱技术的物理前沿"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-inorganic-res",
@@ -5998,7 +6108,8 @@ window.PHYSICS_GRAPH = {
      "note": "无机固体的功能材料化"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-organic-res",
@@ -6034,7 +6145,8 @@ window.PHYSICS_GRAPH = {
      "note": "生物活性分子合成与化学生物学交叉"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-physchem-res",
@@ -6084,7 +6196,8 @@ window.PHYSICS_GRAPH = {
      "note": "胶体与界面即软物质"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-polymer-res",
@@ -6119,7 +6232,8 @@ window.PHYSICS_GRAPH = {
      "note": "高分子是软物质物理的核心体系"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-materials",
@@ -6168,7 +6282,8 @@ window.PHYSICS_GRAPH = {
      "note": "功能材料的重要类别"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-meso",
@@ -6210,7 +6325,8 @@ window.PHYSICS_GRAPH = {
      "note": "纳米器件的半导体基础"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-semiconductor",
@@ -6259,7 +6375,8 @@ window.PHYSICS_GRAPH = {
      "note": "半导体物理（能带、输运）"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-spintronics",
@@ -6294,7 +6411,8 @@ window.PHYSICS_GRAPH = {
      "note": "磁性多源于关联效应"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-strong-corr",
@@ -6350,7 +6468,8 @@ window.PHYSICS_GRAPH = {
      "note": "非常规超导多出于强关联体系"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-superconduct",
@@ -6385,7 +6504,8 @@ window.PHYSICS_GRAPH = {
      "note": "非常规超导多出于强关联体系"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-ai-reasoning",
@@ -6413,7 +6533,8 @@ window.PHYSICS_GRAPH = {
      "note": "课程基础"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-cv",
@@ -6455,7 +6576,8 @@ window.PHYSICS_GRAPH = {
      "note": "视觉理解的高层任务"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-graphics-hci",
@@ -6483,7 +6605,8 @@ window.PHYSICS_GRAPH = {
      "note": "编程与几何数据结构"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-ml-res",
@@ -6518,7 +6641,8 @@ window.PHYSICS_GRAPH = {
      "note": "统计学习理论与高维统计"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-nlp",
@@ -6546,7 +6670,8 @@ window.PHYSICS_GRAPH = {
      "note": "深度学习"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-robotics",
@@ -6581,7 +6706,8 @@ window.PHYSICS_GRAPH = {
      "note": "经典控制理论"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-database-res",
@@ -6609,7 +6735,8 @@ window.PHYSICS_GRAPH = {
      "note": "课程基础"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-networks-res",
@@ -6637,7 +6764,8 @@ window.PHYSICS_GRAPH = {
      "note": "课程基础"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-os-systems",
@@ -6673,7 +6801,8 @@ window.PHYSICS_GRAPH = {
      "note": "课程基础"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-security",
@@ -6715,7 +6844,8 @@ window.PHYSICS_GRAPH = {
      "note": "量子密钥分发与后量子迁移"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-algorithms",
@@ -6751,7 +6881,8 @@ window.PHYSICS_GRAPH = {
      "note": "极值组合与概率方法"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-formal-methods",
@@ -6793,7 +6924,8 @@ window.PHYSICS_GRAPH = {
      "note": "类型论与数理逻辑（柯里-霍华德对应）"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-atmos",
@@ -6856,7 +6988,8 @@ window.PHYSICS_GRAPH = {
      "note": "大气湍流"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-geophy",
@@ -6898,7 +7031,8 @@ window.PHYSICS_GRAPH = {
      "note": "同属地球系统"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-ocean",
@@ -6947,7 +7081,8 @@ window.PHYSICS_GRAPH = {
      "note": "同属地球系统"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-aerospace",
@@ -6989,7 +7124,8 @@ window.PHYSICS_GRAPH = {
      "note": "湍流与高超声速流动"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-civil-env-eng",
@@ -7018,7 +7154,8 @@ window.PHYSICS_GRAPH = {
      "note": "结构力学"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-energy-eng",
@@ -7060,7 +7197,8 @@ window.PHYSICS_GRAPH = {
      "note": "磁约束聚变发电的工程化"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-materials-eng",
@@ -7102,7 +7240,8 @@ window.PHYSICS_GRAPH = {
      "note": "化学合成的材料路线"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-control",
@@ -7144,7 +7283,8 @@ window.PHYSICS_GRAPH = {
      "note": "经典控制理论"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-electrical-eng",
@@ -7180,7 +7320,8 @@ window.PHYSICS_GRAPH = {
      "note": "电力电子器件"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-mechanical-eng",
@@ -7208,7 +7349,8 @@ window.PHYSICS_GRAPH = {
      "note": "力学基础"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-fluid-dyn",
@@ -7243,7 +7385,8 @@ window.PHYSICS_GRAPH = {
      "note": "湍流与高超声速流动"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-nonlinear",
@@ -7292,7 +7435,8 @@ window.PHYSICS_GRAPH = {
      "note": "湍流是非线性系统的代表"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-pattern",
@@ -7334,7 +7478,8 @@ window.PHYSICS_GRAPH = {
      "note": "软物质是斑图的典型载体"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-turbulence",
@@ -7383,7 +7528,8 @@ window.PHYSICS_GRAPH = {
      "note": "太阳风是天然湍流实验室"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-black-hole",
@@ -7425,7 +7571,8 @@ window.PHYSICS_GRAPH = {
      "note": "信息佯谬指向量子引力"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-grav-wave",
@@ -7467,7 +7614,8 @@ window.PHYSICS_GRAPH = {
      "note": "波形模板依赖数值模拟"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-numerical-rel",
@@ -7516,7 +7664,8 @@ window.PHYSICS_GRAPH = {
      "note": "数值相对论是科学计算的典型应用"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-qg",
@@ -7579,7 +7728,8 @@ window.PHYSICS_GRAPH = {
      "note": "量子引力的数学表述"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-hep-ex",
@@ -7621,7 +7771,8 @@ window.PHYSICS_GRAPH = {
      "note": "共享对撞机实验技术"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-hep-ph",
@@ -7670,7 +7821,8 @@ window.PHYSICS_GRAPH = {
      "note": "实验检验唯象预言"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-hep-th",
@@ -7713,7 +7865,8 @@ window.PHYSICS_GRAPH = {
      "note": "弦论是量子引力的候选"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-lattice",
@@ -7755,7 +7908,8 @@ window.PHYSICS_GRAPH = {
      "note": "QCD 相图与状态方程"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-comm-systems",
@@ -7791,7 +7945,8 @@ window.PHYSICS_GRAPH = {
      "note": "容量理论指导系统设计"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-image-speech",
@@ -7826,7 +7981,8 @@ window.PHYSICS_GRAPH = {
      "note": "视觉理解的高层任务"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-microelectronics",
@@ -7862,7 +8018,8 @@ window.PHYSICS_GRAPH = {
      "note": "半导体物理（能带、输运）"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-signal-processing",
@@ -7890,7 +8047,8 @@ window.PHYSICS_GRAPH = {
      "note": "课程基础"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-info-theory",
@@ -7953,7 +8111,8 @@ window.PHYSICS_GRAPH = {
      "note": "量子信息论（量子信道容量、量子纠错码）"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-mathematical-physics",
@@ -8000,7 +8159,8 @@ window.PHYSICS_GRAPH = {
      "note": "量子引力的数学表述"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-optimization",
@@ -8042,7 +8202,8 @@ window.PHYSICS_GRAPH = {
      "note": "连续优化与组合优化的交汇"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-pde-research",
@@ -8084,7 +8245,8 @@ window.PHYSICS_GRAPH = {
      "note": "调和分析是现代 PDE 的核心工具"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-probability",
@@ -8126,7 +8288,8 @@ window.PHYSICS_GRAPH = {
      "note": "统计力学的概率模型（伊辛模型、渗流）"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-scientific-computing",
@@ -8161,7 +8324,8 @@ window.PHYSICS_GRAPH = {
      "note": "数值相对论是科学计算的典型应用"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-statistics",
@@ -8203,7 +8367,8 @@ window.PHYSICS_GRAPH = {
      "note": "生物统计与高维组学数据分析"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-algebra",
@@ -8238,7 +8403,8 @@ window.PHYSICS_GRAPH = {
      "note": "交换代数是代数几何的语言"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-algebraic-geometry",
@@ -8285,7 +8451,8 @@ window.PHYSICS_GRAPH = {
      "note": "算术几何是两者的交叉"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-analysis",
@@ -8321,7 +8488,8 @@ window.PHYSICS_GRAPH = {
      "note": "调和分析是现代 PDE 的核心工具"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-combinatorics",
@@ -8370,7 +8538,8 @@ window.PHYSICS_GRAPH = {
      "note": "纠错码与图论/设计理论交叉"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-dynamical-systems",
@@ -8419,7 +8588,8 @@ window.PHYSICS_GRAPH = {
      "note": "物理中的非线性动力学与混沌"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-geometry-topology",
@@ -8455,7 +8625,8 @@ window.PHYSICS_GRAPH = {
      "note": "基本群与同调"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-math-logic",
@@ -8491,7 +8662,8 @@ window.PHYSICS_GRAPH = {
      "note": "类型论与数理逻辑（柯里-霍华德对应）"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-number-theory",
@@ -8533,7 +8705,8 @@ window.PHYSICS_GRAPH = {
      "note": "公钥密码的数论基础（RSA、椭圆曲线）"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-hic",
@@ -8575,7 +8748,8 @@ window.PHYSICS_GRAPH = {
      "note": "QCD 相图的格点结果"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-nucl-astro",
@@ -8617,7 +8791,8 @@ window.PHYSICS_GRAPH = {
      "note": "恒星核燃烧即核天体物理"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-nucl-reaction",
@@ -8652,7 +8827,8 @@ window.PHYSICS_GRAPH = {
      "note": "核数据支撑放射治疗与成像"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-nucl-structure",
@@ -8680,7 +8856,8 @@ window.PHYSICS_GRAPH = {
      "note": "课程基础"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-icf",
@@ -8723,7 +8900,8 @@ window.PHYSICS_GRAPH = {
      "note": "另一条聚变路线"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-laser-plasma",
@@ -8765,7 +8943,8 @@ window.PHYSICS_GRAPH = {
      "note": "高功率激光驱动等离子体"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-mcf",
@@ -8807,7 +8986,8 @@ window.PHYSICS_GRAPH = {
      "note": "另一条聚变路线"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-space-plasma",
@@ -8849,7 +9029,8 @@ window.PHYSICS_GRAPH = {
      "note": "太阳风是天然湍流实验室"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-cold-atom",
@@ -8891,7 +9072,8 @@ window.PHYSICS_GRAPH = {
      "note": "冷原子是主要模拟平台"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-qc",
@@ -8954,7 +9136,8 @@ window.PHYSICS_GRAPH = {
      "note": "模拟是计算的重要应用"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-qcomm",
@@ -8996,7 +9179,8 @@ window.PHYSICS_GRAPH = {
      "note": "量子密钥分发与后量子迁移"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-qmetro",
@@ -9038,7 +9222,8 @@ window.PHYSICS_GRAPH = {
      "note": "原子钟与频率测量"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-qsim",
@@ -9094,7 +9279,8 @@ window.PHYSICS_GRAPH = {
      "note": "模拟目标是强关联模型"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-biophy",
@@ -9136,7 +9322,8 @@ window.PHYSICS_GRAPH = {
      "note": "生物体系多为软物质"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-medphy",
@@ -9178,7 +9365,8 @@ window.PHYSICS_GRAPH = {
      "note": "医学物理（成像、放疗）的生物学端点"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-soft",
@@ -9248,7 +9436,8 @@ window.PHYSICS_GRAPH = {
      "note": "高分子是软物质物理的核心体系"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-complex",
@@ -9290,7 +9479,8 @@ window.PHYSICS_GRAPH = {
      "note": "复杂系统多为非平衡"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-noneq",
@@ -9346,7 +9536,8 @@ window.PHYSICS_GRAPH = {
      "note": "随机热力学是共同语言"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-phase",
@@ -9381,7 +9572,8 @@ window.PHYSICS_GRAPH = {
      "note": "量子相变是核心议题"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   },
   {
    "id": "r-stochastic",
@@ -9423,7 +9615,8 @@ window.PHYSICS_GRAPH = {
      "note": "随机热力学是共同语言"
     }
    ],
-   "softLinks": []
+   "softLinks": [],
+   "resources": []
   }
  ],
  "links": [
