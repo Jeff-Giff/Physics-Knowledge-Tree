@@ -173,8 +173,8 @@ window.KTResourceEditor = (() => {
     ).join('');
 
     return `
-<div id="res-editor-overlay" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.6);z-index:9999;align-items:center;justify-content:center;">
-  <div id="res-editor-panel" style="background:#fff;border-radius:8px;max-width:640px;width:90%;max-height:85vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+<div id="res-editor-overlay" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.6);z-index:9999;overflow-y:auto;padding:20px;">
+  <div id="res-editor-panel" style="background:#fff;border-radius:8px;max-width:640px;width:90%;margin:20px auto;max-height:none;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
     <div style="padding:16px 20px;border-bottom:1px solid #e5e7eb;display:flex;justify-content:space-between;align-items:center;">
       <strong style="font-size:16px;">${esc(t('res_title'))}</strong>
       <button id="res-editor-close" style="background:none;border:none;font-size:20px;cursor:pointer;color:#666;">✕</button>

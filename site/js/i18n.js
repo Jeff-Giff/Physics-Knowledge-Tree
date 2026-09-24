@@ -110,6 +110,9 @@ window.KTI18n = (() => {
       admin_removed: '已移除',
       admin_confirm_remove: '确定移除该管理员吗？',
       admin_build_notice: '修改管理员名单后需等待约 1–2 分钟重新构建生效',
+      user_center: '用户中心',
+      back: '返回知识树',
+      not_logged_in: '未登录',
     },
     en: {
       doc_title: 'Science Knowledge Tree',
@@ -206,6 +209,9 @@ window.KTI18n = (() => {
       admin_removed: 'Removed',
       admin_confirm_remove: 'Remove this admin?',
       admin_build_notice: 'Changes take ~1–2 min to rebuild',
+      user_center: 'User Center',
+      back: 'Back to Tree',
+      not_logged_in: 'Not logged in',
     },
   };
 
