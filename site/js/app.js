@@ -846,6 +846,12 @@ window.KTApp = (() => {
       });
     }
 
+    if (btnUserCenter) {
+      btnUserCenter.addEventListener('click', () => {
+        window.location.href = 'user.html';
+      });
+    }
+
     document.addEventListener('click', ev => {
       if (!userDropdown.classList.contains('hidden') &&
           !userDropdown.contains(ev.target) &&

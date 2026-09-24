@@ -65,7 +65,6 @@ window.KTAuth = (() => {
     if (hash.includes('token=')) {
       const params = new URLSearchParams(hash.replace(/^#/, ''));
       const t = params.get('token');
-      const state = params.get('state');
       if (t) {
         saveToken(t);
         // 清除 hash，避免刷新重复处理
@@ -75,12 +74,27 @@ window.KTAuth = (() => {
 
     loadToken();
     if (token) await fetchUser();
+
+    // 如果登录前保存在其他页面，登录完成后跳回去
+    try {
+      const returnTo = sessionStorage.getItem('pkt-oauth-return');
+      if (returnTo && isLoggedIn()) {
+        sessionStorage.removeItem('pkt-oauth-return');
+        if (window.location.pathname !== returnTo) {
+          window.location.href = returnTo;
+          return; // 跳转后不再 emit，目标页面会重新 init
+        }
+      }
+    } catch (e) {}
+
     emit();
   }
 
   function login() {
     const state = Math.random().toString(36).slice(2) + Date.now().toString(36);
     try { sessionStorage.setItem('pkt-oauth-state', state); } catch (e) {}
+    // 记住当前页面，登录成功后跳回来
+    try { sessionStorage.setItem('pkt-oauth-return', window.location.pathname); } catch (e) {}
     const url = new URL('https://github.com/login/oauth/authorize');
     url.searchParams.set('client_id', OAUTH_CLIENT_ID);
     url.searchParams.set('redirect_uri', `${OAUTH_PROXY}/callback`);
