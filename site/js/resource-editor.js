@@ -61,6 +61,17 @@ window.KTResourceEditor = (() => {
     return { content: text, sha: data.sha };
   }
 
+  /* YAML 安全值：含特殊字符时用 JSON.stringify（YAML 是 JSON 超集） */
+  function yamlSafe(s) {
+    if (typeof s !== 'string') s = String(s);
+    if (!s) return '""';
+    // 如果包含 YAML 元字符或可能引发解析问题的字符，用 JSON 引号包裹
+    if (/[":'\r\n#\[\]{}|>&*!?,`@]/.test(s) || /^[-?:,|&!*%@`#\s]/.test(s) || /^\d+:/.test(s)) {
+      return JSON.stringify(s);
+    }
+    return s;
+  }
+
   /* 只替换 front-matter 中的 resources 块 */
   function patchResources(text, resources) {
     // 定位 front-matter
@@ -76,10 +87,10 @@ window.KTResourceEditor = (() => {
       resYaml = 'resources: []';
     } else {
       resYaml = 'resources:\n' + resources.map(r => {
-        const lines = [`  - title: ${r.title}`];
-        if (r.type) lines.push(`    type: ${r.type}`);
-        lines.push(`    url: ${r.url}`);
-        if (r.note) lines.push(`    note: ${r.note}`);
+        const lines = [`  - title: ${yamlSafe(r.title)}`];
+        if (r.type) lines.push(`    type: ${yamlSafe(r.type)}`);
+        lines.push(`    url: ${yamlSafe(r.url)}`);
+        if (r.note) lines.push(`    note: ${yamlSafe(r.note)}`);
         return lines.join('\n');
       }).join('\n');
     }

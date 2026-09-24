@@ -5,7 +5,7 @@
 
 window.KTAuth = (() => {
   const LS_KEY = 'pkt-github-token';
-  const OAUTH_CLIENT_ID = 'Ov23lizLGgVM51iu6xRk'; // GitHub OAuth App Client ID
+  const OAUTH_CLIENT_ID = 'Ov23liwXl1I1bGvwv3Ou'; // GitHub OAuth App Client ID
   const OAUTH_PROXY = 'https://pkt-oauth.pkt-oauth.workers.dev';
   const FRONTEND_URL = 'https://jeff-giff.github.io/Physics-Knowledge-Tree/';
 

@@ -299,11 +299,11 @@ html, body {
 .sec-body p { font-size: 14px; line-height: 1.85; margin: 6px 0; color: #dbe4ee; }
 .sec-body ul, .sec-body ol { margin: 6px 0 6px 22px; font-size: 14px; line-height: 1.8; color: #dbe4ee; }
 .sec-body li { margin: 3px 0; }
-.sec-body blockquote { margin: 8px 0; padding: 8px 12px; border-left: 3px solid var(--accent); background: rgba(255,255,255,0.04); font-size: 13px; color: var(--fg-dim); }
-.sec-body code { background: rgba(255,255,255,0.08); padding: 1px 5px; border-radius: 4px; font-size: 13px; font-family: Consolas, monospace; }
+.sec-body blockquote { margin: 8px 0; padding: 8px 12px; border-left: 3px solid var(--accent); background: rgba(255,255,255,0.04); font-size: 14px; color: var(--fg-dim); }
+.sec-body code { background: rgba(255,255,255,0.08); padding: 1px 5px; border-radius: 4px; font-size: 14px; font-family: Consolas, monospace; }
 .sec-body pre { background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; overflow-x: auto; margin: 8px 0; }
 .sec-body pre code { background: none; padding: 0; }
-.sec-body table { border-collapse: collapse; margin: 8px 0; font-size: 13px; }
+.sec-body table { border-collapse: collapse; margin: 8px 0; font-size: 14px; }
 .sec-body th, .sec-body td { border: 1px solid var(--border); padding: 5px 10px; }
 .sec-body strong { color: #fff; }
 .jump-link {
@@ -316,7 +316,7 @@ html, body {
 
 /* 相关节点区块 */
 .sec-links { margin: 8px 0; }
-.sec-links .lbl { font-size: 13px; font-weight: 700; letter-spacing: 1px; margin: 14px 0 8px; color: var(--fg-dim); }
+.sec-links .lbl { font-size: 16px; font-weight: 700; letter-spacing: 1px; margin: 14px 0 8px; color: var(--fg); }
 .link-card {
   display: flex;
   align-items: center;
@@ -332,15 +332,15 @@ html, body {
 .link-card:hover { background: rgba(88,166,255,0.1); border-color: rgba(88,166,255,0.35); }
 .link-card .nm { font-size: 14px; color: var(--fg); }
 .link-card .wtag {
-  font-size: 11px;
+  font-size: 14px;
   color: var(--accent);
   border: 1px solid rgba(88,166,255,0.4);
   border-radius: 8px;
   padding: 0 6px;
   flex: none;
 }
-.link-card .note { font-size: 12px; color: var(--fg-dim); margin-top: 2px; }
-.link-card .arrow { margin-left: auto; color: var(--fg-dim); font-size: 13px; }
+.link-card .note { font-size: 14px; color: var(--fg-dim); margin-top: 2px; }
+.link-card .arrow { margin-left: auto; color: var(--fg-dim); font-size: 14px; }
 .link-card.soft { opacity: 0.75; border-style: dashed; }
 .link-card.prereq { border-color: rgba(88,166,255,0.30); }
 .link-card.prereq .nm { color: var(--accent); }
@@ -350,7 +350,7 @@ html, body {
   margin: 18px 0 8px;
   padding-top: 12px;
   border-top: 1px solid var(--border);
-  font-size: 12px;
+  font-size: 14px;
   color: var(--fg-dim);
   line-height: 1.8;
 }
@@ -523,13 +523,13 @@ html, body {
 
 /* ---------------- 推荐资料 ---------------- */
 .sec-resources { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); }
-.sec-resources .lbl { font-size: 13px; font-weight: 600; color: var(--fg-dim); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+.sec-resources .lbl { font-size: 16px; font-weight: 700; color: var(--fg); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
 .res-group { margin-bottom: 10px; }
-.res-group-title { font-size: 12px; color: var(--accent); margin-bottom: 4px; font-weight: 500; }
-.res-item { margin: 4px 0; font-size: 13px; line-height: 1.5; }
+.res-group-title { font-size: 14px; color: var(--accent); margin-bottom: 4px; font-weight: 500; }
+.res-item { margin: 4px 0; font-size: 14px; line-height: 1.5; }
 .res-link { color: var(--accent); text-decoration: none; word-break: break-all; }
 .res-link:hover { text-decoration: underline; }
-.res-note { color: var(--fg-dim); font-size: 12px; margin-left: 6px; }
+.res-note { color: var(--fg-dim); font-size: 14px; margin-left: 6px; }
 
 @media (max-width: 720px) {
   .brand .subtitle { display: none; }
