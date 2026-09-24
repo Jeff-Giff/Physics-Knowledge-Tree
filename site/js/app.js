@@ -796,6 +796,8 @@ window.KTApp = (() => {
     const userDropdown = document.getElementById('user-dropdown');
     const udName = document.getElementById('ud-name');
     const btnLogout = document.getElementById('btn-logout');
+    const btnApplyAdmin = document.getElementById('btn-apply-admin');
+    const btnAdminPanel = document.getElementById('btn-admin-panel');
     if (!auth || !loginBtn) return;
 
     function closeDropdown() {
@@ -813,16 +815,25 @@ window.KTApp = (() => {
         userLink.style.display = '';
         userLink.textContent = `@${user.login}`;
         if (udName) udName.textContent = user.login;
+        if (btnApplyAdmin) {
+          btnApplyAdmin.style.display = isAdmin ? 'none' : '';
+          btnApplyAdmin.textContent = t('admin_apply');
+        }
+        if (btnAdminPanel) {
+          btnAdminPanel.style.display = isAdmin ? '' : 'none';
+          btnAdminPanel.textContent = t('admin_panel');
+        }
       } else {
         loginBtn.style.display = '';
         loginBtn.textContent = t('login_btn');
         loginBtn.onclick = () => auth.login();
         userLink.style.display = 'none';
+        if (btnApplyAdmin) btnApplyAdmin.style.display = 'none';
+        if (btnAdminPanel) btnAdminPanel.style.display = 'none';
         closeDropdown();
       }
     }
 
-    // 点击用户名打开下拉
     if (userLink) {
       userLink.addEventListener('click', ev => {
         ev.stopPropagation();
@@ -834,7 +845,6 @@ window.KTApp = (() => {
       });
     }
 
-    // 点击退登
     if (btnLogout) {
       btnLogout.addEventListener('click', () => {
         auth.logout();
@@ -842,7 +852,22 @@ window.KTApp = (() => {
       });
     }
 
-    // 点击页面其他区域关闭下拉
+    // 申请成为管理员
+    if (btnApplyAdmin) {
+      btnApplyAdmin.addEventListener('click', () => {
+        closeDropdown();
+        openApplyModal();
+      });
+    }
+
+    // 管理后台
+    if (btnAdminPanel) {
+      btnAdminPanel.addEventListener('click', () => {
+        closeDropdown();
+        openAdminPanel();
+      });
+    }
+
     document.addEventListener('click', ev => {
       if (!userDropdown.classList.contains('hidden') &&
           !userDropdown.contains(ev.target) &&
@@ -855,6 +880,184 @@ window.KTApp = (() => {
     auth.init().then(() => {
       updateAuthUI(auth.isLoggedIn(), auth.getUser(), auth.isAdmin());
     });
+  }
+
+  /* ---------- 申请成为管理员弹窗 ---------- */
+  function openApplyModal() {
+    const modal = document.getElementById('apply-modal');
+    const reason = document.getElementById('apply-reason');
+    const status = document.getElementById('apply-status');
+    const t = window.KTI18n.t;
+    if (!modal) return;
+
+    document.getElementById('apply-title').textContent = t('admin_apply');
+    document.getElementById('apply-submit').textContent = t('admin_submit');
+    document.getElementById('apply-cancel').textContent = t('res_cancel');
+
+    modal.style.display = 'flex';
+    modal.classList.remove('hidden');
+    if (reason) reason.value = '';
+    if (status) status.textContent = '';
+
+    const doSubmit = async () => {
+      if (!reason.value.trim()) {
+        status.textContent = '请填写理由';
+        return;
+      }
+      status.textContent = '提交中…';
+      try {
+        await window.KTAdmin.applyAdmin(reason.value.trim());
+        status.textContent = t('admin_app_submitted');
+        setTimeout(() => closeApplyModal(), 1500);
+      } catch (e) {
+        status.textContent = t('admin_app_error', { msg: e.message });
+      }
+    };
+
+    const submitBtn = document.getElementById('apply-submit');
+    const cancelBtn = document.getElementById('apply-cancel');
+    const closeBtn = document.getElementById('apply-close');
+
+    submitBtn.onclick = doSubmit;
+    cancelBtn.onclick = closeApplyModal;
+    closeBtn.onclick = closeApplyModal;
+
+    // 点击背景关闭
+    modal.onclick = ev => {
+      if (ev.target === modal) closeApplyModal();
+    };
+  }
+
+  function closeApplyModal() {
+    const modal = document.getElementById('apply-modal');
+    if (modal) { modal.style.display = 'none'; modal.classList.add('hidden'); }
+  }
+
+  /* ---------- 管理后台弹窗 ---------- */
+  async function openAdminPanel() {
+    const modal = document.getElementById('admin-modal');
+    const t = window.KTI18n.t;
+    if (!modal) return;
+
+    document.getElementById('admin-title').textContent = t('admin_panel');
+    document.getElementById('admin-apps-title').textContent = t('admin_applications');
+    document.getElementById('admin-list-title').textContent = t('admin_admins');
+
+    modal.style.display = 'flex';
+    modal.classList.remove('hidden');
+
+    document.getElementById('admin-close').onclick = closeAdminPanel;
+    modal.onclick = ev => { if (ev.target === modal) closeAdminPanel(); };
+
+    await renderAdminPanel();
+  }
+
+  function closeAdminPanel() {
+    const modal = document.getElementById('admin-modal');
+    if (modal) { modal.style.display = 'none'; modal.classList.add('hidden'); }
+  }
+
+  async function renderAdminPanel() {
+    const t = window.KTI18n.t;
+    const appsList = document.getElementById('admin-apps-list');
+    const adminsList = document.getElementById('admin-admins-list');
+
+    // 加载申请列表
+    if (appsList) {
+      appsList.innerHTML = '<div style="color:var(--fg-dim);font-size:13px;">加载中…</div>';
+      try {
+        const apps = await window.KTAdmin.listApplications();
+        if (!apps || apps.length === 0) {
+          appsList.innerHTML = `<div style="color:var(--fg-dim);font-size:14px;padding:8px 0;">${t('admin_no_apps')}</div>`;
+        } else {
+          appsList.innerHTML = apps.map(app => {
+            const login = app.user?.login || 'unknown';
+            const bodyLines = (app.body || '').split('\n');
+            const reasonLine = bodyLines.find(l => l.startsWith('**理由**:')) || '';
+            const reason = reasonLine.replace('**理由**:', '').trim() || '未填写';
+            return `
+<div class="admin-app-item" style="padding:10px 0;border-bottom:1px solid var(--border);">
+  <div style="font-size:14px;font-weight:600;">@${esc(login)}</div>
+  <div style="font-size:13px;color:var(--fg-dim);margin:4px 0;">${esc(reason)}</div>
+  <div style="display:flex;gap:8px;margin-top:6px;">
+    <button class="btn admin-approve-btn" data-number="${app.number}" data-login="${esc(login)}" style="font-size:12px;padding:3px 10px;background:rgba(34,197,94,0.15);color:#22c55e;border:1px solid rgba(34,197,94,0.35);">${t('admin_approve')}</button>
+    <button class="btn admin-reject-btn" data-number="${app.number}" style="font-size:12px;padding:3px 10px;background:rgba(239,68,68,0.15);color:#ef4444;border:1px solid rgba(239,68,68,0.35);">${t('admin_reject')}</button>
+  </div>
+</div>`;
+          }).join('');
+
+          // 绑定同意按钮
+          appsList.querySelectorAll('.admin-approve-btn').forEach(btn => {
+            btn.addEventListener('click', async () => {
+              const num = parseInt(btn.dataset.number, 10);
+              const login = btn.dataset.login;
+              btn.textContent = '处理中…';
+              btn.disabled = true;
+              try {
+                await window.KTAdmin.approveApplication(num, login);
+                await renderAdminPanel();
+              } catch (e) {
+                btn.textContent = e.message;
+                btn.disabled = false;
+              }
+            });
+          });
+
+          // 绑定拒绝按钮
+          appsList.querySelectorAll('.admin-reject-btn').forEach(btn => {
+            btn.addEventListener('click', async () => {
+              const num = parseInt(btn.dataset.number, 10);
+              const note = prompt(t('admin_reject_note'));
+              if (note === null) return;
+              btn.textContent = '处理中…';
+              btn.disabled = true;
+              try {
+                await window.KTAdmin.rejectApplication(num, note);
+                await renderAdminPanel();
+              } catch (e) {
+                btn.textContent = e.message;
+                btn.disabled = false;
+              }
+            });
+          });
+        }
+      } catch (e) {
+        appsList.innerHTML = `<div style="color:#ef4444;font-size:13px;">加载失败: ${esc(e.message)}</div>`;
+      }
+    }
+
+    // 加载管理员列表
+    if (adminsList) {
+      const admins = window.KTAdmin.listAdmins();
+      const currentLogin = window.KTAuth.getUser()?.login?.toLowerCase();
+      if (!admins || admins.length === 0) {
+        adminsList.innerHTML = '<div style="color:var(--fg-dim);font-size:14px;">无</div>';
+      } else {
+        adminsList.innerHTML = admins.map(a => {
+          const isSelf = a.toLowerCase() === currentLogin;
+          return `
+<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border);">
+  <span style="font-size:14px;">@${esc(a)}${isSelf ? ' <span style="color:var(--fg-dim);font-size:12px;">(你)</span>' : ''}</span>
+  ${!isSelf ? `<button class="btn admin-remove-btn" data-login="${esc(a)}" style="font-size:12px;padding:2px 8px;background:rgba(239,68,68,0.12);color:#ef4444;border:1px solid rgba(239,68,68,0.3);">${t('admin_removed')}</button>` : ''}
+</div>`;
+        }).join('');
+
+        adminsList.querySelectorAll('.admin-remove-btn').forEach(btn => {
+          btn.addEventListener('click', async () => {
+            const login = btn.dataset.login;
+            if (!confirm(t('admin_confirm_remove'))) return;
+            btn.disabled = true;
+            try {
+              await window.KTAdmin.removeAdminFromFile(login);
+              await renderAdminPanel();
+            } catch (e) {
+              alert(e.message);
+              btn.disabled = false;
+            }
+          });
+        });
+      }
+    }
   }
 
   if (document.readyState === 'loading') {

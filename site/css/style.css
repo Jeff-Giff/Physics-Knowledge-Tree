@@ -559,6 +559,24 @@ html, body {
 }
 .ud-actions .btn:hover { background: rgba(88,166,255,0.25); }
 
+/* ---------------- 管理后台弹窗 ---------------- */
+.admin-sec-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--fg-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+.admin-app-item { padding: 10px 0; border-bottom: 1px solid var(--border); }
+.admin-app-item:last-child { border-bottom: none; }
+
+/* 申请弹窗 */
+#apply-modal.hidden,
+#admin-modal.hidden { display: none; }
+#apply-modal,
+#admin-modal { display: flex; }
+
 @media (max-width: 720px) {
   .brand .subtitle { display: none; }
   .brand { min-width: 90px; }
