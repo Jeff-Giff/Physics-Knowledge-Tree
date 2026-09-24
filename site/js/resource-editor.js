@@ -44,6 +44,21 @@ window.KTResourceEditor = (() => {
     return n ? (n.file || `content/${n.domain}/${nid}.md`) : null;
   }
 
+  /* Base64 → UTF-8 文本 */
+  function b64ToUtf8(b64) {
+    const binary = atob(b64.replace(/\n/g, ''));
+    const bytes = Uint8Array.from(binary, c => c.charCodeAt(0));
+    return new TextDecoder('utf-8').decode(bytes);
+  }
+
+  /* UTF-8 文本 → Base64 */
+  function utf8ToB64(text) {
+    const bytes = new TextEncoder().encode(text);
+    let binary = '';
+    bytes.forEach(b => binary += String.fromCharCode(b));
+    return btoa(binary);
+  }
+
   /* 拉取文件内容与 sha */
   async function fetchFile(path) {
     const token = getToken();
@@ -57,7 +72,7 @@ window.KTResourceEditor = (() => {
       throw new Error(`GitHub API ${res.status}`);
     }
     const data = await res.json();
-    const text = atob(data.content.replace(/\n/g, ''));
+    const text = b64ToUtf8(data.content);
     return { content: text, sha: data.sha };
   }
 
@@ -142,7 +157,7 @@ window.KTResourceEditor = (() => {
       },
       body: JSON.stringify({
         message,
-        content: btoa(unescape(encodeURIComponent(content))),
+        content: utf8ToB64(content),
         sha,
         branch: BRANCH,
       }),

@@ -4309,7 +4309,14 @@ window.PHYSICS_GRAPH = {
     }
    ],
    "softLinks": [],
-   "resources": []
+   "resources": [
+    {
+     "title": "The Probability and Statistics Cookbook",
+     "type": "工具",
+     "url": "https://statistics.zone/",
+     "note": "这是一个公式集。"
+    }
+   ]
   },
   {
    "id": "c-abstract-algebra",
