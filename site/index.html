@@ -30,8 +30,19 @@
       <button id="btn-legend" class="btn">领域图例</button>
       <button id="btn-lang" class="btn" title="Switch language / 切换语言">EN</button>
       <button id="btn-login" class="btn" style="display:none;">登录</button>
-      <span id="user-name" style="font-size:12px;color:#666;margin-left:4px;"></span>
+      <a id="user-link" class="btn" style="display:none;" href="javascript:void(0)"></a>
       <span id="stat"></span>
+
+      <!-- 用户下拉菜单 -->
+      <div id="user-dropdown" class="hidden">
+        <div class="ud-head">
+          <div class="ud-name" id="ud-name"></div>
+          <div class="ud-hint">GitHub 用户</div>
+        </div>
+        <div class="ud-actions">
+          <button id="btn-logout" class="btn">退出</button>
+        </div>
+      </div>
     </div>
   </div>
 

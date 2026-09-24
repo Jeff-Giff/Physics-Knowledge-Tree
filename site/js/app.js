@@ -792,23 +792,64 @@ window.KTApp = (() => {
   function initAuth() {
     const auth = window.KTAuth;
     const loginBtn = document.getElementById('btn-login');
-    const userName = document.getElementById('user-name');
+    const userLink = document.getElementById('user-link');
+    const userDropdown = document.getElementById('user-dropdown');
+    const udName = document.getElementById('ud-name');
+    const btnLogout = document.getElementById('btn-logout');
     if (!auth || !loginBtn) return;
+
+    function closeDropdown() {
+      userDropdown.classList.add('hidden');
+    }
+
+    function openDropdown() {
+      userDropdown.classList.remove('hidden');
+    }
 
     function updateAuthUI(loggedIn, user, isAdmin) {
       const t = window.KTI18n.t;
       if (loggedIn && user) {
-        loginBtn.textContent = t('logout_btn');
-        loginBtn.style.display = '';
-        loginBtn.onclick = () => auth.logout();
-        userName.textContent = isAdmin ? `@${user.login} (admin)` : `@${user.login}`;
+        loginBtn.style.display = 'none';
+        userLink.style.display = '';
+        userLink.textContent = `@${user.login}`;
+        if (udName) udName.textContent = user.login;
       } else {
-        loginBtn.textContent = t('login_btn');
         loginBtn.style.display = '';
+        loginBtn.textContent = t('login_btn');
         loginBtn.onclick = () => auth.login();
-        userName.textContent = '';
+        userLink.style.display = 'none';
+        closeDropdown();
       }
     }
+
+    // 点击用户名打开下拉
+    if (userLink) {
+      userLink.addEventListener('click', ev => {
+        ev.stopPropagation();
+        if (userDropdown.classList.contains('hidden')) {
+          openDropdown();
+        } else {
+          closeDropdown();
+        }
+      });
+    }
+
+    // 点击退登
+    if (btnLogout) {
+      btnLogout.addEventListener('click', () => {
+        auth.logout();
+        closeDropdown();
+      });
+    }
+
+    // 点击页面其他区域关闭下拉
+    document.addEventListener('click', ev => {
+      if (!userDropdown.classList.contains('hidden') &&
+          !userDropdown.contains(ev.target) &&
+          ev.target !== userLink) {
+        closeDropdown();
+      }
+    });
 
     auth.onChange(updateAuthUI);
     auth.init().then(() => {

@@ -315,7 +315,7 @@ html, body {
 .jump-link:hover { color: #79c0ff; }
 
 /* 相关节点区块 */
-.sec-links { margin: 8px 0; }
+.sec-links { margin: 14px 0 8px; padding-top: 12px; border-top: 1px solid var(--border); }
 .sec-links .lbl { font-size: 16px; font-weight: 700; letter-spacing: 1px; margin: 14px 0 8px; color: var(--fg); }
 .link-card {
   display: flex;
@@ -525,11 +525,38 @@ html, body {
 .sec-resources { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); }
 .sec-resources .lbl { font-size: 16px; font-weight: 700; color: var(--fg); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
 .res-group { margin-bottom: 10px; }
-.res-group-title { font-size: 14px; color: var(--accent); margin-bottom: 4px; font-weight: 500; }
+.res-group-title { font-size: 14px; color: var(--fg-dim); margin-bottom: 4px; font-weight: 700; }
 .res-item { margin: 4px 0; font-size: 14px; line-height: 1.5; }
 .res-link { color: var(--accent); text-decoration: none; word-break: break-all; }
 .res-link:hover { text-decoration: underline; }
 .res-note { color: var(--fg-dim); font-size: 14px; margin-left: 6px; }
+
+/* ---------------- 用户下拉菜单 ---------------- */
+#user-dropdown {
+  position: absolute;
+  top: 44px;
+  right: 8px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+  min-width: 180px;
+  padding: 12px 14px;
+  z-index: 2000;
+}
+#user-dropdown.hidden { display: none; }
+.ud-head { margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+.ud-name { font-size: 15px; font-weight: 700; color: var(--fg); word-break: break-all; }
+.ud-hint { font-size: 12px; color: var(--fg-dim); margin-top: 2px; }
+.ud-actions { display: flex; justify-content: flex-end; }
+.ud-actions .btn {
+  font-size: 13px;
+  padding: 5px 14px;
+  background: rgba(88,166,255,0.12);
+  color: var(--accent);
+  border: 1px solid rgba(88,166,255,0.35);
+}
+.ud-actions .btn:hover { background: rgba(88,166,255,0.25); }
 
 @media (max-width: 720px) {
   .brand .subtitle { display: none; }
