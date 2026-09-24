@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>用户中心 — 中文物理知识树</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="user-page">
+
+  <!-- 顶部栏 -->
+  <div id="topbar">
+    <div class="brand">
+      <div class="title" id="brand-title">中文物理知识树</div>
+      <div class="subtitle" id="brand-subtitle">用户中心</div>
+    </div>
+    <div class="actions" style="margin-left:auto;">
+      <a href="./" class="btn" id="btn-back">返回知识树</a>
+      <button id="btn-lang" class="btn" title="Switch language / 切换语言">EN</button>
+      <button id="btn-login" class="btn" style="display:none;">登录</button>
+      <button id="btn-logout" class="btn" style="display:none;">退出</button>
+    </div>
+  </div>
+
+  <!-- 主体 -->
+  <div class="user-container">
+    <!-- 用户资料卡片 -->
+    <div class="user-card">
+      <img id="user-avatar" class="user-avatar" src="" alt="avatar" style="display:none;">
+      <div class="user-info">
+        <div class="user-name" id="user-name">未登录</div>
+        <div class="user-login" id="user-login"></div>
+        <div class="user-badges" id="user-badges"></div>
+      </div>
+    </div>
+
+    <!-- 未登录提示 -->
+    <div id="guest-hint" class="user-section" style="display:none;">
+      <div class="user-hint-text">请登录以查看个人资料和管理选项</div>
+    </div>
+
+    <!-- 申请成为管理员 -->
+    <div id="apply-section" class="user-section" style="display:none;">
+      <div class="user-sec-title" id="apply-sec-title">申请成为管理员</div>
+      <textarea id="apply-reason" class="user-textarea" placeholder="请简述申请理由…"></textarea>
+      <div class="user-actions-row">
+        <button id="apply-submit" class="btn" style="background:var(--accent);color:#fff;">提交申请</button>
+      </div>
+      <div id="apply-status" class="user-status"></div>
+    </div>
+
+    <!-- 管理后台 -->
+    <div id="admin-section" class="user-section" style="display:none;">
+      <div class="user-sec-title" id="admin-sec-title">管理后台</div>
+
+      <div class="admin-subsec">
+        <div class="admin-sub-title" id="admin-apps-title">待处理申请</div>
+        <div id="admin-apps-list"></div>
+      </div>
+
+      <div class="admin-subsec">
+        <div class="admin-sub-title" id="admin-list-title">现有管理员</div>
+        <div id="admin-admins-list"></div>
+      </div>
+
+      <div class="user-hint-text" style="margin-top:10px;">修改管理员名单后需等待约 1–2 分钟重新构建生效</div>
+    </div>
+  </div>
+
+  <script src="data/graph.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/admin.js"></script>
+  <script src="js/user.js"></script>
+</body>
+</html>

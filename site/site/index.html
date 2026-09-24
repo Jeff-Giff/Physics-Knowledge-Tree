@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>中文物理知识树</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="js/vendor/katex/katex.min.css">
+</head>
+<body>
+
+  <!-- 顶部栏 -->
+  <div id="topbar">
+    <div class="brand">
+      <div class="title" id="brand-title">中文物理知识树</div>
+      <div class="subtitle" id="brand-subtitle">PHYSICS KNOWLEDGE GRAPH</div>
+    </div>
+    <div id="search-wrap">
+      <input id="search-input" type="text" placeholder="搜索知识点（名称 / 别名 / 标签）…" autocomplete="off">
+      <div id="search-results"></div>
+    </div>
+    <div class="actions">
+      <button id="btn-global" class="btn active">3D 全局</button>
+      <button id="btn-labels" class="btn active">标签</button>
+      <button id="btn-tree" class="btn">我的路径</button>
+      <button id="btn-domain-hl" class="btn">分类高亮</button>
+      <label class="ctl"><span id="ctl-font-label">字号</span><input id="font-slider" type="range" min="10" max="50" step="1" value="15"></label>
+      <label class="ctl hidden" id="spacing-ctl"><span id="ctl-spacing-label">间距</span><input id="spacing-slider" type="range" min="50" max="300" step="5" value="100"></label>
+      <button id="btn-reset" class="btn hidden">重置布局</button>
+      <button id="btn-legend" class="btn">领域图例</button>
+      <button id="btn-lang" class="btn" title="Switch language / 切换语言">EN</button>
+      <button id="btn-login" class="btn" style="display:none;">登录</button>
+      <a id="user-link" class="btn" style="display:none;" href="javascript:void(0)"></a>
+      <span id="stat"></span>
+
+      <!-- 用户下拉菜单 -->
+      <div id="user-dropdown" class="hidden">
+        <div class="ud-head">
+          <div class="ud-name" id="ud-name"></div>
+          <div class="ud-hint">GitHub 用户</div>
+        </div>
+        <div class="ud-actions">
+          <a id="btn-user-center" class="btn" href="user.html" style="display:none;">用户中心</a>
+          <button id="btn-logout" class="btn">退出</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 图容器 -->
+  <div id="graph3d"></div>
+  <div id="graph2d" class="hidden"></div>
+
+  <!-- 2D 提示条 -->
+  <div id="hint2d" class="hidden"></div>
+
+  <!-- 领域图例 -->
+  <div id="cloud-legend" class="hidden"></div>
+
+  <!-- 分类高亮侧边栏（3D，可多选） -->
+  <div id="domain-panel" class="hidden"></div>
+
+  <!-- 树状学习图面板 -->
+  <div id="tree-panel" class="hidden">
+    <div id="tree-head">
+      <span class="th-title" id="tree-title">我的学习路径</span>
+      <div class="th-actions">
+        <button id="tree-save-btn" class="btn" title="保存到森林">保存</button>
+        <button id="tree-forest-btn" class="btn" title="载入已保存的学习树">已有路径</button>
+        <button id="tree-clear" class="btn" title="清空">清空</button>
+      </div>
+    </div>
+    <div id="tree-save-box" class="hidden">
+      <input id="tree-name-input" type="text" placeholder="输入名称…">
+      <button id="tree-save-confirm" class="btn">确认</button>
+      <button id="tree-save-cancel" class="btn">取消</button>
+    </div>
+    <div id="tree-forest" class="hidden"></div>
+    <div id="tree-list"></div>
+    <div id="tree-empty">双击进入节点开始构建学习树</div>
+  </div>
+  <div id="tree-prompt" class="hidden"></div>
+
+  <!-- 详情抽屉 -->
+  <div id="detail" class="closed">
+    <div id="detail-head">
+      <div id="detail-title"></div>
+      <div id="detail-sub"></div>
+      <button id="detail-close" title="关闭">✕</button>
+    </div>
+    <div id="detail-scroll"></div>
+  </div>
+
+  <!-- 加载遮罩 -->
+  <div id="loading">正在加载知识树…</div>
+
+  <!-- 第三方库（本地化，离线可用） -->
+  <script src="js/vendor/three.min.js"></script>
+  <script src="js/vendor/three-timer-polyfill.js"></script>
+  <script src="js/vendor/3d-force-graph.min.js"></script>
+  <script src="js/vendor/force-graph.min.js"></script>
+  <script src="js/vendor/marked.min.js"></script>
+  <script src="js/vendor/katex.min.js"></script>
+  <script src="js/vendor/auto-render.min.js"></script>
+
+  <!-- 图数据（由 build.py 生成） -->
+  <script src="data/graph.js"></script>
+
+  <!-- 应用代码 -->
+  <script src="js/i18n.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/resource-editor.js"></script>
+  <script src="js/admin.js"></script>
+  <script src="js/detail.js"></script>
+  <script src="js/search.js"></script>
+  <script src="js/tree.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
