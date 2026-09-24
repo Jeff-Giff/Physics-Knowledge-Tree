@@ -1,4 +1,9 @@
 ---
+resources:
+  - title: The Probability and Statistics Cookbook
+    type: 笔记
+    url: "https://statistics.zone/"
+    note: 这是一个公式集。
 id: c-probability
 name: 概率论与数理统计
 name_en: Probability and Statistics
@@ -7,8 +12,8 @@ aliases: [概率统计]
 updated: 2026-08-13
 resources:
   - title: The Probability and Statistics Cookbook
-    type: 工具
-    url: https://statistics.zone/
+    type: 笔记
+    url: "https://statistics.zone/"
     note: 这是一个公式集。
 links:
   - {id: c-calculus, type: prereq, note: 微积分是概率密度与期望计算的基础}
