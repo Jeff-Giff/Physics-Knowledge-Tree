@@ -45,15 +45,22 @@ window.KTDetail = (() => {
     // 正文
     html += `<div class="sec-body" id="body-md"></div>`;
 
-    // 推荐资料
+    // 推荐资料（始终渲染，给管理员添加入口）
     const resources = n.resources || [];
-    if (resources.length) {
+    const hasResources = resources.length > 0;
+    html += `<div class="sec-resources">
+      <div class="lbl" style="display:flex;justify-content:space-between;align-items:center;">
+        ${esc(t('res_title'))}
+        <span id="res-edit-wrap" style="display:none;">
+          <button id="res-edit-btn" class="btn" style="font-size:13px;padding:3px 10px;">${esc(t('res_edit'))}</button>
+        </span>
+      </div>`;
+    if (hasResources) {
       const byType = {};
       resources.forEach(r => {
         const tk = r.type || t('res_type_note');
         (byType[tk] = byType[tk] || []).push(r);
       });
-      html += `<div class="sec-resources"><div class="lbl">${esc(t('res_title'))}</div>`;
       Object.entries(byType).forEach(([type, list]) => {
         html += `<div class="res-group"><div class="res-group-title">${esc(type)}</div>`;
         list.forEach(r => {
@@ -64,8 +71,10 @@ window.KTDetail = (() => {
         });
         html += `</div>`;
       });
-      html += `</div>`;
+    } else {
+      html += `<div style="color:var(--fg-dim);font-size:14px;padding:4px 0;">${esc(t('res_empty'))}</div>`;
     }
+    html += `</div>`;
 
     // 连线（二元关系：先修 / 相关），先修在前
     const links = n.links || [];
@@ -116,11 +125,6 @@ window.KTDetail = (() => {
       });
       html += `</div>`;
     }
-
-    // 编辑按钮（仅管理员可见）
-    html += `<div id="res-edit-wrap" style="display:none;margin-top:8px;">
-      <button id="res-edit-btn" class="btn" style="font-size:13px;padding:4px 10px;">${esc(t('res_edit'))}</button>
-    </div>`;
 
     // 脚注
     html += `<div class="sec-foot">${

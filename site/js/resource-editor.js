@@ -32,18 +32,6 @@ window.KTResourceEditor = (() => {
     try { return sessionStorage.getItem('pkt-github-token') || null; } catch (e) { return null; }
   }
 
-  /* 从 graph.js 中查找节点 */
-  function findNode(nid) {
-    const g = window.PHYSICS_GRAPH;
-    if (!g || !g.nodes) return null;
-    return g.nodes.find(x => x.id === nid) || null;
-  }
-
-  function findNodeFile(nid) {
-    const n = findNode(nid);
-    return n ? (n.file || `content/${n.domain}/${nid}.md`) : null;
-  }
-
   /* Base64 → UTF-8 文本 */
   function b64ToUtf8(b64) {
     const binary = atob(b64.replace(/\n/g, ''));
@@ -57,6 +45,18 @@ window.KTResourceEditor = (() => {
     let binary = '';
     bytes.forEach(b => binary += String.fromCharCode(b));
     return btoa(binary);
+  }
+
+  /* 从 graph.js 中查找节点 */
+  function findNode(nid) {
+    const g = window.PHYSICS_GRAPH;
+    if (!g || !g.nodes) return null;
+    return g.nodes.find(x => x.id === nid) || null;
+  }
+
+  function findNodeFile(nid) {
+    const n = findNode(nid);
+    return n ? (n.file || `content/${n.domain}/${nid}.md`) : null;
   }
 
   /* 拉取文件内容与 sha */
@@ -80,7 +80,6 @@ window.KTResourceEditor = (() => {
   function yamlSafe(s) {
     if (typeof s !== 'string') s = String(s);
     if (!s) return '""';
-    // 如果包含 YAML 元字符或可能引发解析问题的字符，用 JSON 引号包裹
     if (/[":'\r\n#\[\]{}|>&*!?,`@]/.test(s) || /^[-?:,|&!*%@`#\s]/.test(s) || /^\d+:/.test(s)) {
       return JSON.stringify(s);
     }
@@ -89,14 +88,12 @@ window.KTResourceEditor = (() => {
 
   /* 只替换 front-matter 中的 resources 块 */
   function patchResources(text, resources) {
-    // 定位 front-matter
     if (!text.startsWith('---')) return null;
     const endIdx = text.indexOf('\n---', 3);
     if (endIdx === -1) return null;
     const fmText = text.slice(3, endIdx);
     const body = text.slice(endIdx + 4);
 
-    // 生成新的 resources YAML
     let resYaml = '';
     if (resources.length === 0) {
       resYaml = 'resources: []';
@@ -110,16 +107,13 @@ window.KTResourceEditor = (() => {
       }).join('\n');
     }
 
-    // 替换或插入 resources 字段
     const fmLines = fmText.split('\n');
     const newLines = [];
     let i = 0;
     let inserted = false;
     while (i < fmLines.length) {
       const line = fmLines[i];
-      // 如果遇到 resources: 行
       if (line.trim().startsWith('resources:')) {
-        // 跳过旧 resources 块（缩进的行）
         i++;
         while (i < fmLines.length && (fmLines[i].startsWith('  ') || fmLines[i].startsWith('\t') || fmLines[i].trim() === '')) {
           i++;
@@ -128,7 +122,6 @@ window.KTResourceEditor = (() => {
         inserted = true;
         continue;
       }
-      // 如果遇到下一个顶层键（非缩进且非空行），在此之前插入 resources（如果还没插入过）
       if (!inserted && line.trim() && !line.startsWith(' ') && !line.startsWith('\t') && i > 0) {
         newLines.push(resYaml);
         inserted = true;
@@ -232,7 +225,6 @@ window.KTResourceEditor = (() => {
 </div>`;
     }).join('');
 
-    // 绑定删除
     list.querySelectorAll('.res-del').forEach(btn => {
       btn.addEventListener('click', () => {
         const idx = parseInt(btn.closest('.res-row').dataset.idx, 10);
@@ -266,7 +258,6 @@ window.KTResourceEditor = (() => {
       return;
     }
 
-    // 读取现有文件（取 sha 和完整内容用于 patch）
     const status = $('#res-editor-status');
     if (status) status.textContent = '读取中…';
     try {
@@ -277,7 +268,6 @@ window.KTResourceEditor = (() => {
       return;
     }
 
-    // 从 graph.js 读取当前 resources 作为初始值
     const node = findNode(nodeId);
     currentResources = (node && node.resources || []).map(r => ({
       title: String(r.title || ''),
@@ -286,7 +276,6 @@ window.KTResourceEditor = (() => {
       note: String(r.note || ''),
     }));
 
-    // 显示编辑器
     const overlay = $('#res-editor-overlay');
     if (!overlay) {
       document.body.insertAdjacentHTML('beforeend', buildEditorHTML());
@@ -321,7 +310,6 @@ window.KTResourceEditor = (() => {
 
       status.textContent = '保存中…';
       try {
-        // 重新拉取最新文件内容（获取最新 sha，同时检测冲突）
         const file = await fetchFile(currentFilePath);
         const newText = patchResources(file.content, currentResources);
         if (!newText) { status.textContent = '文件格式异常'; return; }
