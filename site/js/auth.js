@@ -91,6 +91,8 @@ window.KTAuth = (() => {
   }
 
   function login() {
+    // 清除旧 token，确保重新授权以获取正确的 scope
+    saveToken(null);
     const state = Math.random().toString(36).slice(2) + Date.now().toString(36);
     try { sessionStorage.setItem('pkt-oauth-state', state); } catch (e) {}
     // 记住当前页面，登录成功后跳回来

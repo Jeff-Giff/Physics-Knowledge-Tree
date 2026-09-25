@@ -66,15 +66,19 @@ window.KTResourceEditor = (() => {
   async function fetchFile(path) {
     const token = getToken();
     if (!token) throw new Error('未登录');
-    const res = await fetch(`${CONTENT_API}/${encodeURIComponent(path)}?ref=${BRANCH}`, {
+    const url = `${CONTENT_API}/${encodeURIComponent(path)}?ref=${BRANCH}`;
+    console.log('[KTResourceEditor] GET', url);
+    const res = await fetch(url, {
       headers: { 'Authorization': `Bearer ${token}`, 'Accept': 'application/vnd.github+json' }
     });
+    console.log('[KTResourceEditor] GET status:', res.status);
     if (!res.ok) {
       if (res.status === 404) throw new Error('文件不存在');
       if (res.status === 401) throw new Error('登录已过期，请重新登录');
       throw new Error(`GitHub API ${res.status}`);
     }
     const data = await res.json();
+    console.log('[KTResourceEditor] sha:', data.sha);
     const text = b64ToUtf8(data.content);
     return { content: text, sha: data.sha };
   }
@@ -144,7 +148,10 @@ window.KTResourceEditor = (() => {
     const token = getToken();
     if (!token) throw new Error('未登录');
     const message = `资源更新: ${currentNodeId} by @${window.KTAuth.getUser()?.login || 'unknown'}`;
-    const res = await fetch(`${CONTENT_API}/${encodeURIComponent(path)}`, {
+    const url = `${CONTENT_API}/${encodeURIComponent(path)}`;
+    console.log('[KTResourceEditor] PUT', url);
+    console.log('[KTResourceEditor] sha:', sha);
+    const res = await fetch(url, {
       method: 'PUT',
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -158,8 +165,13 @@ window.KTResourceEditor = (() => {
         branch: BRANCH,
       }),
     });
+    console.log('[KTResourceEditor] PUT status:', res.status);
     if (!res.ok) {
       const data = await res.json().catch(() => ({}));
+      console.log('[KTResourceEditor] PUT error:', data);
+      if (res.status === 404) {
+        throw new Error('文件不存在或登录权限不足（请退出后重新登录）');
+      }
       if (res.status === 409 || (data.message && data.message.includes('sha'))) {
         throw new Error('CONFLICT');
       }
