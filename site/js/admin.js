@@ -55,22 +55,27 @@ window.KTAdmin = (() => {
 
   /* ---------- 申请 ---------- */
 
+  const TITLE_PREFIX = '管理员申请: @';
+
   async function applyAdmin(reason) {
     const user = window.KTAuth.getUser();
     if (!user) throw new Error('未登录');
-    const title = `管理员申请: @${user.login}`;
+    const title = `${TITLE_PREFIX}${user.login}`;
     const body = `**申请人**: @${user.login}\n**理由**: ${reason || '未填写'}\n**时间**: ${new Date().toISOString()}`;
+    // 注意：不传 labels，普通用户没有创建 label 的权限
     return ghApi(ISSUES_API, {
       method: 'POST',
-      body: JSON.stringify({ title, body, labels: [LABEL] }),
+      body: JSON.stringify({ title, body }),
     });
   }
 
   /* ---------- 查询 ---------- */
 
   async function listApplications() {
-    const url = `${ISSUES_API}?labels=${LABEL}&state=open&sort=created&direction=asc`;
-    return ghApi(url);
+    // 获取所有 open issues，前端按标题前缀过滤（避免 labels 权限问题）
+    const url = `${ISSUES_API}?state=open&sort=created&direction=asc&per_page=100`;
+    const all = await ghApi(url);
+    return (all || []).filter(issue => issue.title && issue.title.startsWith(TITLE_PREFIX));
   }
 
   /* ---------- 审批 ---------- */
