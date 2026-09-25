@@ -173,24 +173,9 @@
           return `
 <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border);">
   <span style="font-size:14px;">@${esc(a)}${isSelf ? ' <span style="color:var(--fg-dim);font-size:12px;">(你)</span>' : ''}</span>
-  ${!isSelf ? `<button class="btn admin-remove-btn" data-login="${esc(a)}" style="font-size:12px;padding:2px 8px;background:rgba(239,68,68,0.12);color:#ef4444;border:1px solid rgba(239,68,68,0.3);">${t('admin_removed')}</button>` : ''}
 </div>`;
         }).join('');
-
-        adminsList.querySelectorAll('.admin-remove-btn').forEach(btn => {
-          btn.addEventListener('click', async () => {
-            const login = btn.dataset.login;
-            if (!confirm(t('admin_confirm_remove'))) return;
-            btn.disabled = true;
-            try {
-              await window.KTAdmin.removeAdminFromFile(login);
-              await renderAdminPanel();
-            } catch (e) {
-              alert(e.message);
-              btn.disabled = false;
-            }
-          });
-        });
+        // 移除管理员功能已暂时禁用，接口保留在 KTAdmin.removeAdminFromFile
       }
     }
   }

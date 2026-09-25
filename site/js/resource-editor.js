@@ -56,7 +56,10 @@ window.KTResourceEditor = (() => {
 
   function findNodeFile(nid) {
     const n = findNode(nid);
-    return n ? (n.file || `content/${n.domain}/${nid}.md`) : null;
+    if (!n) return null;
+    // n.file 是相对于 content/ 的路径（如 c-math/c-probability.md）
+    if (n.file) return `content/${n.file}`;
+    return `content/${n.domain}/${nid}.md`;
   }
 
   /* 拉取文件内容与 sha */
@@ -328,3 +331,4 @@ window.KTResourceEditor = (() => {
 
   return { open, close };
 })();
+
