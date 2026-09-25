@@ -3,3 +3,5 @@
 # 管理员增减 = 改此文件后重新运行 python build.py
 admins:
   - jeff-giff
+
+  - jeff-giff-2
