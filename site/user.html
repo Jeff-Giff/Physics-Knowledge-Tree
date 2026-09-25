@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>用户中心 — 中文物理知识树</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=3">
 </head>
 <body class="user-page">
 
@@ -41,12 +41,36 @@
 
     <!-- 申请成为管理员 -->
     <div id="apply-section" class="user-section" style="display:none;">
-      <div class="user-sec-title" id="apply-sec-title">申请成为管理员</div>
-      <textarea id="apply-reason" class="user-textarea" placeholder="请简述申请理由…"></textarea>
-      <div class="user-actions-row">
-        <button id="apply-submit" class="btn" style="background:var(--accent);color:#fff;">提交申请</button>
+      <div id="apply-form">
+        <div class="user-sec-title" id="apply-sec-title">申请成为管理员</div>
+        <textarea id="apply-reason" class="user-textarea" placeholder="请简述申请理由…"></textarea>
+        <div class="user-actions-row">
+          <button id="apply-submit" class="btn" style="background:var(--accent);color:#fff;">提交申请</button>
+        </div>
+        <div id="apply-status" class="user-status"></div>
       </div>
-      <div id="apply-status" class="user-status"></div>
+      <div id="apply-pending" style="display:none;">
+        <div class="user-sec-title" id="apply-pending-title">申请状态</div>
+        <div class="user-status" style="color:var(--accent);">⏳ <span id="apply-pending-text">您已提交管理员申请，等待审批中</span></div>
+      </div>
+    </div>
+
+    <!-- 反映问题 -->
+    <div id="feedback-section" class="user-section" style="display:none;">
+      <div class="user-sec-title" id="feedback-title">反映问题</div>
+      <select id="feedback-category" class="user-select">
+        <option value="内容错误">内容错误</option>
+        <option value="链接失效">链接失效</option>
+        <option value="功能异常">功能异常</option>
+        <option value="界面显示">界面显示</option>
+        <option value="其他建议">其他建议</option>
+      </select>
+      <input id="feedback-title-input" type="text" class="user-input" placeholder="问题标题（简洁描述）…">
+      <textarea id="feedback-detail" class="user-textarea" placeholder="详细描述问题或建议…" style="margin-top:10px;"></textarea>
+      <div class="user-actions-row">
+        <button id="feedback-submit" class="btn" style="background:var(--accent);color:#fff;">提交反馈</button>
+      </div>
+      <div id="feedback-status" class="user-status"></div>
     </div>
 
     <!-- 管理后台 -->
@@ -67,11 +91,11 @@
     </div>
   </div>
 
-  <script src="data/graph.js"></script>
-  <script src="js/i18n.js"></script>
-  <script src="js/common.js"></script>
-  <script src="js/auth.js"></script>
-  <script src="js/admin.js"></script>
-  <script src="js/user.js"></script>
+  <script src="data/graph.js?v=3"></script>
+  <script src="js/i18n.js?v=3"></script>
+  <script src="js/common.js?v=3"></script>
+  <script src="js/auth.js?v=3"></script>
+  <script src="js/admin.js?v=3"></script>
+  <script src="js/user.js?v=3"></script>
 </body>
 </html>

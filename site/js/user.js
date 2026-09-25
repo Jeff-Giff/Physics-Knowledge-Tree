@@ -21,12 +21,18 @@
     $('apply-sec-title').textContent = t('admin_apply');
     $('apply-submit').textContent = t('admin_submit');
     $('apply-reason').placeholder = t('admin_reason');
+    $('apply-pending-title').textContent = t('admin_status');
+    $('apply-pending-text').textContent = t('admin_pending');
     $('admin-sec-title').textContent = t('admin_panel');
     $('admin-apps-title').textContent = t('admin_applications');
     $('admin-list-title').textContent = t('admin_admins');
+    $('feedback-title').textContent = t('feedback_title');
+    $('feedback-submit').textContent = t('feedback_submit');
+    $('feedback-title-input').placeholder = t('feedback_input_title');
+    $('feedback-detail').placeholder = t('feedback_input_detail');
   }
 
-  function updateUI() {
+  async function updateUI() {
     const loggedIn = auth.isLoggedIn();
     const user = auth.getUser();
     const isAdmin = auth.isAdmin();
@@ -37,6 +43,7 @@
     const badges = $('user-badges');
     const guestHint = $('guest-hint');
     const applySection = $('apply-section');
+    const feedbackSection = $('feedback-section');
     const adminSection = $('admin-section');
     const btnLogin = $('btn-login');
     const btnLogout = $('btn-logout');
@@ -52,9 +59,28 @@
       }
       if (guestHint) guestHint.style.display = 'none';
       if (applySection) applySection.style.display = isAdmin ? 'none' : '';
+      if (feedbackSection) feedbackSection.style.display = '';
       if (adminSection) adminSection.style.display = isAdmin ? '' : 'none';
       if (btnLogin) btnLogin.style.display = 'none';
       if (btnLogout) btnLogout.style.display = '';
+
+      // 检查是否已有 pending 的申请
+      if (!isAdmin && applySection) {
+        try {
+          const myApp = await window.KTAdmin.checkMyApplication();
+          const form = $('apply-form');
+          const pending = $('apply-pending');
+          if (myApp && myApp.state === 'open') {
+            if (form) form.style.display = 'none';
+            if (pending) pending.style.display = '';
+          } else {
+            if (form) form.style.display = '';
+            if (pending) pending.style.display = 'none';
+          }
+        } catch (e) {
+          // 静默失败，保持表单显示
+        }
+      }
 
       if (isAdmin) renderAdminPanel();
     } else {
@@ -64,6 +90,7 @@
       if (badges) badges.innerHTML = '';
       if (guestHint) guestHint.style.display = '';
       if (applySection) applySection.style.display = 'none';
+      if (feedbackSection) feedbackSection.style.display = 'none';
       if (adminSection) adminSection.style.display = 'none';
       if (btnLogin) btnLogin.style.display = '';
       if (btnLogout) btnLogout.style.display = 'none';
@@ -189,7 +216,7 @@
       const reasonEl = $('apply-reason');
       const statusEl = $('apply-status');
       if (!reasonEl.value.trim()) {
-        statusEl.textContent = '请填写理由';
+        statusEl.textContent = t('admin_reason_hint');
         return;
       }
       statusEl.textContent = '提交中…';
@@ -197,13 +224,36 @@
         await window.KTAdmin.applyAdmin(reasonEl.value.trim());
         statusEl.textContent = t('admin_app_submitted');
         reasonEl.value = '';
+        // 刷新 UI 显示 pending 状态
+        await updateUI();
       } catch (e) {
         statusEl.textContent = t('admin_app_error', { msg: e.message });
       }
     });
 
+    // 反馈提交
+    $('feedback-submit').addEventListener('click', async () => {
+      const categoryEl = $('feedback-category');
+      const titleEl = $('feedback-title-input');
+      const detailEl = $('feedback-detail');
+      const statusEl = $('feedback-status');
+      if (!titleEl.value.trim()) {
+        statusEl.textContent = t('feedback_title_hint');
+        return;
+      }
+      statusEl.textContent = '提交中…';
+      try {
+        await window.KTAdmin.reportIssue(categoryEl.value, titleEl.value.trim(), detailEl.value.trim());
+        statusEl.textContent = t('feedback_submitted');
+        titleEl.value = '';
+        detailEl.value = '';
+      } catch (e) {
+        statusEl.textContent = t('feedback_error', { msg: e.message });
+      }
+    });
+
     await auth.init();
-    updateUI();
+    await updateUI();
     auth.onChange(() => updateUI());
   }
 

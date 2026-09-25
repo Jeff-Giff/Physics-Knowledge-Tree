@@ -188,6 +188,34 @@ window.KTAdmin = (() => {
     }
   }
 
+  /* ---------- 查询自己的申请 ---------- */
+
+  async function checkMyApplication() {
+    const user = window.KTAuth.getUser();
+    if (!user) return null;
+    const url = `${ISSUES_API}?state=all&sort=created&direction=desc&per_page=100`;
+    const all = await ghApi(url);
+    const mine = (all || []).filter(
+      issue => issue.title && issue.title === `${TITLE_PREFIX}${user.login}`
+    );
+    return mine.length > 0 ? mine[0] : null;
+  }
+
+  /* ---------- 反映问题 ---------- */
+
+  const FEEDBACK_PREFIX = '[反馈] ';
+
+  async function reportIssue(category, title, detail) {
+    const user = window.KTAuth.getUser();
+    if (!user) throw new Error('未登录');
+    const fullTitle = `${FEEDBACK_PREFIX}${category}: ${title}`;
+    const body = `**反馈人**: @${user.login}\n**分类**: ${category}\n**详情**:\n${detail || '未填写'}\n**时间**: ${new Date().toISOString()}`;
+    return ghApi(ISSUES_API, {
+      method: 'POST',
+      body: JSON.stringify({ title: fullTitle, body }),
+    });
+  }
+
   /* ---------- 当前管理员列表 ---------- */
 
   function listAdmins() {
@@ -200,6 +228,8 @@ window.KTAdmin = (() => {
     listApplications,
     approveApplication,
     rejectApplication,
+    checkMyApplication,
+    reportIssue,
     listAdmins,
     addAdminToFile,
     removeAdminFromFile,

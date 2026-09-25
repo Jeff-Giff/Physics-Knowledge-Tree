@@ -638,6 +638,19 @@ body.user-page { overflow: auto; }
   text-align: center;
   padding: 20px 0;
 }
+.user-select, .user-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--fg);
+  font-size: 14px;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+.user-select { margin-bottom: 10px; }
+.user-input { margin-bottom: 0; }
 .admin-subsec { margin-top: 16px; }
 .admin-sub-title {
   font-size: 13px;
