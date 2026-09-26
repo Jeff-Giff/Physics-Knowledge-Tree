@@ -65,6 +65,7 @@ async function requireUser(request) {
 
 /* ---------- D1 初始化 ---------- */
 async function initDB(db) {
+  if (!db) throw new Error('D1 database binding (env.DB) is not configured. Check wrangler.toml d1_databases binding.');
   await db.exec(`
     CREATE TABLE IF NOT EXISTS admins (
       github_login TEXT PRIMARY KEY,
@@ -157,8 +158,12 @@ async function buildGraph(env) {
     return graphCache;
   }
 
+  if (!env.DB) throw new Error('D1 binding (env.DB) missing');
+
   // 读取 domains
-  const domainsRows = await env.DB.prepare('SELECT * FROM domains').all();
+  let domainsRows;
+  try { domainsRows = await env.DB.prepare('SELECT * FROM domains').all(); }
+  catch (e) { throw new Error('D1 query domains failed: ' + e.message); }
   const domains = {};
   for (const d of (domainsRows.results || [])) {
     domains[d.id] = {
@@ -171,7 +176,9 @@ async function buildGraph(env) {
   }
 
   // 读取 meta
-  const metaRows = await env.DB.prepare('SELECT * FROM meta').all();
+  let metaRows;
+  try { metaRows = await env.DB.prepare('SELECT * FROM meta').all(); }
+  catch (e) { throw new Error('D1 query meta failed: ' + e.message); }
   const metaMap = {};
   for (const m of (metaRows.results || [])) {
     metaMap[m.key] = m.value;
@@ -179,7 +186,9 @@ async function buildGraph(env) {
   const maxVisualDegree = parseInt(metaMap.max_visual_degree || '8', 10);
 
   // 读取所有 nodes
-  const nodesRows = await env.DB.prepare('SELECT * FROM nodes ORDER BY id').all();
+  let nodesRows;
+  try { nodesRows = await env.DB.prepare('SELECT * FROM nodes ORDER BY id').all(); }
+  catch (e) { throw new Error('D1 query nodes failed: ' + e.message); }
   const rawNodes = nodesRows.results || [];
 
   const nodesById = {};
@@ -367,29 +376,40 @@ function invalidateGraphCache() {
  * ============================================================ */
 export default {
   async fetch(request, env, ctx) {
-    await initDB(env.DB);
+    try {
+      await initDB(env.DB);
 
-    const url = new URL(request.url);
-    const path = url.pathname;
+      const url = new URL(request.url);
+      const path = url.pathname;
 
-    if (request.method === 'OPTIONS') {
-      return new Response(null, { status: 204, headers: CORS_HEADERS });
-    }
+      if (request.method === 'OPTIONS') {
+        return new Response(null, { status: 204, headers: CORS_HEADERS });
+      }
 
-    /* OAuth Callback */
-    if (path === '/callback') {
-      return handleOAuthCallback(request, env);
-    }
+      /* OAuth Callback */
+      if (path === '/callback') {
+        return handleOAuthCallback(request, env);
+      }
 
-    /* Graph API */
-    if (path === '/api/graph.js') {
-      const graph = await buildGraph(env);
-      return jsResponse(`window.PHYSICS_GRAPH = ${JSON.stringify(graph)};`);
-    }
-    if (path === '/api/graph') {
-      const graph = await buildGraph(env);
-      return jsonResponse(graph);
-    }
+      /* Graph API */
+      if (path === '/api/graph.js') {
+        try {
+          const graph = await buildGraph(env);
+          return jsResponse(`window.PHYSICS_GRAPH = ${JSON.stringify(graph)};`);
+        } catch (e) {
+          console.error('buildGraph error:', e.stack || e.message);
+          return errorResponse('Graph build failed: ' + (e.message || String(e)), 500);
+        }
+      }
+      if (path === '/api/graph') {
+        try {
+          const graph = await buildGraph(env);
+          return jsonResponse(graph);
+        } catch (e) {
+          console.error('buildGraph error:', e.stack || e.message);
+          return errorResponse('Graph build failed: ' + (e.message || String(e)), 500);
+        }
+      }
 
     /* Node API */
     const nodeMatch = path.match(/^\/api\/node\/([^\/]+)$/);
@@ -421,6 +441,10 @@ export default {
     if (path === '/api/feedback-list') return handleListFeedback(request, env);
 
     return errorResponse('Not Found', 404);
+    } catch (e) {
+      console.error('Worker error:', e.stack || e.message);
+      return errorResponse('Internal Server Error: ' + (e.message || String(e)), 500);
+    }
   },
 };
 
